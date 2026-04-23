@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenyon Jones — AI Systems & ML Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070f;
+    --bg2: #0d0d1a;
+    --bg3: #12121f;
+    --amber: #f59e0b;
+    --amber-dim: #92600a;
+    --teal: #0fd9b4;
+    --teal-dim: #0a6b58;
+    --text: #e8e6d9;
+    --text-dim: #8a8880;
+    --text-dimmer: #4a4840;
+    --border: rgba(245,158,11,0.15);
+    --border-teal: rgba(15,217,180,0.15);
+    --mono: 'DM Mono', monospace;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(7,7,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(5rem, 12vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title .accent { color: var(--amber); }
+
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 3rem;
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    border: 1px solid var(--border-teal);
+    padding: 0.3rem 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(15,217,180,0.04);
+  }
+
+  .hero-scroll {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: var(--text-dimmer);
+    animation: pulse-line 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-line {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* SECTION BASE */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: attr(data-num);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 2.5rem;
+    color: var(--text);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-body p {
+    color: var(--text-dim);
+    margin-bottom: 1.2rem;
+    font-size: 16px;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .stat-cell {
+    background: var(--bg2);
+    padding: 1.5rem;
+  }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 3.5rem;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 1px;
+  }
+
+  .project-card {
+    background: var(--bg2);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .project-card:hover { background: var(--bg3); }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--amber);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-card:hover::after { opacity: 1; }
+
+  .project-id {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-name {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
+  }
+
+  .project-desc {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tech-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--amber-dim);
+    border: 1px solid rgba(146,96,10,0.4);
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* CLAUDE CHAT SECTION */
+  .claude-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .claude-hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .claude-hero-label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+  }
+
+  .claude-headline {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+  }
+
+  .claude-subhead {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 2.5rem;
+    max-width: 520px;
+  }
+
+  /* CHAT WIDGET */
+  #chat-container {
+    background: var(--bg2);
+    border: 1px solid var(--border-teal);
+    position: relative;
+  }
+
+  #chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-teal);
+    background: rgba(15,217,180,0.04);
+  }
+
+  #chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .chat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  #chat-header-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+  }
+
+  #chat-model-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.1em;
+  }
+
+  #chat-messages {
+    height: 420px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    scroll-behavior: smooth;
+  }
+
+  #chat-messages::-webkit-scrollbar { width: 4px; }
+  #chat-messages::-webkit-scrollbar-track { background: transparent; }
+  #chat-messages::-webkit-scrollbar-thumb { background: var(--text-dimmer); }
+
+  .msg {
+    display: flex;
+    gap: 1rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-avatar {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+    height: fit-content;
+  }
+
+  .msg.assistant .msg-avatar {
+    color: var(--teal);
+    border: 1px solid var(--border-teal);
+    background: rgba(15,217,180,0.04);
+  }
+
+  .msg.user .msg-avatar {
+    color: var(--amber);
+    border: 1px solid var(--border);
+    background: rgba(245,158,11,0.04);
+  }
+
+  .msg-body {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    flex: 1;
+  }
+
+  .msg.user .msg-body { color: var(--text); }
+
+  #chat-footer {
+    border-top: 1px solid var(--border-teal);
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-end;
+    background: rgba(15,217,180,0.02);
+  }
+
+  #chat-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    max-height: 120px;
+    min-height: 24px;
+  }
+
+  #chat-input::placeholder { color: var(--text-dimmer); }
+
+  #chat-send {
+    background: var(--teal);
+    border: none;
+    color: #07070f;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  #chat-send:hover { opacity: 0.85; }
+  #chat-send:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .quick-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .qp {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    background: transparent;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .qp:hover {
+    color: var(--amber);
+    border-color: rgba(245,158,11,0.4);
+    background: rgba(245,158,11,0.04);
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .contact-cell {
+    background: var(--bg2);
+    padding: 2rem;
+  }
+
+  .contact-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-value {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  .contact-value:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.1em;
+  }
+
+  /* TYPING INDICATOR */
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .typing-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: typing 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing {
+    0%, 100% { opacity: 0.2; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section, .claude-section { padding: 4rem 1.5rem; }
+    .about-grid, .projects-grid, .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">KJ — Systems</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#ask">Ask Claude</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="index.html" style="color:var(--text-dim)">Main Site</a></li>
+  <li><a href="fundraiser.html" style="color:var(--text-dim)">Fundraiser</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">ML Systems Consulting</div>
+  <h1 class="hero-title">
+    KENYON<br>
+    <span class="accent">JONES</span>
+  </h1>
+  <p class="hero-sub">
+    MSCS Machine Learning · AI pipeline architecture · Voice AI systems ·
+    GCP/Vertex AI · GoF design patterns at scale
+  </p>
+  <div class="hero-tags">
+    <span class="tag">CommPlex Sovereign</span>
+    <span class="tag">Vertex AI</span>
+    <span class="tag">Voice Agents</span>
+    <span class="tag">ML Pipelines</span>
+    <span class="tag">Vast.ai GPU</span>
+    <span class="tag">GoF Architecture</span>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label" data-num="01">About</div>
+  <h2 class="section-title">ARCHITECT.<br>ENGINEER. FOUNDER.</h2>
+  <div class="about-grid">
+    <div class="about-body reveal">
+      <p>
+        Based in Beulah, North Dakota. Kenyon Jones holds an MSCS with a specialization in
+        Machine Learning — designing and shipping production AI systems that operate at the
+        intersection of voice, data, and cloud infrastructure.
+      </p>
+      <p>
+        Current focus: CommPlex Sovereign — a parallel outreach and intelligence platform
+        combining Bland.ai voice agents, Twilio SMS, GCP Vertex AI, and real-time ML scoring.
+        Built with GoF design patterns from the ground up.
+      </p>
+      <p>
+        Available for consulting engagements in AI pipeline architecture,
+        LLM integration, GPU compute strategy, and ML system design.
+      </p>
+    </div>
+    <div class="stat-grid reveal">
+      <div class="stat-cell">
+        <div class="stat-num">MS</div>
+        <div class="stat-label">CS — ML specialization</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">AI pipeline nodes built</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Cloud platforms integrated</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">GoF patterns applied</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label" data-num="02">Projects</div>
+  <h2 class="section-title">WHAT WE<br>HAVE BUILT</h2>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-id">SYS-001</div>
+      <div class="project-name">COMMPLEX<br>SOVEREIGN</div>
+      <div class="project-desc">
+        Parallel AI outreach platform. Wave fan-out → qualifier chain → iterator queue → warm transfer.
+        Voice agents, SMS, email in palindromic sequence. Live call supervision with Gemini streaming.
+      </div>
+      <div class="project-tech">
+        <span class="tech-pill">Bland.ai</span>
+        <span class="tech-pill">Twilio</span>
+        <span class="tech-pill">Gemini 2.5</span>
+        <span class="tech-pill">Firestore</span>
+        <span class="tech-pill">GoF Chain</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-id">SYS-002</div>
+      <div class="project-name">ARC FLEET<br>CAMPAIGN</div>
+      <div class="project-desc">
+        CommConQualiPsi pipeline — T-shaped sprint methodology. Observer wave, Sluice qualifier,
+        Series iterator, Bridge/Memento close. Full GoF pattern implementation with LLM-driven code review.
+      </div>
+      <div class="project-tech">
+        <span class="tech-pill">Claude API</span>
+        <span class="tech-pill">Vertex AI</span>
+        <span class="tech-pill">Observer</span>
+        <span class="tech-pill">Memento</span>
+        <span class="tech-pill">Strategy</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-id">SYS-003</div>
+      <div class="project-name">VAST.AI GPU<br>INTELLIGENCE</div>
+      <div class="project-desc">
+        GPU market intelligence platform on Vast.ai. BigQuery analytics, Firestore snapshots,
+        GCS data lake. Automated offer scoring, cost modeling, and deployment orchestration for ML workloads.
+      </div>
+      <div class="project-tech">
+        <span class="tech-pill">Vast.ai</span>
+        <span class="tech-pill">BigQuery</span>
+        <span class="tech-pill">GCS</span>
+        <span class="tech-pill">Cloud Run</span>
+        <span class="tech-pill">NumPy/Pandas</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-id">SYS-004</div>
+      <div class="project-name">MASTER<br>WOVEN BIBLE</div>
+      <div class="project-desc">
+        50-image scatter-gather pipeline: parallel multimodal analysis via Gemini 2.5 Flash
+        with dual-quota key rotation (Vertex + AI Studio), checkpoint-resume, and Gemini 2.5 Pro synthesis.
+      </div>
+      <div class="project-tech">
+        <span class="tech-pill">Gemini 2.5 Flash</span>
+        <span class="tech-pill">Gemini 2.5 Pro</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">GCP Secret Mgr</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLAUDE CHAT -->
+<div class="claude-section" id="ask">
+  <div class="claude-hero-label">Ask Claude — Live</div>
+  <h2 class="claude-headline">TALK TO MY<br>AI CONSULTANT</h2>
+  <p class="claude-subhead">
+    Briefed on my work, stack, and capabilities. Ask anything about
+    services, architecture, or how I can help your project.
+  </p>
+  <div class="quick-prompts">
+    <button class="qp" onclick="setPrompt('What services does Kenyon offer?')">What services do you offer?</button>
+    <button class="qp" onclick="setPrompt('Tell me about the CommPlex system architecture')">CommPlex architecture</button>
+    <button class="qp" onclick="setPrompt('How can Kenyon help me build a voice AI system?')">Build a voice AI system</button>
+    <button class="qp" onclick="setPrompt('What is your ML background and expertise?')">ML background</button>
+    <button class="qp" onclick="setPrompt('How do I get started with a consulting engagement?')">Start an engagement</button>
+  </div>
+  <div id="chat-container">
+    <div id="chat-header">
+      <div id="chat-header-left">
+        <div class="chat-dot"></div>
+        <span id="chat-header-label">Claude — Kenyon's AI Consultant</span>
+      </div>
+      <span id="chat-model-tag">claude-sonnet-4-6</span>
+    </div>
+    <div id="chat-messages">
+      <div class="msg assistant">
+        <div class="msg-avatar">AI</div>
+        <div class="msg-body">
+          Hello. I'm Claude, briefed on Kenyon Jones's work and capabilities.<br><br>
+          Kenyon is an MSCS ML engineer and consultant based in North Dakota — specializing in
+          AI pipeline architecture, voice agent systems, GCP/Vertex AI integration, and
+          production ML deployment. He built CommPlex Sovereign, the Arc Fleet Campaign engine,
+          and GPU intelligence tooling on Vast.ai.<br><br>
+          What would you like to know?
+        </div>
+      </div>
+    </div>
+    <div id="chat-footer">
+      <textarea id="chat-input" rows="1" placeholder="Ask about services, projects, or how to work together..."></textarea>
+      <button id="chat-send" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" data-num="03">Contact</div>
+  <h2 class="section-title">LET'S BUILD<br>SOMETHING.</h2>
+  <div class="contact-grid reveal">
+    <div class="contact-cell">
+      <div class="contact-label">Primary Email</div>
+      <a href="mailto:kjones@shy2shy.com" class="contact-value">kjones@shy2shy.com</a>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-label">Personal Email</div>
+      <a href="mailto:kjones.px10pro@gmail.com" class="contact-value">kjones.px10pro@gmail.com</a>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-label">Phone</div>
+      <a href="tel:7018705235" class="contact-value">(701) 870-5235</a>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-label">Location</div>
+      <span class="contact-value" style="cursor:default;">Beulah, North Dakota</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">© 2026 Kenyon Jones — AI Systems & ML Consulting</span>
+  <span class="footer-text">CommPlex Sovereign · Arc Fleet · Vast.ai GPU Intelligence</span>
+
+  <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--ff-mono);font-size:0.62rem">
+    <a href="index.html" style="color:var(--text-muted);text-decoration:none">Main Site</a>
+    <a href="fundraiser.html" style="color:var(--text-muted);text-decoration:none">Fundraiser</a>
+    <a href="consulting.html" style="color:var(--text-muted);text-decoration:none">Consulting</a>
+    <a href="privacy-policy.html" style="color:var(--text-muted);text-decoration:none">Privacy Policy</a>
+    <a href="terms.html" style="color:var(--text-muted);text-decoration:none">Terms</a>
+    <a href="sms-consent.html" style="color:var(--text-muted);text-decoration:none">SMS Opt-Out</a>
+  </div>
+</footer>
+
+<script>
+const SYSTEM_PROMPT = `You are Claude, acting as the AI consultant and representative for Kenyon Jones — an MSCS Machine Learning engineer and consultant based in Beulah, North Dakota.
+
+About Kenyon:
+- MSCS specialization in Machine Learning
+- Expert in AI pipeline architecture, GoF design patterns, voice AI systems
+- Built CommPlex Sovereign: a parallel outreach platform using Bland.ai voice agents, Twilio SMS, Gemini 2.5 (Vertex AI), Firestore, GCP Secret Manager
+- Built Arc Fleet Campaign: CommConQualiPsi pipeline (Observer wave → Chain qualifier → Iterator queue → Bridge/Memento close)
+- Built Vast.ai GPU Intelligence: market analysis, BigQuery, GCS data lake, Cloud Run
+- Built 50-image scatter-gather pipeline with dual-quota Gemini key rotation
+- Team: Kenyon (owner/architect), Charles (integrator), Justin (QA), Cynthia (voice agent ops)
+- Available for consulting in: AI pipeline architecture, LLM integration, voice AI (Bland.ai), GCP/Vertex AI, GPU compute strategy, ML system design, GoF pattern implementation
+
+Services offered:
+1. AI Pipeline Architecture — design and build production ML pipelines on GCP/Vertex AI
+2. Voice AI Systems — Bland.ai agent design, Twilio integration, call supervision
+3. LLM Integration — Claude/Gemini API integration, prompt engineering, multi-modal pipelines
+4. GPU Compute Strategy — Vast.ai, GCP GPU instances, fine-tuning workflows
+5. ML System Design — SOLID principles, GoF patterns, TDD, scalable architecture
+
+Be professional, knowledgeable, and helpful. Keep responses concise (3-5 sentences unless more detail is requested). Speak from Kenyon's perspective when discussing his capabilities and projects. If someone wants to hire or engage, direct them to kjones@shy2shy.com.`;
+
+const messages = [];
+let isLoading = false;
+
+function setPrompt(text) {
+  document.getElementById('chat-input').value = text;
+  document.getElementById('chat-input').focus();
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+document.getElementById('chat-input').addEventListener('input', function() {
+  autoResize(this);
+});
+
+document.getElementById('chat-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+function appendMessage(role, content) {
+  const el = document.createElement('div');
+  el.className = `msg ${role}`;
+  el.innerHTML = `
+    <div class="msg-avatar">${role === 'assistant' ? 'AI' : 'You'}</div>
+    <div class="msg-body">${content.replace(/\n/g, '<br>')}</div>
+  `;
+  const container = document.getElementById('chat-messages');
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+  return el;
+}
+
+function showTyping() {
+  const el = document.createElement('div');
+  el.className = 'msg assistant';
+  el.id = 'typing-msg';
+  el.innerHTML = `
+    <div class="msg-avatar">AI</div>
+    <div class="msg-body">
+      <div class="typing-indicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
+  `;
+  const container = document.getElementById('chat-messages');
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-msg');
+  if (t) t.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  isLoading = true;
+  document.getElementById('chat-send').disabled = true;
+  input.value = '';
+  input.style.height = 'auto';
+
+  messages.push({ role: 'user', content: text });
+  appendMessage('user', text);
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: messages
+      })
+    });
+
+    const data = await res.json();
+    removeTyping();
+
+    if (data.content && data.content[0]) {
+      const reply = data.content[0].text;
+      messages.push({ role: 'assistant', content: reply });
+      appendMessage('assistant', reply);
+    } else {
+      appendMessage('assistant', 'Something went wrong. Please email kjones@shy2shy.com directly.');
+    }
+  } catch (err) {
+    removeTyping();
+    appendMessage('assistant', 'Network error. Please reach out directly at kjones@shy2shy.com.');
+  }
+
+  isLoading = false;
+  document.getElementById('chat-send').disabled = false;
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

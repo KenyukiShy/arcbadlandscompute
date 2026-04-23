@@ -1,0 +1,2712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arc Badlands Compute — Rural AI Infrastructure · North Dakota</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090b;
+  --bg2: #0e1014;
+  --bg3: #131519;
+  --rust: #c4561e;
+  --rust-light: #e0713a;
+  --amber: #d4921f;
+  --amber-light: #f0b53a;
+  --cyan: #00c8e0;
+  --cyan-dim: #0097aa;
+  --sage: #7aad8a;
+  --sand: #c8b894;
+  --text: #e8e4dc;
+  --text-dim: #8a8880;
+  --text-muted: #545250;
+  --border: rgba(200,184,148,0.12);
+  --border-warm: rgba(196,86,30,0.25);
+  --glow-rust: rgba(196,86,30,0.15);
+  --glow-cyan: rgba(0,200,224,0.1);
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-condensed: 'Barlow Condensed', sans-serif;
+  --ff-body: 'Barlow', sans-serif;
+  --ff-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 2px; }
+
+/* ── Utility ── */
+.mono { font-family: var(--ff-mono); font-size: 0.82em; }
+.condensed { font-family: var(--ff-condensed); }
+.display { font-family: var(--ff-display); }
+.rust { color: var(--rust-light); }
+.cyan { color: var(--cyan); }
+.amber { color: var(--amber-light); }
+.sage { color: var(--sage); }
+.sand { color: var(--sand); }
+.dim { color: var(--text-dim); }
+.muted { color: var(--text-muted); }
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--rust);
+}
+
+.section-heading {
+  font-family: var(--ff-display);
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.section-subheading {
+  font-family: var(--ff-condensed);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  max-width: 52ch;
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2em 0.6em;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.badge-rust { color: var(--rust-light); border-color: var(--rust); background: rgba(196,86,30,0.08); }
+.badge-cyan { color: var(--cyan); border-color: var(--cyan-dim); background: rgba(0,200,224,0.06); }
+.badge-amber { color: var(--amber-light); border-color: var(--amber); background: rgba(212,146,31,0.08); }
+.badge-sage { color: var(--sage); border-color: rgba(122,173,138,0.4); background: rgba(122,173,138,0.06); }
+.badge-sand { color: var(--sand); border-color: rgba(200,184,148,0.3); background: rgba(200,184,148,0.06); }
+
+/* ── Noise texture overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(8,9,11,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-logo-mark {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--rust);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--rust-light);
+  font-weight: 900;
+  background: rgba(196,86,30,0.1);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--ff-condensed);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--rust-light); }
+
+.nav-cta {
+  font-family: var(--ff-condensed);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  text-decoration: none;
+  border: 1px solid var(--rust);
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  transition: all 0.2s;
+  background: rgba(196,86,30,0.05);
+}
+.nav-cta:hover { background: rgba(196,86,30,0.15); color: var(--text); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 3rem 5rem 3.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Geological strata background */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 50% at 75% 50%, rgba(196,86,30,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,200,224,0.04) 0%, transparent 60%),
+    linear-gradient(170deg, #08090b 0%, #0c0d10 40%, #0e0b09 70%, #08090b 100%);
+  z-index: 0;
+}
+
+.hero-strata {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.strata-line {
+  position: absolute;
+  width: 120%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-warm), transparent);
+  transform-origin: left center;
+  opacity: 0;
+  animation: strataReveal 2s ease forwards;
+}
+
+@keyframes strataReveal {
+  to { opacity: 1; }
+}
+
+.hero-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s ease forwards;
+}
+
+.hero-title {
+  font-family: var(--ff-display);
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s ease forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--rust-light);
+}
+
+.hero-subtitle {
+  font-family: var(--ff-condensed);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s ease forwards;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  max-width: 48ch;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.9s ease forwards;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.1s ease forwards;
+}
+
+.hero-stat-val {
+  font-family: var(--ff-condensed);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--rust-light);
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.3s ease forwards;
+}
+
+.btn-primary {
+  font-family: var(--ff-condensed);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.8rem;
+  background: var(--rust);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--rust-light); transform: translateY(-1px); }
+
+.btn-outline {
+  font-family: var(--ff-condensed);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.8rem;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.btn-outline:hover { border-color: var(--sand); color: var(--text); }
+
+/* GPU rack visualization */
+.gpu-rack {
+  position: relative;
+  width: 320px;
+  height: 420px;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 1.2s 1.0s ease forwards;
+}
+
+.rack-unit {
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(135deg, #1a1d24, #141720);
+  border: 1px solid rgba(196,86,30,0.2);
+  border-radius: 3px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.rack-unit::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--rust);
+  opacity: 0.6;
+}
+
+.rack-unit.v100::before { background: var(--rust); }
+.rack-unit.future::before { background: var(--text-muted); opacity: 0.3; }
+.rack-unit.active { border-color: rgba(196,86,30,0.4); }
+
+.rack-unit-label {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+
+.rack-unit-model {
+  font-family: var(--ff-condensed);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.rack-led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rust-light);
+  margin-left: auto;
+  box-shadow: 0 0 6px var(--rust);
+  animation: ledPulse 2s ease-in-out infinite;
+}
+
+.rack-unit.future .rack-led {
+  background: var(--text-muted);
+  box-shadow: none;
+  animation: none;
+  opacity: 0.3;
+}
+
+@keyframes ledPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.rack-vram {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--cyan-dim);
+  margin-left: auto;
+}
+
+.rack-label {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── SECTION COMMON ── */
+section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 0 3rem;
+}
+
+/* ── STATUS BANNER ── */
+.status-banner {
+  background: rgba(196,86,30,0.06);
+  border-top: 1px solid rgba(196,86,30,0.2);
+  border-bottom: 1px solid rgba(196,86,30,0.2);
+  padding: 0.75rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  overflow: hidden;
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  color: var(--rust-light);
+  letter-spacing: 0.1em;
+  flex-wrap: wrap;
+}
+
+.status-banner span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rust-light);
+  animation: ledPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── MISSION ── */
+#mission {
+  background: var(--bg2);
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6rem;
+  align-items: start;
+}
+
+.mission-text {
+  font-family: var(--ff-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.mission-text em {
+  font-style: italic;
+  color: var(--rust-light);
+}
+
+.mission-body {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-top: 1.5rem;
+}
+
+.mission-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pillar {
+  padding: 1.5rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  border-left: 3px solid var(--rust);
+  transition: border-color 0.3s;
+}
+.pillar:hover { border-color: var(--rust-light); }
+
+.pillar-title {
+  font-family: var(--ff-condensed);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pillar-icon { color: var(--rust-light); font-size: 1.1rem; }
+
+.pillar-body {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── GEOGRAPHY ── */
+#geography {
+  background: var(--bg);
+}
+
+.geo-intro {
+  max-width: 60ch;
+  margin-bottom: 3rem;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.nd-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.city-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  transition: all 0.25s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.city-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.city-card:hover { border-color: rgba(196,86,30,0.35); background: var(--bg3); }
+.city-card:hover::before { transform: scaleX(1); }
+.city-card.anchor { border-color: rgba(196,86,30,0.3); }
+.city-card.anchor::before { transform: scaleX(0.4); }
+
+.city-name {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.city-county {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.city-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.city-tag {
+  font-family: var(--ff-mono);
+  font-size: 0.58rem;
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+  border: 1px solid rgba(122,173,138,0.3);
+  color: var(--sage);
+  letter-spacing: 0.06em;
+}
+
+.city-tag.reap { border-color: rgba(212,146,31,0.3); color: var(--amber-light); }
+.city-tag.hub { border-color: rgba(0,200,224,0.25); color: var(--cyan); }
+.city-tag.home { border-color: rgba(196,86,30,0.4); color: var(--rust-light); }
+
+/* ── GRANTS ── */
+#grants {
+  background: var(--bg2);
+}
+
+.grants-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-top: 3rem;
+}
+
+.grant-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  transition: all 0.25s;
+  position: relative;
+}
+.grant-card:hover { border-color: rgba(196,86,30,0.3); transform: translateY(-2px); }
+
+.grant-program {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  margin-bottom: 0.3rem;
+}
+
+.grant-full-name {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.grant-body {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.grant-fit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fit-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fit-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rust), var(--amber-light));
+  border-radius: 2px;
+}
+
+.grant-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* ── TAX ── */
+.tax-provisions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.tax-item {
+  padding: 1.2rem 1.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.tax-code {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  color: var(--cyan);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  padding-top: 0.1rem;
+}
+
+.tax-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.tax-desc strong {
+  display: block;
+  font-family: var(--ff-condensed);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+/* ── HARDWARE ── */
+#hardware {
+  background: var(--bg);
+}
+
+.hardware-intro {
+  max-width: 56ch;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.roadmap-timeline {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.roadmap-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.7rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--rust) 0%, var(--text-muted) 50%, transparent 100%);
+}
+
+.roadmap-phase {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.roadmap-phase::before {
+  content: '';
+  position: absolute;
+  left: -2.6rem;
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--rust);
+  background: var(--bg);
+}
+
+.roadmap-phase.active::before {
+  background: var(--rust);
+  box-shadow: 0 0 12px rgba(196,86,30,0.5);
+}
+
+.roadmap-phase.upcoming::before {
+  border-color: var(--text-muted);
+}
+
+.phase-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.phase-label {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+}
+
+.phase-timeline {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.phase-title {
+  font-family: var(--ff-condensed);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.phase-body {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  max-width: 58ch;
+}
+
+.hardware-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hw-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 140px;
+}
+
+.hw-card.current { border-color: rgba(196,86,30,0.35); }
+.hw-card.upcoming { opacity: 0.6; }
+
+.hw-model {
+  font-family: var(--ff-condensed);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hw-vram {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--cyan);
+  letter-spacing: 0.06em;
+}
+
+.hw-count {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}
+
+.vram-target-box {
+  margin-top: 2.5rem;
+  padding: 1.5rem 2rem;
+  background: var(--bg2);
+  border: 1px solid rgba(0,200,224,0.15);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.vram-target-title {
+  font-family: var(--ff-condensed);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.5rem;
+}
+
+.vram-target-val {
+  font-family: var(--ff-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.vram-note {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 48ch;
+}
+
+/* ── ENTITIES ── */
+#entities {
+  background: var(--bg2);
+}
+
+.entity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-top: 2.5rem;
+}
+
+.entity-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+
+.entity-card:hover { border-color: rgba(196,86,30,0.3); }
+
+.entity-card.primary {
+  border-color: rgba(196,86,30,0.3);
+  background: linear-gradient(135deg, rgba(196,86,30,0.05) 0%, transparent 60%);
+}
+
+.entity-abbr {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--rust-light);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.entity-name {
+  font-family: var(--ff-condensed);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.entity-type {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.entity-body {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── DESIGN PHILOSOPHY ── */
+#philosophy {
+  background: var(--bg);
+}
+
+.philosophy-intro {
+  max-width: 54ch;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.patterns-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.pattern-col {
+  border-right: 1px solid var(--border);
+  padding: 1.5rem;
+}
+.pattern-col:last-child { border-right: none; }
+
+.pattern-col-title {
+  font-family: var(--ff-condensed);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pattern-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pattern-list li {
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.pattern-list li::before {
+  content: '↳';
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ── SERVICES ── */
+#services {
+  background: var(--bg2);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-top: 2.5rem;
+}
+
+.service-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem 1.5rem;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--rust), var(--amber));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.service-card:hover { border-color: rgba(196,86,30,0.3); transform: translateY(-2px); }
+.service-card:hover::after { transform: scaleX(1); }
+
+.service-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.service-title {
+  font-family: var(--ff-condensed);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.service-body {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* ── TEAM ── */
+#team {
+  background: var(--bg);
+}
+
+.team-intro {
+  max-width: 54ch;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.team-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  transition: all 0.25s;
+}
+
+.team-card:hover { border-color: rgba(196,86,30,0.25); }
+
+.team-card.lead {
+  border-color: rgba(196,86,30,0.25);
+  background: linear-gradient(135deg, rgba(196,86,30,0.04) 0%, var(--bg2) 50%);
+}
+
+.team-initials {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: rgba(196,86,30,0.12);
+  border: 1px solid rgba(196,86,30,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--rust-light);
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.team-card.cyan-card .team-initials { background: rgba(0,200,224,0.08); border-color: rgba(0,200,224,0.2); color: var(--cyan); }
+.team-card.amber-card .team-initials { background: rgba(212,146,31,0.08); border-color: rgba(212,146,31,0.2); color: var(--amber-light); }
+.team-card.sage-card .team-initials { background: rgba(122,173,138,0.08); border-color: rgba(122,173,138,0.2); color: var(--sage); }
+
+.team-name {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.15rem;
+}
+
+.team-role {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.team-body {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.team-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.team-skill {
+  font-family: var(--ff-mono);
+  font-size: 0.58rem;
+  padding: 0.15em 0.45em;
+  border-radius: 2px;
+  background: rgba(200,184,148,0.06);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.advisory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.advisory-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.advisory-name {
+  font-family: var(--ff-condensed);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.1rem;
+}
+
+.advisory-role {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.advisory-desc {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ── PARTNERSHIPS ── */
+#partnerships {
+  background: var(--bg2);
+}
+
+.partner-targets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.partner-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  transition: all 0.25s;
+}
+
+.partner-card:hover { border-color: rgba(196,86,30,0.3); }
+
+.partner-org {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+.partner-type {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.partner-body {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.partner-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.ps-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+.ps-dot.seeking { background: var(--amber-light); }
+.ps-dot.active { background: var(--sage); animation: ledPulse 2s infinite; }
+
+/* ── CONTACT ── */
+#contact {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+#contact::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 60%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(196,86,30,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.contact-cta {
+  font-family: var(--ff-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.contact-cta em {
+  font-style: italic;
+  color: var(--rust-light);
+}
+
+.contact-body {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  max-width: 52ch;
+}
+
+.contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.75rem 1rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.contact-item-label {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 70px;
+  padding-top: 0.05rem;
+}
+
+.contact-item-val {
+  font-family: var(--ff-condensed);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.contact-item-val a { color: var(--text); text-decoration: none; }
+.contact-item-val a:hover { color: var(--rust-light); }
+
+.contact-nd-badge {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+}
+
+.contact-nd-title {
+  font-family: var(--ff-condensed);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.nd-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nd-detail-item {
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.nd-detail-item::before {
+  content: '→';
+  color: var(--rust);
+  flex-shrink: 0;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+
+.footer-left {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+}
+
+.footer-right {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-link {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--rust-light); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── SECTION ACCENT LINES ── */
+.section-accent {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--ff-display);
+  font-size: 12rem;
+  font-weight: 700;
+  font-style: italic;
+  color: rgba(196,86,30,0.025);
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  #hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding-top: 7rem; }
+  .mission-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .grants-grid { grid-template-columns: repeat(2, 1fr); }
+  .patterns-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .advisory-grid { grid-template-columns: repeat(2, 1fr); }
+  .partner-targets { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+@media (max-width: 768px) {
+  footer { grid-template-columns: 1fr 1fr !important; }
+
+  .container { padding: 0 1.5rem; }
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 0; }
+  .grants-grid { grid-template-columns: 1fr; }
+  .patterns-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .advisory-grid { grid-template-columns: 1fr; }
+  .partner-targets { grid-template-columns: 1fr; }
+  .tax-provisions { grid-template-columns: 1fr; }
+  .entity-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">AB</div>
+    Arc Badlands Compute
+  </a>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#grants">Funding</a></li>
+    <li><a href="#hardware">Hardware</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#partnerships">Partners</a></li>
+    <li><a href="https://claude.ai/public/artifacts/75f9d0c5-5b0f-43a8-bcdc-aafa93c2987c" target="_blank">Fundraiser</a></li>
+    <li><a href="https://claude.ai/public/artifacts/7b707b05-cf94-470f-82fc-9949aedf838a" target="_blank">Consulting</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-strata">
+    <div class="strata-line" style="top:30%;transform:rotate(-1.5deg);animation-delay:0.8s;"></div>
+    <div class="strata-line" style="top:50%;transform:rotate(-1deg);animation-delay:1s;"></div>
+    <div class="strata-line" style="top:68%;transform:rotate(-1.2deg);animation-delay:1.2s;"></div>
+  </div>
+
+  <div class="hero-left">
+    <p class="hero-eyebrow">Hazen · Mercer County · North Dakota · 501(c)(3) Filing Pending</p>
+    <h1 class="hero-title">
+      Arc<br><em>Badlands</em><br>Compute
+    </h1>
+    <p class="hero-subtitle">Rural AI Infrastructure for the Great Plains</p>
+    <p class="hero-desc">
+      A nonprofit GPU compute collective building resilient, sovereign artificial intelligence infrastructure in rural North Dakota — serving education, research, and workforce development across Mercer County and the region.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">8×</div>
+        <div class="hero-stat-label">V100 SXM2<br>Live Nodes</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">256<span style="font-size:1.2rem;font-weight:400">GB</span></div>
+        <div class="hero-stat-label">GPU VRAM<br>Current</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">4</div>
+        <div class="hero-stat-label">Core<br>Staff</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">ND</div>
+        <div class="hero-stat-label">Primary<br>Jurisdiction</div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#partnerships" class="btn-primary">Partner With Us</a>
+      <a href="#grants" class="btn-outline">Funding Targets</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="gpu-rack">
+      <!-- Current: Penguin Relion XE4118GTS, 8× V100 SXM2 -->
+      <div class="rack-unit v100 active">
+        <div>
+          <div class="rack-unit-label">LIVE · PHASE 1</div>
+          <div class="rack-unit-model">8× V100 SXM2</div>
+        </div>
+        <div class="rack-vram">256 GB</div>
+        <div class="rack-led"></div>
+      </div>
+      <div class="rack-unit active" style="border-left-color:rgba(196,86,30,0.3);height:34px;">
+        <div class="rack-unit-label" style="font-size:0.58rem;color:var(--text-muted)">Penguin Relion XE4118GTS · Hazen ND</div>
+        <div class="rack-led" style="opacity:0.4;animation:none;"></div>
+      </div>
+      <div style="height:1rem;"></div>
+      <!-- P-series auxiliary -->
+      <div class="rack-unit future" style="border-left-color:rgba(200,184,148,0.2);">
+        <div>
+          <div class="rack-unit-label">PENDING · P-SERIES</div>
+          <div class="rack-unit-model">P100 + P40 + P4</div>
+        </div>
+        <div class="rack-vram" style="color:var(--text-muted)">≥512 GB</div>
+        <div class="rack-led"></div>
+      </div>
+      <div style="height:0.5rem;"></div>
+      <!-- Phase 2: A100 -->
+      <div class="rack-unit future">
+        <div>
+          <div class="rack-unit-label">PHASE 2 · TARGET</div>
+          <div class="rack-unit-model">A100 SXM4 ×8</div>
+        </div>
+        <div class="rack-vram" style="color:var(--text-muted)">640 GB</div>
+        <div class="rack-led"></div>
+      </div>
+      <!-- Phase 3: H100/200 -->
+      <div class="rack-unit future">
+        <div>
+          <div class="rack-unit-label">PHASE 3 · TARGET</div>
+          <div class="rack-unit-model">H100/200 NVL</div>
+        </div>
+        <div class="rack-vram" style="color:var(--text-muted)">1.6 TB</div>
+        <div class="rack-led"></div>
+      </div>
+      <!-- Phase 4: B200 -->
+      <div class="rack-unit future">
+        <div>
+          <div class="rack-unit-label">PHASE 4 · TARGET</div>
+          <div class="rack-unit-model">B200 NVL</div>
+        </div>
+        <div class="rack-vram" style="color:var(--text-muted)">2.4 TB</div>
+        <div class="rack-led"></div>
+      </div>
+      <!-- Phase 5: Rubin -->
+      <div class="rack-unit future" style="opacity:0.4;">
+        <div>
+          <div class="rack-unit-label">PHASE 5 · HORIZON</div>
+          <div class="rack-unit-model">Rubin NVL</div>
+        </div>
+        <div class="rack-vram" style="color:var(--text-muted)">TBD</div>
+        <div class="rack-led"></div>
+      </div>
+      <div class="rack-label">ARC BADLANDS · GPU STACK ROADMAP</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS BANNER -->
+<div class="status-banner">
+  <span><div class="status-dot"></div> 501(c)(3) Filing in Preparation</span>
+  <span><div class="status-dot" style="animation-delay:0.3s"></div> Colocation Target: DCN Bismarck</span>
+  <span><div class="status-dot" style="animation-delay:0.6s"></div> NVIDIA Inception: Enrollment Pending</span>
+  <span><div class="status-dot" style="animation-delay:0.9s"></div> ND Primary Sector Cert: Application Preparation</span>
+  <span><div class="status-dot" style="animation-delay:1.2s"></div> REAP / USDA Rural Dev: Monitoring</span>
+</div>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="container">
+    <div class="mission-grid reveal">
+      <div>
+        <div class="section-label">Mission</div>
+        <p class="mission-text">
+          To build <em>sovereign, resilient</em> compute infrastructure in rural North Dakota — making advanced AI, GPU compute, and technical education accessible to communities that have historically lacked access to it.
+        </p>
+        <p class="mission-body">
+          Arc Badlands Compute operates at the intersection of emerging technology and rural development. We are establishing GPU compute infrastructure, educational pipelines, and vocational certification programs in Mercer County — directly serving the Hazen, Beulah, and broader Bismarck-Mandan corridor while positioning North Dakota as a legitimate participant in the national AI infrastructure buildout. We are not yet grant-funded, not yet certified, and not yet formally incorporated as a nonprofit — but we are building with that intent at every layer of our architecture, governance, and program design.
+        </p>
+      </div>
+      <div class="mission-pillars">
+        <div class="pillar">
+          <div class="pillar-title"><span class="pillar-icon">⚡</span> GPU Compute Access</div>
+          <div class="pillar-body">Providing on-demand GPU compute to researchers, educators, and startups across North Dakota — infrastructure typically found only in urban centers.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title"><span class="pillar-icon">🎓</span> Vocational Education</div>
+          <div class="pillar-body">Training programs in AI/ML operations, cloud infrastructure (GCP), and NVIDIA GPU management — building a credentialed technical workforce in rural ND.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title"><span class="pillar-icon">🏔️</span> Rural Sovereignty</div>
+          <div class="pillar-body">Designing for energy independence, sustainable operations, and resilient uptime — a community asset that does not depend on distant data center access.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title"><span class="pillar-icon">🔬</span> R&amp;D Infrastructure</div>
+          <div class="pillar-body">Qualified Research Expenses (QRE) generating IRC §41 R&amp;D credits and supporting academic, industry, and government computing needs across the region.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GEOGRAPHY -->
+<section id="geography">
+  <div class="container reveal">
+    <div class="section-label">Geographic Coverage</div>
+    <h2 class="section-heading">North Dakota<br>Service Region</h2>
+    <p class="section-subheading">Grant eligibility · Rural development corridors · Workforce zones</p>
+
+    <p class="geo-intro" style="margin-top:1.5rem;">
+      Our primary operations anchor in Mercer County (Hazen / Beulah), with service area and grant eligibility spanning USDA Rural Development corridors across the state. The following cities represent either current operations, colocation targets, or active grant and workforce development zones.
+    </p>
+
+    <div class="nd-cities-grid">
+      <div class="city-card anchor">
+        <div class="city-name">Hazen</div>
+        <div class="city-county">Mercer County</div>
+        <div class="city-tags">
+          <span class="city-tag home">HQ · Primary Ops</span>
+          <span class="city-tag reap">REAP Eligible</span>
+          <span class="city-tag">Rural Dev</span>
+        </div>
+      </div>
+      <div class="city-card anchor">
+        <div class="city-name">Beulah</div>
+        <div class="city-county">Mercer County</div>
+        <div class="city-tags">
+          <span class="city-tag home">Ops · Logistics</span>
+          <span class="city-tag reap">REAP Eligible</span>
+          <span class="city-tag">Energy Corridor</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Bismarck</div>
+        <div class="city-county">Burleigh County</div>
+        <div class="city-tags">
+          <span class="city-tag hub">Colocation Hub</span>
+          <span class="city-tag">DCN Target</span>
+          <span class="city-tag">State Gov</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Mandan</div>
+        <div class="city-county">Morton County</div>
+        <div class="city-tags">
+          <span class="city-tag">Workforce Zone</span>
+          <span class="city-tag reap">REAP Eligible</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Minot</div>
+        <div class="city-county">Ward County</div>
+        <div class="city-tags">
+          <span class="city-tag hub">Regional Hub</span>
+          <span class="city-tag">Education</span>
+          <span class="city-tag">USAF Corridor</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Dickinson</div>
+        <div class="city-county">Stark County</div>
+        <div class="city-tags">
+          <span class="city-tag reap">REAP Eligible</span>
+          <span class="city-tag">Energy Sector</span>
+          <span class="city-tag">Workforce</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Williston</div>
+        <div class="city-county">Williams County</div>
+        <div class="city-tags">
+          <span class="city-tag reap">REAP Eligible</span>
+          <span class="city-tag">Bakken</span>
+          <span class="city-tag">Energy</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Fargo</div>
+        <div class="city-county">Cass County</div>
+        <div class="city-tags">
+          <span class="city-tag hub">Metro Hub</span>
+          <span class="city-tag">NDSU</span>
+          <span class="city-tag">Finance</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Grand Forks</div>
+        <div class="city-county">Grand Forks County</div>
+        <div class="city-tags">
+          <span class="city-tag hub">UND</span>
+          <span class="city-tag">Research</span>
+          <span class="city-tag">USAF</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Jamestown</div>
+        <div class="city-county">Stutsman County</div>
+        <div class="city-tags">
+          <span class="city-tag reap">REAP Eligible</span>
+          <span class="city-tag">Agriculture</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Devils Lake</div>
+        <div class="city-county">Ramsey County</div>
+        <div class="city-tags">
+          <span class="city-tag reap">REAP Eligible</span>
+          <span class="city-tag">Tribal / Rural</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Washburn</div>
+        <div class="city-county">McLean County</div>
+        <div class="city-tags">
+          <span class="city-tag home">Adjacent</span>
+          <span class="city-tag reap">REAP Eligible</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GRANTS -->
+<section id="grants">
+  <div class="container reveal">
+    <div class="section-label">Funding Strategy</div>
+    <h2 class="section-heading">Grant &amp; Incentive<br>Targets</h2>
+    <p class="section-subheading">We are not yet funded — these programs represent our active application pipeline</p>
+
+    <div class="grants-grid">
+
+      <div class="grant-card">
+        <div class="grant-status"><span class="badge badge-amber">Monitoring · Paused</span></div>
+        <div class="grant-program">REAP</div>
+        <div class="grant-full-name">USDA Rural Energy for America Program</div>
+        <div class="grant-body">Provides grants and loan guarantees for renewable energy systems and energy efficiency improvements for rural small businesses and agricultural producers. USDA has temporarily paused new applications; we are tracking reopening. Arc Badlands' rural location, energy-intensive compute load, and planned renewable integration make this a strong fit.</div>
+        <div class="grant-fit">
+          <span class="rust" style="font-size:0.62rem;">Fit</span>
+          <div class="fit-bar"><div class="fit-fill" style="width:85%"></div></div>
+          <span style="color:var(--text-muted);">85%</span>
+        </div>
+      </div>
+
+      <div class="grant-card">
+        <div class="grant-status"><span class="badge badge-rust">Preparing</span></div>
+        <div class="grant-program">USDA DLT</div>
+        <div class="grant-full-name">Distance Learning &amp; Telemedicine Grant</div>
+        <div class="grant-body">Funds telecommunications, computer networks, and related equipment that serve rural communities' educational and medical needs. Our vocational training, educational failover infrastructure, and GCP/NVIDIA certification programs directly qualify. Strongest near-term fit in the USDA portfolio.</div>
+        <div class="grant-fit">
+          <span class="rust" style="font-size:0.62rem;">Fit</span>
+          <div class="fit-bar"><div class="fit-fill" style="width:92%"></div></div>
+          <span style="color:var(--text-muted);">92%</span>
+        </div>
+      </div>
+
+      <div class="grant-card">
+        <div class="grant-status"><span class="badge badge-rust">Preparing</span></div>
+        <div class="grant-program">NSF SBIR</div>
+        <div class="grant-full-name">National Science Foundation Small Business Innovation Research</div>
+        <div class="grant-body">Funds R&amp;D that has potential for commercialization. Our ML infrastructure, AI voice agent research (CommPlex), and GPU power management architecture (Claurkdown) represent original R&amp;D with clear commercial applicability. Phase I target: $275K.</div>
+        <div class="grant-fit">
+          <span class="rust" style="font-size:0.62rem;">Fit</span>
+          <div class="fit-bar"><div class="fit-fill" style="width:70%"></div></div>
+          <span style="color:var(--text-muted);">70%</span>
+        </div>
+      </div>
+
+      <div class="grant-card">
+        <div class="grant-status"><span class="badge badge-cyan">Active · ND Program</span></div>
+        <div class="grant-program">ND Automation</div>
+        <div class="grant-full-name">North Dakota Automation Tax Credit Program</div>
+        <div class="grant-body">Available through the ND Department of Commerce for businesses investing in automation technology. Our GPU compute pipeline, AI-assisted workflows, and inference infrastructure directly qualify as automation investment. Applications accepted annually.</div>
+        <div class="grant-fit">
+          <span class="rust" style="font-size:0.62rem;">Fit</span>
+          <div class="fit-bar"><div class="fit-fill" style="width:80%"></div></div>
+          <span style="color:var(--text-muted);">80%</span>
+        </div>
+      </div>
+
+      <div class="grant-card">
+        <div class="grant-status"><span class="badge badge-rust">Preparing</span></div>
+        <div class="grant-program">Primary Sector</div>
+        <div class="grant-full-name">ND Primary Sector Certification &amp; Tax Incentives</div>
+        <div class="grant-body">ND offers significant tax exemptions for primary sector businesses — companies that bring new money into the state from outside. GPU compute rental (Vast.ai, RunPod, TensorDock) and AI services to out-of-state clients constitute primary sector revenue. Certification unlocks income tax, sales tax, and property tax benefits.</div>
+        <div class="grant-fit">
+          <span class="rust" style="font-size:0.62rem;">Fit</span>
+          <div class="fit-bar"><div class="fit-fill" style="width:75%"></div></div>
+          <span style="color:var(--text-muted);">75%</span>
+        </div>
+      </div>
+
+      <div class="grant-card">
+        <div class="grant-status"><span class="badge badge-rust">Preparing</span></div>
+        <div class="grant-program">BND PACE</div>
+        <div class="grant-full-name">Bank of North Dakota Partnership in Assisting Community Expansion</div>
+        <div class="grant-body">BND's PACE program provides interest rate buydowns for primary sector business loans through participating lenders. Combined with equipment financing for GPU hardware, PACE can significantly reduce cost of capital on our A100 and H100 acquisitions.</div>
+        <div class="grant-fit">
+          <span class="rust" style="font-size:0.62rem;">Fit</span>
+          <div class="fit-bar"><div class="fit-fill" style="width:68%"></div></div>
+          <span style="color:var(--text-muted);">68%</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tax provisions -->
+    <div class="section-label" style="margin-top:3rem;">Federal Tax Provisions</div>
+    <h3 class="section-heading" style="font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:0.5rem;">IRC &amp; OBBBA<br>Provisions We Target</h3>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;font-family:var(--ff-mono);letter-spacing:0.04em;">One Big Beautiful Bill Act (2025) · TCJA · IRC R&amp;D Framework</p>
+
+    <div class="tax-provisions">
+      <div class="tax-item">
+        <div class="tax-code">IRC §41</div>
+        <div class="tax-desc">
+          <strong>R&amp;D Tax Credit</strong>
+          Qualified Research Expenses (QRE) across our ML infrastructure, AI agent development, and GPU architecture work generate federal R&amp;D credits — including payroll tax offset eligibility for small businesses.
+        </div>
+      </div>
+      <div class="tax-item">
+        <div class="tax-code">IRC §174A</div>
+        <div class="tax-desc">
+          <strong>R&amp;D Expensing (OBBBA Restored)</strong>
+          The One Big Beautiful Bill Act restores domestic R&amp;D expensing to immediate deduction (vs. 5-year amortization under TCJA). This significantly improves cash flow on our R&amp;D-heavy operations.
+        </div>
+      </div>
+      <div class="tax-item">
+        <div class="tax-code">IRC §168(k)</div>
+        <div class="tax-desc">
+          <strong>Bonus Depreciation</strong>
+          100% first-year bonus depreciation on qualified GPU and compute hardware. OBBBA extends this treatment, making hardware acquisition substantially more tax-efficient.
+        </div>
+      </div>
+      <div class="tax-item">
+        <div class="tax-code">IRC §48</div>
+        <div class="tax-desc">
+          <strong>Investment Tax Credit (ITC)</strong>
+          Energy property credit applicable to our renewable energy integration — solar, wind, and energy storage components of our data center design qualify for ITC treatment.
+        </div>
+      </div>
+      <div class="tax-item">
+        <div class="tax-code">WOTC</div>
+        <div class="tax-desc">
+          <strong>Work Opportunity Tax Credit</strong>
+          Hiring from targeted groups — including long-term unemployed and rural workforce populations in ND — generates per-employee federal credits, aligning our hiring mission with financial incentives.
+        </div>
+      </div>
+      <div class="tax-item">
+        <div class="tax-code">QRE Exchange</div>
+        <div class="tax-desc">
+          <strong>Tax Credit Refundability Exchange</strong>
+          For qualifying nonprofit and startup entities, excess R&amp;D credits may be transferable or monetized. We are structuring operations to maximize this pathway as our 501(c)(3) status is confirmed.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HARDWARE -->
+<section id="hardware">
+  <div class="container reveal">
+    <div class="section-label">Infrastructure Roadmap</div>
+    <h2 class="section-heading">GPU Stack<br>&amp; Compute Architecture</h2>
+    <p class="section-subheading">Annual doubling cadence · VRAM proportionality maintained · GCP burst capacity</p>
+
+    <p class="hardware-intro" style="margin-top:1.5rem;">
+      We are building a generational GPU stack anchored on NVIDIA architecture — from current V100 SXM2 capacity through Ampere, Hopper, and Blackwell, targeting annual hardware doubling while maintaining proportional VRAM across generations. Auxiliary P-series cards (P100, P40, P4) provide cost-effective VRAM expansion at 2× V100 density. Primary colocation target is DCN's Coleman Data Center in Bismarck. GCP scaling provides elastic burst capacity beyond on-premises limits.
+    </p>
+
+    <div class="roadmap-timeline">
+
+      <div class="roadmap-phase active">
+        <div class="phase-meta">
+          <span class="phase-label">Phase 1 · Live</span>
+          <span class="phase-timeline">2026 · Hazen, ND</span>
+          <span class="badge badge-rust">Current</span>
+        </div>
+        <div class="phase-title">Volta Foundation</div>
+        <div class="phase-body">Penguin Relion XE4118GTS server hosting 8× NVIDIA V100 SXM2 GPUs with NVLink interconnect. 256 GB HBM2 aggregate. Operating on Vast.ai, RunPod, and TensorDock rental platforms. BGA rework and vGPU unlock capabilities on-site. P-series supplemental cards (P100, P40, P4) targeted to reach ≥512 GB accessible VRAM at 2× V100 density.</div>
+        <div class="hardware-cards">
+          <div class="hw-card current">
+            <div class="hw-model">V100 SXM2 ×8</div>
+            <div class="hw-vram">256 GB HBM2</div>
+            <div class="hw-count">Penguin Relion XE4118GTS · NVLink</div>
+          </div>
+          <div class="hw-card">
+            <div class="hw-model">P100 ×2+</div>
+            <div class="hw-vram">32–48 GB HBM2</div>
+            <div class="hw-count">2× per V100 parity target</div>
+          </div>
+          <div class="hw-card">
+            <div class="hw-model">P40 ×N</div>
+            <div class="hw-vram">24 GB GDDR5X</div>
+            <div class="hw-count">Inference · Volume</div>
+          </div>
+          <div class="hw-card">
+            <div class="hw-model">P4 ×N</div>
+            <div class="hw-vram">8 GB GDDR5</div>
+            <div class="hw-count">Edge · Light Inference</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase upcoming">
+        <div class="phase-meta">
+          <span class="phase-label" style="color:var(--text-muted);">Phase 2 · Target</span>
+          <span class="phase-timeline">2027 · DCN Bismarck</span>
+          <span class="badge badge-sand">Planned</span>
+        </div>
+        <div class="phase-title" style="color:var(--text-dim);">Ampere Generation</div>
+        <div class="phase-body">A100 SXM4 octet targeting 640 GB HBM2e. Colocation at DCN Coleman Data Center, Bismarck. First Tier 2 certification milestone. Combined with V100 stack for parallel workloads — training on A100, inference on V100/P-series.</div>
+        <div class="hardware-cards">
+          <div class="hw-card upcoming">
+            <div class="hw-model">A100 SXM4 ×8</div>
+            <div class="hw-vram">640 GB HBM2e</div>
+            <div class="hw-count">Redstone / NVLink 3.0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase upcoming">
+        <div class="phase-meta">
+          <span class="phase-label" style="color:var(--text-muted);">Phase 3 · Horizon</span>
+          <span class="phase-timeline">2028</span>
+          <span class="badge badge-sand">Planned</span>
+        </div>
+        <div class="phase-title" style="color:var(--text-dim);">Hopper Generation</div>
+        <div class="phase-body">H100 or H200 NVL configuration. SXM5 interconnect. Targeting 1.6+ TB HBM3 aggregate. Full Tier 2 / Uptime Institute certification candidacy. NVIDIA DGX or partner-validated system. GCP Vertex AI integration for elastic overflow.</div>
+        <div class="hardware-cards">
+          <div class="hw-card upcoming">
+            <div class="hw-model">H100/H200 NVL</div>
+            <div class="hw-vram">≥1.6 TB HBM3</div>
+            <div class="hw-count">SXM5 · NVLink 4.0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase upcoming">
+        <div class="phase-meta">
+          <span class="phase-label" style="color:var(--text-muted);">Phase 4–5 · Horizon</span>
+          <span class="phase-timeline">2029–2030</span>
+          <span class="badge badge-sand">Strategic</span>
+        </div>
+        <div class="phase-title" style="color:var(--text-dim);">Blackwell → Rubin</div>
+        <div class="phase-body">B200 NVL (Blackwell generation) followed by Rubin architecture as it becomes commercially available. Annual doubling maintained. Full VRAM stack hierarchy proportionality preserved across all generations. GCP Cloud scaling as elastic ceiling.</div>
+        <div class="hardware-cards">
+          <div class="hw-card upcoming">
+            <div class="hw-model">B200 NVL</div>
+            <div class="hw-vram">≥2.4 TB HBM3e</div>
+            <div class="hw-count">Blackwell · SXM6</div>
+          </div>
+          <div class="hw-card upcoming">
+            <div class="hw-model">Rubin NVL</div>
+            <div class="hw-vram">TBD</div>
+            <div class="hw-count">2030+ Horizon</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vram-target-box reveal">
+      <div>
+        <div class="vram-target-title">VRAM Guarantee Target</div>
+        <div class="vram-target-val">320 <span style="font-size:1.5rem;font-weight:400;color:var(--text-dim)">GB</span></div>
+        <div class="vram-target-title" style="margin-top:0.5rem;color:var(--text-muted);">Minimum Reserved · Scaling to 640 GB</div>
+      </div>
+      <div class="vram-note">
+        We target a guaranteed minimum VRAM floor (320–640 GB depending on phase) available for reserved workloads and educational use — ensuring that grant-funded programs and vocational training are never preempted by commercial rental demand. GCP Vertex AI provides elastic burst capacity above on-premises ceilings.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ENTITIES -->
+<section id="entities">
+  <div class="container reveal">
+    <div class="section-label">Organizational Structure</div>
+    <h2 class="section-heading">The Arc Badlands<br>Entity Family</h2>
+    <p class="section-subheading">Five coordinated entities · Pending formation · Nonprofit anchor</p>
+
+    <div class="entity-grid">
+      <div class="entity-card primary">
+        <div class="entity-abbr">ABComplete · Primary</div>
+        <div class="entity-name">Arc Badlands Compute</div>
+        <div class="entity-type"><span class="rust">501(c)(3) Nonprofit</span> · Filing Pending</div>
+        <div class="entity-body">The nonprofit anchor and mission entity. Operates educational programs, vocational certification, NVIDIA and GCP training, and educational failover infrastructure. Receives grants, donations, and program revenue. Governance board with conflict-of-interest recusal provisions. All other entities are siblings or subsidiaries structured to support the nonprofit mission.</div>
+      </div>
+      <div class="entity-card">
+        <div class="entity-abbr">ABConsulting</div>
+        <div class="entity-name">Arc Badlands Consulting</div>
+        <div class="entity-type"><span class="amber">S-Corp · For-Profit</span> · Private</div>
+        <div class="entity-body">Principal consulting entity led by Kenyon Jones. Provides ML architecture, AI systems design, software engineering, and technical advisory services. Operates independently with for-profit revenue that supports broader Arc Badlands ecosystem development.</div>
+      </div>
+      <div class="entity-card">
+        <div class="entity-abbr">ABColocation</div>
+        <div class="entity-name">Arc Badlands Colocation</div>
+        <div class="entity-type"><span class="cyan">LLC · For-Profit</span> · GPU Rental</div>
+        <div class="entity-body">Commercial GPU compute rental and colocation entity. Operates hardware on Vast.ai, RunPod, and TensorDock. Primary sector revenue driver — compute sold to out-of-state customers constitutes ND primary sector export revenue, qualifying for ND tax incentives and BND PACE interest buydowns.</div>
+      </div>
+      <div class="entity-card">
+        <div class="entity-abbr">ABCooperative</div>
+        <div class="entity-name">Arc Badlands Cooperative</div>
+        <div class="entity-type"><span style="color:var(--sage);">Disregarded Entity</span> · Internal</div>
+        <div class="entity-body">Internal cooperative structure for resource sharing, cost allocation, and member-benefit computation across the entity family. Provides a governance mechanism for distributed ownership and equitable resource distribution among contributors and community participants.</div>
+      </div>
+      <div class="entity-card">
+        <div class="entity-abbr">ABCommercial</div>
+        <div class="entity-name">Arc Badlands Commercial</div>
+        <div class="entity-type"><span class="amber">LLC · For-Profit</span> · Commercial Ops</div>
+        <div class="entity-body">Commercial operations entity for partnerships, vendor relationships, and revenue-generating activities not covered by ABColocation. Acts as the primary contracting entity for vendor agreements (NVIDIA, PNY, GCP) and commercial service delivery.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container reveal">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-heading">Services &amp;<br>Programs</h2>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">🎓</span>
+        <div class="service-title">Vocational Education &amp; Certification</div>
+        <div class="service-body">NVIDIA DLI certification prep, GCP Associate and Professional tracks, ML operations training, and hands-on GPU infrastructure management — designed for North Dakota workforce participants who may lack traditional four-year pathways.</div>
+        <div class="service-tags">
+          <span class="badge badge-rust">NVIDIA DLI</span>
+          <span class="badge badge-cyan">GCP Certified</span>
+          <span class="badge badge-sand">ML Ops</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">⚙️</span>
+        <div class="service-title">GPU Compute Rental</div>
+        <div class="service-body">On-demand NVIDIA V100 SXM2 compute available via Vast.ai, RunPod, and TensorDock. Multi-tenant isolation, VRAM reservation guarantees, and dedicated node access for training, fine-tuning, and inference workloads.</div>
+        <div class="service-tags">
+          <span class="badge badge-rust">Vast.ai</span>
+          <span class="badge badge-cyan">RunPod</span>
+          <span class="badge badge-amber">TensorDock</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏫</span>
+        <div class="service-title">Educational Failover Infrastructure</div>
+        <div class="service-body">Resilient compute infrastructure for rural K-12 and community college distance learning. Provides redundant connectivity and AI-assisted content delivery for schools across Mercer County and adjacent regions — USDA DLT eligible.</div>
+        <div class="service-tags">
+          <span class="badge badge-sage">USDA DLT</span>
+          <span class="badge badge-sand">K-12</span>
+          <span class="badge badge-cyan">Distance Learning</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔬</span>
+        <div class="service-title">AI/ML Research Infrastructure</div>
+        <div class="service-body">Compute access for academic researchers, government agencies, and independent investigators working on problems aligned with North Dakota's priority sectors — agriculture, energy, healthcare, and logistics. QRE-generating R&amp;D activities documented and tracked for IRC §41 compliance.</div>
+        <div class="service-tags">
+          <span class="badge badge-rust">QRE Tracked</span>
+          <span class="badge badge-cyan">IRC §41</span>
+          <span class="badge badge-sage">Research</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">☀️</span>
+        <div class="service-title">Sustainable Energy Integration</div>
+        <div class="service-body">Designing our compute operations for renewable energy integration from the ground up — solar, wind, and storage colocation to reduce grid dependence, qualify for REAP and ITC incentives, and serve as a model for energy-responsible AI infrastructure in rural America.</div>
+        <div class="service-tags">
+          <span class="badge badge-sage">REAP</span>
+          <span class="badge badge-amber">IRC §48 ITC</span>
+          <span class="badge badge-sand">Net-Zero Target</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏗️</span>
+        <div class="service-title">ML Architecture &amp; Consulting</div>
+        <div class="service-body">Enterprise-grade ML systems design for ND businesses and government. GoF design patterns applied to AI systems, AOP/OOP/OOA architecture, LLM deployment, fine-tuning pipelines, and AI agent orchestration for real business workflows.</div>
+        <div class="service-tags">
+          <span class="badge badge-rust">GoF Patterns</span>
+          <span class="badge badge-cyan">LLM Ops</span>
+          <span class="badge badge-sand">AOP · OOP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DESIGN PHILOSOPHY -->
+<section id="philosophy">
+  <div class="container reveal">
+    <div class="section-label">Technical Foundation</div>
+    <h2 class="section-heading">Architecture<br>Philosophy</h2>
+    <p class="section-subheading">GoF · AOP · OOP · OOA · ML · LLM · Agent patterns · All disciplines, one system</p>
+
+    <p class="philosophy-intro" style="margin-top:1.5rem;">
+      Arc Badlands applies a rigorous, multi-paradigm architectural discipline to every layer of our systems — from GPU firmware to AI agent orchestration. We hold GoF (Gang of Four) design patterns as foundational, extend them through aspect-oriented, object-oriented, and ML-specific conventions, and maintain this discipline as a training objective for our vocational programs.
+    </p>
+
+    <div class="patterns-grid">
+      <div class="pattern-col">
+        <div class="pattern-col-title">GoF / GoFour</div>
+        <ul class="pattern-list">
+          <li>Strategy — swappable algorithms</li>
+          <li>Template Method — campaign scaffolds</li>
+          <li>Observer — event fan-out</li>
+          <li>Facade — API gateway layer</li>
+          <li>Proxy — dry-run gate</li>
+          <li>Singleton — classifier instances</li>
+          <li>Composite — multi-notifier</li>
+          <li>Chain of Responsibility — sluice filters</li>
+          <li>Adapter — backend abstraction</li>
+          <li>Factory — vehicle config objects</li>
+        </ul>
+      </div>
+      <div class="pattern-col">
+        <div class="pattern-col-title">AOP · OOP · OOA</div>
+        <ul class="pattern-list">
+          <li>AOP — cross-cutting concerns</li>
+          <li>Logging as aspect, not method</li>
+          <li>Auth &amp; rate-limit as aspects</li>
+          <li>OOP — encapsulation first</li>
+          <li>Polymorphic campaign objects</li>
+          <li>Inheritance via ABCs (Python)</li>
+          <li>OOA — domain modeling</li>
+          <li>Repository pattern for data</li>
+          <li>Dependency injection</li>
+          <li>Interface segregation (SOLID)</li>
+        </ul>
+      </div>
+      <div class="pattern-col">
+        <div class="pattern-col-title">ML / LLM Patterns</div>
+        <ul class="pattern-list">
+          <li>Map-Reduce for doc synthesis</li>
+          <li>RAG — retrieval-augmented gen</li>
+          <li>Two-tier vector architecture</li>
+          <li>Checkpoint-resume pipelines</li>
+          <li>Client pool + round-robin</li>
+          <li>Quota-aware retry backoff</li>
+          <li>Anti-hallucination guardrails</li>
+          <li>Sluice / classification filter</li>
+          <li>Prompt template injection</li>
+          <li>Multi-client load balancing</li>
+        </ul>
+      </div>
+      <div class="pattern-col">
+        <div class="pattern-col-title">Agent / Systems</div>
+        <ul class="pattern-list">
+          <li>Cadence engine w/ signal gates</li>
+          <li>Inbound call triage workflow</li>
+          <li>Voice agent orchestration</li>
+          <li>Webhook fan-out architecture</li>
+          <li>SvelteKit PWA edge nodes</li>
+          <li>Kotlin CIC Android companion</li>
+          <li>Wear OS DataClient sync</li>
+          <li>STAR framework eval engine</li>
+          <li>IRC §41 QRE documentation</li>
+          <li>Playwright test automation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container reveal">
+    <div class="section-label">Team</div>
+    <h2 class="section-heading">The Arc Badlands<br>Staff</h2>
+
+    <p class="team-intro">
+      A practitioner-first team. We prioritize demonstrated capability and field experience over credentials — while building toward formal certification for every team member. Our staff represents a cross-section of ML research, GPU hardware, frontend engineering, sustainable energy, and operations.
+    </p>
+
+    <!-- Core staff -->
+    <div class="team-grid">
+      <div class="team-card lead">
+        <div class="team-initials">KJ</div>
+        <div class="team-name">Kenyon Jones</div>
+        <div class="team-role">Executive Director · Principal Architect</div>
+        <div class="team-body">
+          10+ years in ML systems, GPU infrastructure, and AI engineering. MSCS with Machine Learning emphasis. Former positions include Federal Reserve Bank of San Francisco, Boomtown Networks, OvationCXM, and AvidXchange. PhD cotutelle candidacy in preparation (Mila Montreal / Netherlands partner institution). Holds exclusive hiring authority and recuses from board votes on conflict-of-interest matters.
+        </div>
+        <div class="team-skills">
+          <span class="team-skill">MSCS · ML</span>
+          <span class="team-skill">GPU Infra</span>
+          <span class="team-skill">BGA Rework</span>
+          <span class="team-skill">vGPU Unlock</span>
+          <span class="team-skill">BIOS Flash</span>
+          <span class="team-skill">FastAPI</span>
+          <span class="team-skill">GCP · Vertex</span>
+          <span class="team-skill">LLM Arch</span>
+        </div>
+      </div>
+
+      <div class="team-card cyan-card">
+        <div class="team-initials">CE</div>
+        <div class="team-name">Cynthia Ennis</div>
+        <div class="team-role">Partner · Edge &amp; Frontend Engineering</div>
+        <div class="team-body">
+          GPU-accelerated UI/UX design, Progressive Web App development, Chrome extension architecture, Android and Kotlin native development. Expert in edge node deployment on Pixel hardware, SvelteKit PWA, and real-time data visualization. Playwright test automation and frontend performance optimization.
+        </div>
+        <div class="team-skills">
+          <span class="team-skill">PWA · SvelteKit</span>
+          <span class="team-skill">Android · Kotlin</span>
+          <span class="team-skill">Chrome Extension</span>
+          <span class="team-skill">GPU UI/UX</span>
+          <span class="team-skill">Playwright</span>
+          <span class="team-skill">Pixel Hardware</span>
+          <span class="team-skill">Wear OS</span>
+        </div>
+      </div>
+
+      <div class="team-card amber-card">
+        <div class="team-initials">CP</div>
+        <div class="team-name">Charles Perrine</div>
+        <div class="team-role">Partner · Research, API &amp; Documentation</div>
+        <div class="team-body">
+          Research background in transcription automation, networking, and API integration. Manages grant writing, technical documentation, compliance documentation, and FastAPI backend development. Playwright automation and systematic outreach pipeline engineering. Primary contact for regulatory and grant application correspondence.
+        </div>
+        <div class="team-skills">
+          <span class="team-skill">Grant Writing</span>
+          <span class="team-skill">FastAPI</span>
+          <span class="team-skill">Transcription</span>
+          <span class="team-skill">Documentation</span>
+          <span class="team-skill">Playwright</span>
+          <span class="team-skill">Networking</span>
+          <span class="team-skill">Compliance</span>
+        </div>
+      </div>
+
+      <div class="team-card sage-card">
+        <div class="team-initials">JS</div>
+        <div class="team-name">Justin Shaw</div>
+        <div class="team-role">Partner · Energy Systems &amp; Logistics</div>
+        <div class="team-body">
+          Lead expert in sustainable energy systems, generation design, and consumption optimization. Manages physical logistics, DevOps operations, and on-site energy infrastructure planning. CDL licensure in progress — expanding capacity for hardware transport and on-site operations. Founding team member present on-site in Hazen since April 2026.
+        </div>
+        <div class="team-skills">
+          <span class="team-skill">Sustainable Energy</span>
+          <span class="team-skill">DevOps</span>
+          <span class="team-skill">Logistics</span>
+          <span class="team-skill">On-Site Ops</span>
+          <span class="team-skill">Energy Systems</span>
+          <span class="team-skill">CDL (Pending)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advisory / Extended -->
+    <div class="section-label" style="margin-top:2.5rem;">Advisory &amp; Extended Staff</div>
+    <div class="advisory-grid">
+      <div class="advisory-card">
+        <div class="team-initials" style="width:36px;height:36px;font-size:0.85rem;background:rgba(200,184,148,0.08);border-color:rgba(200,184,148,0.2);color:var(--sand);flex-shrink:0;">KE</div>
+        <div>
+          <div class="advisory-name">Kathy Ennis</div>
+          <div class="advisory-role">Finance Advisor · Future Board</div>
+          <div class="advisory-desc">Finance oversight, bookkeeping coordination, and board-level financial advisory. Future voting board member; recuses on matters constituting conflict of interest per governance bylaws.</div>
+        </div>
+      </div>
+      <div class="advisory-card">
+        <div class="team-initials" style="width:36px;height:36px;font-size:0.85rem;background:rgba(200,184,148,0.08);border-color:rgba(200,184,148,0.2);color:var(--sand);flex-shrink:0;">SA</div>
+        <div>
+          <div class="advisory-name">Sherrie &amp; Doug Appleby</div>
+          <div class="advisory-role">Safety &amp; Fire Standards Advisors</div>
+          <div class="advisory-desc">Physical safety, fire code compliance, and standards advisory for Tier 3 Uptime Institute certification candidacy. On-site asset coordination (Douglasville, GA).</div>
+        </div>
+      </div>
+      <div class="advisory-card">
+        <div class="team-initials" style="width:36px;height:36px;font-size:0.85rem;background:rgba(200,184,148,0.08);border-color:rgba(200,184,148,0.2);color:var(--sand);flex-shrink:0;">AJ</div>
+        <div>
+          <div class="advisory-name">Anthony Kenyon Jones</div>
+          <div class="advisory-role">Audit, Inspection &amp; Logistics Mgmt</div>
+          <div class="advisory-desc">Audit oversight, physical inspection management, and logistics coordination for hardware acquisition, shipping, and on-site receiving. CDL-capable freight coordination.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kenyon academic background -->
+    <div class="vram-target-box reveal" style="margin-top:2.5rem;border-color:rgba(196,86,30,0.15);">
+      <div>
+        <div class="vram-target-title" style="color:var(--rust-light);">Principal Education</div>
+        <div style="font-family:var(--ff-condensed);font-size:1.3rem;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:0.25rem;">Georgia Institute of<br>Technology</div>
+        <div style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--text-muted);letter-spacing:0.08em;">M.S. Computer Science · Machine Learning</div>
+      </div>
+      <div class="vram-note">
+        <strong style="color:var(--text);font-family:var(--ff-condensed);font-size:0.95rem;font-weight:700;display:block;margin-bottom:0.5rem;letter-spacing:0.04em;">Graduate Coursework (Selected)</strong>
+        Computer Vision · Reinforcement Learning · Machine Learning · Artificial Intelligence · Knowledge-Based AI · High-Performance Computer Architecture · Data &amp; Visual Analytics · Software Development Process · Deep Learning · Graduate Algorithms
+        <br><br>
+        <span style="color:var(--text-muted);font-size:0.78rem;">PhD cotutelle in preparation: Mila Québec AI Institute (Montréal) and partner institution (Netherlands). Specialization to be determined.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PARTNERSHIPS -->
+<section id="partnerships">
+  <div class="container reveal">
+    <div class="section-label">Partnership Targets</div>
+    <h2 class="section-heading">Vendors, Platforms<br>&amp; Program Partners</h2>
+    <p class="section-subheading">We are actively seeking the following relationships · None yet established</p>
+
+    <div class="partner-targets">
+      <div class="partner-card">
+        <div class="partner-org">NVIDIA</div>
+        <div class="partner-type">Hardware Vendor · Program Partner</div>
+        <div class="partner-body">NVIDIA Inception Program enrollment pending. Seeking preferred hardware pricing, DLI curriculum licensing for vocational programs, and NVIDIA partner status to support GPU stack procurement from V100 through Blackwell generations.</div>
+        <div class="partner-status-row"><div class="ps-dot seeking"></div> Enrollment Pending</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-org">PNY Technologies</div>
+        <div class="partner-type">Hardware Partner · Preferred Supplier</div>
+        <div class="partner-body">PNY Preferred Partner program targeting procurement of professional GPU cards (RTX Pro, Quadro, and data center variants). PNY's relationship with NVIDIA positions them as a preferred channel partner for our P-series and future Ampere/Hopper acquisitions.</div>
+        <div class="partner-status-row"><div class="ps-dot seeking"></div> Outreach Pending</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-org">Google Cloud</div>
+        <div class="partner-type">Cloud Partner · GCP Enabled</div>
+        <div class="partner-body">GCP Partner program targeting Vertex AI integration, GCP for Startups/Nonprofits credit access, and formal GCP Enabled status for reselling and deploying GCP services as part of our training curriculum and client delivery.</div>
+        <div class="partner-status-row"><div class="ps-dot seeking"></div> Application Pending</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-org">DCN · Coleman Center</div>
+        <div class="partner-type">Colocation Partner · Bismarck ND</div>
+        <div class="partner-body">Coleman Data Center in Bismarck is the confirmed colocation target for A100-class and above hardware. Proximity to ND state government, fiber infrastructure, and power capacity make DCN the natural partner for Tier 2+ operations.</div>
+        <div class="partner-status-row"><div class="ps-dot seeking"></div> Negotiation Pending</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-org">ND Dept. of Commerce</div>
+        <div class="partner-type">State Partner · Incentive Programs</div>
+        <div class="partner-body">Primary Sector Certification, Automation Tax Credit, and Workforce Development partnerships through ND Commerce. Key to unlocking state-level tax incentives, LIFT program access, and INNOVATE ND program participation.</div>
+        <div class="partner-status-row"><div class="ps-dot seeking"></div> Application Preparation</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-org">Eide Bailly LLP</div>
+        <div class="partner-type">CPA Partner · Tax Strategy</div>
+        <div class="partner-body">Fargo-based national CPA firm (contact: S. Breuer) engaged for multi-year tax strategy including R&amp;D credit documentation, QRE expense tracking, IRC §174A and §168(k) planning, and ND state incentive optimization. Active engagement.</div>
+        <div class="partner-status-row"><div class="ps-dot active"></div> Engaged · Active</div>
+      </div>
+    </div>
+
+    <div style="padding:1.5rem;background:var(--bg);border:1px solid var(--border);border-radius:4px;margin-top:1rem;">
+      <div class="section-label" style="margin-bottom:0.75rem;">Also Targeting</div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+        <span class="badge badge-sand">USDA Rural Development ND Office</span>
+        <span class="badge badge-sand">Bank of North Dakota</span>
+        <span class="badge badge-sand">ND SBIR Match Program</span>
+        <span class="badge badge-sand">Vast.ai Preferred Partner</span>
+        <span class="badge badge-sand">RunPod Enterprise</span>
+        <span class="badge badge-sand">Mercer County EDC</span>
+        <span class="badge badge-sand">Bismarck-Mandan Chamber</span>
+        <span class="badge badge-sand">NDSU Extension</span>
+        <span class="badge badge-sand">University of Mary (Bismarck)</span>
+        <span class="badge badge-sand">ND Energy Association</span>
+        <span class="badge badge-sand">Unix Surplus (Sunnyvale CA)</span>
+        <span class="badge badge-sand">Uptime Institute</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container reveal">
+    <div class="contact-grid">
+      <div>
+        <div class="section-label">Get In Touch</div>
+        <h2 class="contact-cta">
+          Let's build <em>something</em><br>for North Dakota.
+        </h2>
+        <p class="contact-body">
+          We are actively seeking grant partners, hardware vendors, colocation agreements, educational institutions, and mission-aligned supporters. If you represent a government agency, corporation, or organization aligned with rural AI infrastructure, workforce development, or sustainable compute — we want to talk.
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-label">Director</div>
+            <div class="contact-item-val">Kenyon Jones — Executive Director</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-label">Domain Email</div>
+            <div class="contact-item-val"><a href="mailto:kjones@shy2shy.com">kjones@shy2shy.com</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-label">Operations</div>
+            <div class="contact-item-val"><a href="mailto:thia@shy2shy.com">thia@shy2shy.com</a> (Cynthia Ennis)</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-label">Research</div>
+            <div class="contact-item-val"><a href="mailto:ccp@shy2shy.com">ccp@shy2shy.com</a> (Charles Perrine)</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-val"><a href="tel:+17018705235">(701) 870-5235</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-val">Hazen, North Dakota · Mercer County</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-nd-badge">
+        <div class="contact-nd-title">North Dakota Operating Context</div>
+        <div class="nd-details">
+          <div class="nd-detail-item">Primary Operations: Hazen &amp; Beulah, Mercer County, ND</div>
+          <div class="nd-detail-item">Colocation Target: DCN Coleman Data Center, Bismarck</div>
+          <div class="nd-detail-item">501(c)(3) Nonprofit: Filing in preparation</div>
+          <div class="nd-detail-item">NAICS: 541715 (R&amp;D in Physical Sciences · applicable)</div>
+          <div class="nd-detail-item">USDA Service Area: Rural · REAP &amp; DLT eligible zones</div>
+          <div class="nd-detail-item">ND Tax Status: Primary Sector certification target</div>
+          <div class="nd-detail-item">Current Hardware: Hazen site · V100 SXM2 cluster</div>
+          <div class="nd-detail-item">GCP Project: commplex-493805 (active)</div>
+          <div class="nd-detail-item">Rental Platforms: Vast.ai · RunPod · TensorDock</div>
+          <div class="nd-detail-item">CPA: Eide Bailly LLP, Fargo (S. Breuer)</div>
+          <div class="nd-detail-item">Energy Goal: Renewable integration · REAP &amp; ITC targets</div>
+          <div class="nd-detail-item">Uptime Target: Tier 2 → Tier 3 Uptime Institute</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SITE NETWORK HUB -->
+<section style="background:var(--bg3);padding:3.5rem 0;border-top:1px solid var(--border)">
+  <div class="container">
+    <div style="font-family:var(--ff-mono);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust-light);display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem">
+      <span style="display:block;width:2rem;height:1px;background:var(--rust)"></span>Arc Badlands Network
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
+      <div style="border:1px solid rgba(196,86,30,0.35);background:linear-gradient(135deg,rgba(196,86,30,0.06),transparent);padding:1.5rem;position:relative">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--rust),transparent)"></div>
+        <div style="font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--rust-light);margin-bottom:0.4rem">Current Site</div>
+        <div style="font-family:var(--ff-condensed);font-size:1.05rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text);margin-bottom:0.35rem">Arc Badlands Compute</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.5;margin-bottom:0.75rem">GPU infrastructure, grants, R&amp;D tax credits, hardware roadmap, entity structure.</div>
+        <span style="font-family:var(--ff-mono);font-size:0.62rem;color:var(--rust-light)">You are here</span>
+      </div>
+      <a href="https://claude.ai/public/artifacts/75f9d0c5-5b0f-43a8-bcdc-aafa93c2987c" target="_blank" style="text-decoration:none;border:1px solid rgba(212,146,31,0.3);background:linear-gradient(135deg,rgba(212,146,31,0.05),transparent);padding:1.5rem;transition:all 0.25s;display:block" onmouseover="this.style.borderColor='rgba(212,146,31,0.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(212,146,31,0.3)';this.style.transform='translateY(0)'">
+        <div style="font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber-light);margin-bottom:0.4rem">Fundraising</div>
+        <div style="font-family:var(--ff-condensed);font-size:1.05rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text);margin-bottom:0.35rem">Asset Liquidation Fund</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.5;margin-bottom:0.75rem">Vehicle sales, equipment liquidation, and infrastructure fundraising for Phase 2 expansion.</div>
+        <span style="font-family:var(--ff-mono);font-size:0.62rem;color:var(--amber-light)">Visit →</span>
+      </a>
+      <a href="https://claude.ai/public/artifacts/7b707b05-cf94-470f-82fc-9949aedf838a" target="_blank" style="text-decoration:none;border:1px solid rgba(0,200,224,0.2);background:linear-gradient(135deg,rgba(0,200,224,0.04),transparent);padding:1.5rem;transition:all 0.25s;display:block" onmouseover="this.style.borderColor='rgba(0,200,224,0.45)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(0,200,224,0.2)';this.style.transform='translateY(0)'">
+        <div style="font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.4rem">Consulting</div>
+        <div style="font-family:var(--ff-condensed);font-size:1.05rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text);margin-bottom:0.35rem">KJones Consulting</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.5;margin-bottom:0.75rem">ML architecture, AI systems design, LLM deployment, and enterprise consulting via Arc Badlands Consulting S-Corp.</div>
+        <span style="font-family:var(--ff-mono);font-size:0.62rem;color:var(--cyan)">Visit →</span>
+      </a>
+      <div style="border:1px solid var(--border);background:var(--bg2);padding:1.5rem">
+        <div style="font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-bottom:0.4rem">Legal &amp; Compliance</div>
+        <div style="font-family:var(--ff-condensed);font-size:1.05rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text);margin-bottom:0.75rem">Policy Pages</div>
+        <div style="display:flex;flex-direction:column;gap:0.4rem">
+          <a href="https://claude.ai/public/artifacts/9b672810-7288-4035-ae36-6901097a7ba9" target="_blank" style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--text-dim);text-decoration:none;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s" onmouseover="this.style.color='var(--sage)'" onmouseout="this.style.color='var(--text-dim)'">→ Privacy Policy</a>
+          <a href="https://claude.ai/public/artifacts/3a6c647c-9963-4f91-bd6c-c25c455c0f5e" target="_blank" style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--text-dim);text-decoration:none;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s" onmouseover="this.style.color='var(--sage)'" onmouseout="this.style.color='var(--text-dim)'">→ Terms of Service</a>
+          <a href="https://claude.ai/public/artifacts/20c1a4ca-b775-4704-be09-9ce6c8994e50" target="_blank" style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--text-dim);text-decoration:none;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s" onmouseover="this.style.color='var(--sage)'" onmouseout="this.style.color='var(--text-dim)'">→ SMS Opt-Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding:3rem 3rem 2rem;background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="footer-left">
+    <div style="font-family:var(--ff-condensed);font-size:1.15rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);margin-bottom:0.5rem">Arc <span style="color:var(--rust-light)">Badlands</span> Compute</div>
+    <div style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--text-muted);line-height:1.9">
+      Hazen, North Dakota · Mercer County<br>
+      501(c)(3) Filing Pending · All entity structures in formation<br>
+      Not yet grant-funded<br>
+      (701) 870-5235 · kjones@shy2shy.com
+    </div>
+    <div style="font-family:var(--ff-mono);font-size:0.58rem;color:var(--text-muted);margin-top:1rem;line-height:1.7">© 2026 Arc Badlands. Content reflects organizational intent and roadmap, not confirmed partnerships or grant awards.</div>
+  </div>
+  <div>
+    <div style="font-family:var(--ff-mono);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem">Navigate</div>
+    <div style="display:flex;flex-direction:column;gap:0.5rem">
+      <a href="#mission" class="footer-link">Mission</a>
+      <a href="#grants" class="footer-link">Funding</a>
+      <a href="#hardware" class="footer-link">Hardware</a>
+      <a href="#services" class="footer-link">Services</a>
+      <a href="#team" class="footer-link">Team</a>
+      <a href="#contact" class="footer-link">Contact</a>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:var(--ff-mono);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem">More Sites</div>
+    <div style="display:flex;flex-direction:column;gap:0.5rem">
+      <a href="https://claude.ai/public/artifacts/75f9d0c5-5b0f-43a8-bcdc-aafa93c2987c" target="_blank" class="footer-link" style="color:var(--amber-light)">Fundraiser →</a>
+      <a href="https://claude.ai/public/artifacts/7b707b05-cf94-470f-82fc-9949aedf838a" target="_blank" class="footer-link" style="color:var(--cyan)">Consulting →</a>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:var(--ff-mono);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem">Legal</div>
+    <div style="display:flex;flex-direction:column;gap:0.5rem">
+      <a href="https://claude.ai/public/artifacts/9b672810-7288-4035-ae36-6901097a7ba9" target="_blank" class="footer-link">Privacy Policy</a>
+      <a href="https://claude.ai/public/artifacts/3a6c647c-9963-4f91-bd6c-c25c455c0f5e" target="_blank" class="footer-link">Terms of Service</a>
+      <a href="https://claude.ai/public/artifacts/20c1a4ca-b775-4704-be09-9ce6c8994e50" target="_blank" class="footer-link">SMS Opt-Out</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Staggered reveal for grids
+document.querySelectorAll('.grants-grid, .nd-cities-grid, .team-grid, .partner-targets, .entity-grid').forEach(grid => {
+  const children = Array.from(grid.children);
+  children.forEach((child, i) => {
+    child.style.transitionDelay = `${i * 0.06}s`;
+    child.classList.add('reveal');
+    observer.observe(child);
+  });
+});
+</script>
+
+</body>
+</html>

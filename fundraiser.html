@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arc Badlands — Asset Liquidation & Infrastructure Fund</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090b;
+  --bg2: #0e1014;
+  --bg3: #131519;
+  --rust: #c4561e;
+  --rust-light: #e0713a;
+  --amber: #d4921f;
+  --amber-light: #f0b53a;
+  --cyan: #00c8e0;
+  --cyan-dim: #0097aa;
+  --sage: #7aad8a;
+  --sand: #c8b894;
+  --gold: #e8c84a;
+  --text: #e8e4dc;
+  --text-dim: #8a8880;
+  --text-muted: #545250;
+  --border: rgba(200,184,148,0.12);
+  --border-warm: rgba(196,86,30,0.25);
+  --glow-rust: rgba(196,86,30,0.15);
+  --glow-cyan: rgba(0,200,224,0.1);
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-condensed: 'Barlow Condensed', sans-serif;
+  --ff-body: 'Barlow', sans-serif;
+  --ff-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 2px; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(8,9,11,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.nav-logo-mark {
+  width: 28px; height: 28px;
+  border: 2px solid var(--rust);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  color: var(--rust-light);
+  font-weight: 900;
+  background: rgba(196,86,30,0.1);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--ff-condensed);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--rust-light); }
+.nav-phone {
+  font-family: var(--ff-mono);
+  font-size: 0.8rem;
+  color: var(--amber-light);
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(212,146,31,0.3);
+  padding: 0.3em 0.8em;
+  border-radius: 2px;
+  background: rgba(212,146,31,0.06);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-phone:hover {
+  background: rgba(212,146,31,0.12);
+  border-color: var(--amber);
+  color: var(--gold);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.hero-bg-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 60px,
+      rgba(200,184,148,0.03) 60px,
+      rgba(200,184,148,0.03) 61px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(200,184,148,0.02) 80px,
+      rgba(200,184,148,0.02) 81px
+    );
+  pointer-events: none;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(196,86,30,0.12) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: var(--rust);
+}
+.hero-title {
+  font-family: var(--ff-display);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1.0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.hero-title span { color: var(--rust-light); font-style: italic; }
+.hero-sub {
+  font-family: var(--ff-condensed);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  max-width: 60ch;
+  margin: 0 auto 2.5rem;
+}
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.btn-primary {
+  font-family: var(--ff-condensed);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.85em 2em;
+  background: var(--rust);
+  color: var(--text);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--rust-light); transform: translateY(-1px); }
+.btn-outline {
+  font-family: var(--ff-condensed);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.85em 2em;
+  background: transparent;
+  color: var(--amber-light);
+  border: 1px solid rgba(212,146,31,0.4);
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-outline:hover {
+  background: rgba(212,146,31,0.1);
+  border-color: var(--amber-light);
+}
+
+/* Phone display */
+.hero-phone-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.5rem 2.5rem;
+  border: 1px solid rgba(212,146,31,0.3);
+  border-radius: 6px;
+  background: rgba(212,146,31,0.04);
+  position: relative;
+}
+.hero-phone-block::before {
+  content: 'AUDRY — AI ACQUISITION AGENT';
+  position: absolute;
+  top: -0.55em;
+  left: 1.5rem;
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  background: var(--bg);
+  padding: 0 0.5rem;
+}
+.hero-phone-number {
+  font-family: var(--ff-condensed);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+}
+.hero-phone-sub {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.hero-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.contact-pill {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  padding: 0.35em 0.8em;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.contact-pill:hover { color: var(--cyan); border-color: var(--cyan-dim); background: rgba(0,200,224,0.04); }
+
+/* ── SECTIONS ── */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--rust);
+}
+.section-heading {
+  font-family: var(--ff-display);
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text);
+}
+.section-heading em { color: var(--rust-light); font-style: italic; }
+
+/* ── FUND GOAL TRACKER ── */
+.fund-tracker {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 3rem 0;
+}
+.fund-tracker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.fund-label {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.fund-amount {
+  font-family: var(--ff-condensed);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+.fund-target {
+  font-family: var(--ff-condensed);
+  font-size: 1rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(200,184,148,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rust) 0%, var(--amber) 100%);
+  border-radius: 3px;
+  width: 24%;
+  position: relative;
+  transition: width 1.5s ease;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: 0; top: -2px; bottom: -2px;
+  width: 2px;
+  background: var(--amber-light);
+  box-shadow: 0 0 8px var(--amber);
+}
+.fund-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.fund-stat {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.fund-stat span { color: var(--text-dim); }
+
+/* ── ASSET CARDS ── */
+.assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.asset-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+}
+.asset-card:hover {
+  border-color: var(--border-warm);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(196,86,30,0.1);
+}
+.asset-card.sold {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.asset-card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.asset-year-make {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.asset-name {
+  font-family: var(--ff-condensed);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  line-height: 1.1;
+}
+.asset-status-badge {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25em 0.6em;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.status-available { color: var(--sage); border: 1px solid rgba(122,173,138,0.4); background: rgba(122,173,138,0.06); }
+.status-priority { color: var(--amber-light); border: 1px solid rgba(212,146,31,0.4); background: rgba(212,146,31,0.08); }
+.status-sold { color: var(--text-muted); border: 1px solid var(--border); background: rgba(200,184,148,0.04); }
+.status-remote { color: var(--cyan); border: 1px solid rgba(0,200,224,0.3); background: rgba(0,200,224,0.04); }
+
+.asset-card-body {
+  padding: 1.5rem;
+}
+.asset-spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(200,184,148,0.05);
+  font-size: 0.85rem;
+}
+.asset-spec-row:last-of-type { border-bottom: none; }
+.spec-key {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.spec-val {
+  font-family: var(--ff-condensed);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: right;
+}
+.asset-price {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.price-label {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.price-range {
+  font-family: var(--ff-condensed);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+.price-range.sold-price {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-size: 1.2rem;
+}
+.sold-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8,9,11,0.4);
+}
+.sold-stamp {
+  font-family: var(--ff-condensed);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  border: 3px solid var(--text-muted);
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  transform: rotate(-15deg);
+  opacity: 0.5;
+}
+.asset-card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.75rem;
+}
+.asset-btn {
+  flex: 1;
+  font-family: var(--ff-condensed);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.6em 1em;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+}
+.asset-btn-primary {
+  background: var(--rust);
+  color: var(--text);
+}
+.asset-btn-primary:hover { background: var(--rust-light); }
+.asset-btn-secondary {
+  background: transparent;
+  color: var(--cyan);
+  border: 1px solid rgba(0,200,224,0.3);
+}
+.asset-btn-secondary:hover { background: rgba(0,200,224,0.06); border-color: var(--cyan); }
+
+/* VIN display */
+.asset-vin {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(200,184,148,0.03);
+  border-radius: 2px;
+  border: 1px solid rgba(200,184,148,0.06);
+}
+.vin-label { color: var(--rust); margin-right: 0.5rem; }
+
+/* ── TEAM / ROLES ── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.team-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem;
+  transition: all 0.3s;
+}
+.team-card:hover {
+  border-color: var(--border-warm);
+  box-shadow: 0 4px 20px rgba(196,86,30,0.08);
+}
+.team-card.ai-agent {
+  border-color: rgba(0,200,224,0.25);
+  background: linear-gradient(135deg, var(--bg2) 0%, rgba(0,200,224,0.03) 100%);
+}
+.team-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 2px solid var(--border-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--rust-light);
+  margin-bottom: 1rem;
+}
+.team-avatar.ai { border-color: rgba(0,200,224,0.4); color: var(--cyan); }
+.team-name {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+.team-title {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rust-light);
+  margin-bottom: 1rem;
+}
+.team-card.ai-agent .team-title { color: var(--cyan-dim); }
+.team-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.team-contact {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+.team-contact a {
+  color: var(--cyan-dim);
+  text-decoration: none;
+}
+.team-contact a:hover { color: var(--cyan); }
+.team-forward {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(200,184,148,0.06);
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+.fwd-arrow { color: var(--rust); margin: 0 0.25rem; }
+
+/* ── ROUTING DIAGRAM ── */
+.routing-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 3rem;
+  overflow-x: auto;
+}
+.routing-title {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.5rem;
+}
+.routing-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+}
+.flow-node {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.flow-node.primary { border-color: var(--rust); color: var(--rust-light); }
+.flow-node.ai-node { border-color: rgba(0,200,224,0.3); color: var(--cyan); }
+.flow-node.human { border-color: rgba(212,146,31,0.3); color: var(--amber-light); }
+.flow-node small {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+.flow-arrow {
+  color: var(--text-muted);
+  margin: 0 0.5rem;
+  font-size: 1rem;
+}
+.flow-split {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── QRE TABLE ── */
+.qre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.qre-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.qre-year {
+  font-family: var(--ff-condensed);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--rust-light);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.qre-activities {
+  list-style: none;
+  margin-top: 0.75rem;
+}
+.qre-activities li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(200,184,148,0.04);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+.qre-activities li::before {
+  content: '▸';
+  color: var(--rust);
+  font-size: 0.7rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+.qre-code {
+  font-family: var(--ff-mono);
+  font-size: 0.58rem;
+  color: var(--rust-light);
+  letter-spacing: 0.1em;
+  background: rgba(196,86,30,0.08);
+  padding: 0.15em 0.4em;
+  border-radius: 2px;
+  white-space: nowrap;
+  margin-top: 0.1rem;
+}
+.qre-est {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.qre-est-label {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.qre-est-val {
+  font-family: var(--ff-condensed);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--amber-light);
+}
+.obbba-note {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(196,86,30,0.06);
+  border: 1px solid rgba(196,86,30,0.2);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.obbba-note strong { color: var(--rust-light); }
+
+/* ── TWILIO INTEGRATION ── */
+.twilio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+@media (max-width: 720px) { .twilio-grid { grid-template-columns: 1fr; } }
+.twilio-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem;
+}
+.twilio-card-title {
+  font-family: var(--ff-condensed);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.twilio-icon {
+  width: 20px; height: 20px;
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+}
+.icon-twilio { background: rgba(245,68,109,0.2); color: #f5446d; }
+.icon-gcp { background: rgba(66,133,244,0.15); color: #4285f4; }
+.icon-bland { background: rgba(0,200,224,0.12); color: var(--cyan); }
+.icon-diag { background: rgba(212,146,31,0.12); color: var(--amber-light); }
+
+code-block {
+  display: block;
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  color: var(--sage);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 0.75rem;
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.8;
+}
+.endpoint-list {
+  list-style: none;
+  margin-top: 0.75rem;
+}
+.endpoint-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(200,184,148,0.04);
+  font-size: 0.82rem;
+}
+.method {
+  font-family: var(--ff-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  padding: 0.2em 0.5em;
+  border-radius: 2px;
+  font-weight: 500;
+}
+.m-get { background: rgba(122,173,138,0.15); color: var(--sage); }
+.m-post { background: rgba(196,86,30,0.15); color: var(--rust-light); }
+.path {
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  color: var(--cyan);
+  flex: 1;
+}
+.endpoint-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ── CREDIT TRACKER ── */
+.credit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.credit-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.credit-platform {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.credit-amount {
+  font-family: var(--ff-condensed);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--amber-light);
+  line-height: 1;
+}
+.credit-type {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  margin-top: 0.4rem;
+}
+.credit-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(200,184,148,0.06);
+  border-radius: 2px;
+  margin-top: 0.75rem;
+  overflow: hidden;
+}
+.credit-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber) 0%, var(--amber-light) 100%);
+  border-radius: 2px;
+}
+
+/* ── CONTACT BANNER ── */
+.contact-banner {
+  background: linear-gradient(135deg, rgba(196,86,30,0.08) 0%, rgba(212,146,31,0.06) 100%);
+  border: 1px solid rgba(196,86,30,0.2);
+  border-radius: 8px;
+  padding: 2.5rem;
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+@media (max-width: 640px) { .contact-banner { grid-template-columns: 1fr; } }
+.contact-banner-title {
+  font-family: var(--ff-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.contact-banner-title em { color: var(--rust-light); font-style: italic; }
+.contact-banner-sub {
+  font-family: var(--ff-condensed);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(8,9,11,0.5);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.contact-row:hover { border-color: var(--border-warm); background: rgba(196,86,30,0.04); }
+.contact-icon {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+}
+.contact-info { flex: 1; }
+.contact-method {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.contact-value {
+  font-family: var(--ff-condensed);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.03em;
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+.disclaimer p {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 80ch;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: var(--ff-condensed);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.footer-copy {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* ── Animations ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.pulse { animation: pulse-dot 2s infinite; }
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero > * { animation: slide-in 0.6s ease both; }
+.hero > *:nth-child(1) { animation-delay: 0.1s; }
+.hero > *:nth-child(2) { animation-delay: 0.2s; }
+.hero > *:nth-child(3) { animation-delay: 0.3s; }
+.hero > *:nth-child(4) { animation-delay: 0.4s; }
+.hero > *:nth-child(5) { animation-delay: 0.5s; }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .container { padding: 0 1.25rem; }
+  .hero { padding: 6rem 1.25rem 3rem; }
+  .routing-flow { flex-direction: column; align-items: flex-start; }
+  .flow-arrow { transform: rotate(90deg); margin: 0.25rem 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">A</div>
+    Arc Badlands Compute
+  </a>
+  <ul class="nav-links">
+    <li><a href="#assets">Assets</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#ai-system">AI System</a></li>
+    <li><a href="#qre">QRE</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:+18667362349" class="nav-phone">+1 866 736 2349</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-eyebrow">
+    <span class="pulse" style="color:var(--sage)">●</span>
+    Asset Liquidation Campaign Active
+  </div>
+
+  <h1 class="hero-title">
+    Infrastructure <span>Fund</span><br>& Asset Sale
+  </h1>
+
+  <p class="hero-sub">
+    Arc Badlands Compute LLC — supporting GPU infrastructure, rural workforce education, and AI R&D in North Dakota. Proceeds directly fund the Penguin Relion XE4118GTS compute cluster and nonprofit operations.
+  </p>
+
+  <div class="hero-phone-block">
+    <div class="hero-phone-sub">Call or Text — AI Answers 24/7</div>
+    <a href="tel:+18667362349" class="hero-phone-number">+1 866 736 2349</a>
+    <div class="hero-phone-sub">Audry Harper · Acquisition Agent · Powered by Bland AI + Twilio</div>
+  </div>
+
+  <div class="hero-contact-row">
+    <a href="tel:+18667362349" class="contact-pill">📞 +1 866 736 2349</a>
+    <a href="sms:+18667362349" class="contact-pill">💬 SMS Same Number</a>
+    <a href="mailto:audry@shy2shy.com" class="contact-pill">✉ audry@shy2shy.com</a>
+    <a href="mailto:kjones@shy2shy.com" class="contact-pill">✉ kjones@shy2shy.com</a>
+  </div>
+
+  <div class="hero-cta-group">
+    <a href="#assets" class="btn-primary">View Vehicles For Sale</a>
+    <a href="#contact" class="btn-outline">Contact Team</a>
+  </div>
+</div>
+
+<!-- FUND GOAL TRACKER -->
+<section style="padding: 3rem 0; border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="fund-tracker">
+      <div class="fund-tracker-header">
+        <div>
+          <div class="fund-label">Campaign Fund Goal</div>
+          <div style="margin-top:0.25rem; font-family:var(--ff-condensed); font-size:0.9rem; color:var(--text-dim);">GPU Cluster Buildout + Nonprofit Operations</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="fund-label">Target</div>
+          <div class="fund-amount">$95,000</div>
+          <div class="fund-target">across all assets + donations</div>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="fund-stats">
+        <div class="fund-stat">Ford Edge (2016) <span>SOLD — Oct 2025 ✓</span></div>
+        <div class="fund-stat">3 vehicles remaining <span>~$71k asking</span></div>
+        <div class="fund-stat">Status <span style="color:var(--sage)">Active Campaign</span></div>
+        <div class="fund-stat">AI Agent <span style="color:var(--cyan)">Audry — Online</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSETS FOR SALE -->
+<section id="assets">
+  <div class="container">
+    <div class="section-label">Asset Liquidation</div>
+    <h2 class="section-heading">Vehicles <em>For Sale</em></h2>
+    <p class="section-subheading" style="font-family:var(--ff-body); font-size:0.95rem; color:var(--text-dim); margin-top:1rem; letter-spacing:0; text-transform:none; max-width:65ch;">
+      All proceeds fund Arc Badlands Compute LLC infrastructure and 501(c)(3) nonprofit operations. Contact Audry at +1 866 736 2349 or email for inquiries. All titles available. Wire transfer or certified check accepted.
+    </p>
+
+    <div class="assets-grid">
+
+      <!-- FORD EDGE — SOLD -->
+      <div class="asset-card sold">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-year-make">2016 · Ford · Edge SE</div>
+            <div class="asset-name">Ford Edge SE</div>
+          </div>
+          <div class="asset-status-badge status-sold">SOLD</div>
+        </div>
+        <div class="asset-card-body">
+          <div class="asset-spec-row"><span class="spec-key">Sold</span><span class="spec-val">October 2025</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Location</span><span class="spec-val">North Dakota</span></div>
+          <div class="asset-price">
+            <div class="price-label">Sale Price</div>
+            <div class="price-range sold-price">Confidential</div>
+          </div>
+        </div>
+        <div class="sold-overlay"><div class="sold-stamp">SOLD ✓</div></div>
+      </div>
+
+      <!-- MKZ — PRIORITY -->
+      <div class="asset-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-year-make">2016 · Lincoln · MKZ Hybrid</div>
+            <div class="asset-name">Lincoln MKZ Hybrid</div>
+          </div>
+          <div class="asset-status-badge status-priority">⚡ PRIORITY</div>
+        </div>
+        <div class="asset-card-body">
+          <div class="asset-spec-row"><span class="spec-key">VIN</span><span class="spec-val" style="font-family:var(--ff-mono);font-size:0.7rem">3LN6L2LUXGR630397</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Location</span><span class="spec-val">Lucky's Towing, Beulah ND</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Title</span><span class="spec-val">Bonded Title (ND)</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Drivetrain</span><span class="spec-val">FWD · Hybrid</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Note</span><span class="spec-val">12V battery issue disclosed</span></div>
+          <div class="asset-price">
+            <div class="price-label">Asking Range</div>
+            <div class="price-range">$3,500 – $5,500</div>
+          </div>
+          <div class="asset-vin"><span class="vin-label">STORED AT:</span>Lucky's Towing & Repair · Beulah ND 58523 · Pickup available</div>
+        </div>
+        <div class="asset-card-footer">
+          <a href="tel:+18667362349" class="asset-btn asset-btn-primary">Call About This</a>
+          <a href="mailto:audry@shy2shy.com?subject=Inquiry: 2016 Lincoln MKZ Hybrid" class="asset-btn asset-btn-secondary">Email Inquiry</a>
+        </div>
+      </div>
+
+      <!-- TOWN CAR -->
+      <div class="asset-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-year-make">1988 · Lincoln · Town Car Signature</div>
+            <div class="asset-name">Lincoln Town Car</div>
+          </div>
+          <div class="asset-status-badge status-available">Available</div>
+        </div>
+        <div class="asset-card-body">
+          <div class="asset-spec-row"><span class="spec-key">VIN</span><span class="spec-val" style="font-family:var(--ff-mono);font-size:0.7rem">1LNBM82FXJY779113</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Location</span><span class="spec-val">Hazen / Beulah, ND</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Trim</span><span class="spec-val">Signature Series</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Title</span><span class="spec-val">Available ND</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Platform</span><span class="spec-val">BaT / Private Sale</span></div>
+          <div class="asset-price">
+            <div class="price-label">Asking Range</div>
+            <div class="price-range">$10,000 – $14,000</div>
+          </div>
+          <div class="asset-vin"><span class="vin-label">LOCATION:</span>Hazen / Beulah ND — Contact for viewing</div>
+        </div>
+        <div class="asset-card-footer">
+          <a href="tel:+18667362349" class="asset-btn asset-btn-primary">Call About This</a>
+          <a href="mailto:audry@shy2shy.com?subject=Inquiry: 1988 Lincoln Town Car Signature" class="asset-btn asset-btn-secondary">Email Inquiry</a>
+        </div>
+      </div>
+
+      <!-- F-350 -->
+      <div class="asset-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-year-make">2006 · Ford · F-350 King Ranch</div>
+            <div class="asset-name">F-350 King Ranch V10</div>
+          </div>
+          <div class="asset-status-badge status-remote">GA — Remote</div>
+        </div>
+        <div class="asset-card-body">
+          <div class="asset-spec-row"><span class="spec-key">VIN</span><span class="spec-val" style="font-family:var(--ff-mono);font-size:0.7rem">1FTWW31Y86EA12357</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Location</span><span class="spec-val">Douglasville, GA 30134</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Engine</span><span class="spec-val">V10 · 6.8L Triton</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Title</span><span class="spec-val">Clean GA Title</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Use Case</span><span class="spec-val">Commercial / Tow / Fleet</span></div>
+          <div class="asset-price">
+            <div class="price-label">Asking Range</div>
+            <div class="price-range">$28,000 – $36,000</div>
+          </div>
+          <div class="asset-vin"><span class="vin-label">STORED:</span>Lighthouse Storage, Douglasville GA · Sherrie &amp; Doug (770) 920-2228</div>
+        </div>
+        <div class="asset-card-footer">
+          <a href="tel:+18667362349" class="asset-btn asset-btn-primary">Call About This</a>
+          <a href="mailto:audry@shy2shy.com?subject=Inquiry: 2006 Ford F-350 King Ranch V10" class="asset-btn asset-btn-secondary">Email Inquiry</a>
+        </div>
+      </div>
+
+      <!-- JAYCO -->
+      <div class="asset-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-year-make">2017 · Jayco · Eagle HT 26.5BHS</div>
+            <div class="asset-name">Jayco Eagle HT</div>
+          </div>
+          <div class="asset-status-badge status-remote">GA — Remote</div>
+        </div>
+        <div class="asset-card-body">
+          <div class="asset-spec-row"><span class="spec-key">VIN</span><span class="spec-val" style="font-family:var(--ff-mono);font-size:0.7rem">1UJCJ0BPXH1P20237</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Location</span><span class="spec-val">Douglasville, GA 30134</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Model</span><span class="spec-val">26.5BHS · Half-Ton Towable</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Title</span><span class="spec-val">Clean GA Title #770175206127980</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Slides</span><span class="spec-val">1 Large Slide (Living Area)</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Use</span><span class="spec-val">Workforce Housing / RV / Crew</span></div>
+          <div class="asset-price">
+            <div class="price-label">Asking Range</div>
+            <div class="price-range">$27,000 – $35,000</div>
+          </div>
+          <div class="asset-vin"><span class="vin-label">STORED:</span>Lighthouse Storage, Douglasville GA · Available immediate pickup</div>
+        </div>
+        <div class="asset-card-footer">
+          <a href="tel:+18667362349" class="asset-btn asset-btn-primary">Call About This</a>
+          <a href="mailto:audry@shy2shy.com?subject=Inquiry: 2017 Jayco Eagle HT 26.5BHS" class="asset-btn asset-btn-secondary">Email Inquiry</a>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER — GPU Compute Time (fundraiser) -->
+      <div class="asset-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-year-make">Fundraiser · Compute Access</div>
+            <div class="asset-name">GPU Rental Credits</div>
+          </div>
+          <div class="asset-status-badge status-available">Coming Soon</div>
+        </div>
+        <div class="asset-card-body">
+          <div class="asset-spec-row"><span class="spec-key">Hardware</span><span class="spec-val">8× V100 SXM2 32GB</span></div>
+          <div class="asset-spec-row"><span class="spec-key">VRAM</span><span class="spec-val">256 GB total</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Platform</span><span class="spec-val">Vast.ai / Arc Direct</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Use</span><span class="spec-val">ML Training / Inference</span></div>
+          <div class="asset-spec-row"><span class="spec-key">Rate</span><span class="spec-val">~$0.35–0.50/hr/GPU</span></div>
+          <div class="asset-price">
+            <div class="price-label">Sponsor Block</div>
+            <div class="price-range">$100 – $1,000</div>
+          </div>
+          <div class="asset-vin"><span class="vin-label">LOCATION:</span>Hazen, ND — Penguin Relion XE4118GTS · Online Q3 2026</div>
+        </div>
+        <div class="asset-card-footer">
+          <a href="mailto:kjones@shy2shy.com?subject=GPU Compute Sponsor Interest" class="asset-btn asset-btn-primary">Sponsor Compute</a>
+          <a href="mailto:kjones@shy2shy.com?subject=Learn More: Arc GPU Rental" class="asset-btn asset-btn-secondary">Learn More</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEAM / ROLES -->
+<section id="team">
+  <div class="container">
+    <div class="section-label">Fundraiser Operations</div>
+    <h2 class="section-heading">Team <em>& Roles</em></h2>
+
+    <div class="team-grid">
+
+      <!-- AUDRY — AI AGENT -->
+      <div class="team-card ai-agent">
+        <div class="team-avatar ai">🤖</div>
+        <div class="team-name">Audry Harper</div>
+        <div class="team-title">AI Acquisition Agent · First Responder</div>
+        <div class="team-desc">
+          Handles all inbound calls and SMS to +1 866 736 2349 around the clock. Answers questions about all assets, collects buyer information, qualifies leads, and routes urgent inquiries to the human team. Powered by Bland AI + Twilio + GCP Dialogflow CX.
+        </div>
+        <div class="team-contact">
+          <div>Phone: <a href="tel:+18667362349">+1 866 736 2349</a></div>
+          <div>Email: <a href="mailto:audry@shy2shy.com">audry@shy2shy.com</a></div>
+          <div>SMS: Same as phone</div>
+        </div>
+        <div class="team-forward">
+          Escalates to <span class="fwd-arrow">→</span> Kenyon Jones (offers/pricing/title)<br>
+          Forwards mail <span class="fwd-arrow">→</span> <span style="color:var(--cyan-dim)">kjones@shy2shy.com · kjones.px10pro@gmail.com</span>
+        </div>
+      </div>
+
+      <!-- KENYON -->
+      <div class="team-card">
+        <div class="team-avatar">KJ</div>
+        <div class="team-name">Kenyon T. Jones</div>
+        <div class="team-title">Lead · Final Authority · All Transactions</div>
+        <div class="team-desc">
+          Sole decision-maker on all asset pricing, title transfer, wire transfers, and pickup scheduling. Reviews all escalations from Audry. Manages GCP/AI infrastructure. MSCS candidate, ML Engineer, Principal Investigator for NSF SBIR.
+        </div>
+        <div class="team-contact">
+          <div>Phone: <a href="tel:+17018705235">701-870-5235</a></div>
+          <div>Email: <a href="mailto:kjones@shy2shy.com">kjones@shy2shy.com</a></div>
+          <div>Alt: <a href="mailto:kjonesmle@gmail.com">kjonesmle@gmail.com</a></div>
+          <div>GCP: <a href="mailto:kjones.px10pro@gmail.com">kjones.px10pro@gmail.com</a></div>
+        </div>
+        <div class="team-forward">
+          Receives all escalations from Audry <span class="fwd-arrow">→</span> SMS + GCP notification
+        </div>
+      </div>
+
+      <!-- CYNTHIA -->
+      <div class="team-card">
+        <div class="team-avatar">CE</div>
+        <div class="team-name">Cynthia Ennis</div>
+        <div class="team-title">Operations Lead · Hardware & Logistics</div>
+        <div class="team-desc">
+          Coordinates on-site asset viewing, physical inspection scheduling, and hardware documentation for the Hazen, ND location. Manages the asset register, aquaponics R&D, and BGA rework operations. QRE-04 and QRE-05 primary.
+        </div>
+        <div class="team-contact">
+          <div>Phone: <a href="tel:+17019465731">701-946-5731</a></div>
+          <div>Email: <a href="mailto:thia@shy2shy.com">thia@shy2shy.com</a></div>
+        </div>
+        <div class="team-forward">
+          Asset viewings · ND pickup coordination · Hardware documentation
+        </div>
+      </div>
+
+      <!-- CHARLES -->
+      <div class="team-card">
+        <div class="team-avatar">CP</div>
+        <div class="team-name">Charles Perrine</div>
+        <div class="team-title">Grant Writer · Compliance · Communications</div>
+        <div class="team-desc">
+          Manages all grant applications (DLT, NSF SBIR, REAP, Innovate ND), nonprofit Form 990, WOTC/DVR documentation, and Grants.gov registration. Handles inbound inquiry routing and fundraiser communications.
+        </div>
+        <div class="team-contact">
+          <div>Phone: <a href="tel:+17018705448">701-870-5448</a></div>
+          <div>Email: <a href="mailto:ccp@shy2shy.com">ccp@shy2shy.com</a></div>
+        </div>
+        <div class="team-forward">
+          Grant inquiries · Partnership inquiries · Media/press
+        </div>
+      </div>
+
+      <!-- AUDIT / LOGISTICS PARTNER -->
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--bg3); border-color:rgba(200,184,148,0.2); color:var(--sand);">⚖</div>
+        <div class="team-name">Audit & Logistics Partner</div>
+        <div class="team-title">Security · Loss Prevention · Receiving · Shipping</div>
+        <div class="team-desc">
+          Independent advisory role covering asset security, chain-of-custody documentation, inventory audit, inbound/outbound logistics, shipping coordination for remote GA assets, and loss prevention protocols.
+        </div>
+        <div class="team-contact">
+          <div>Route via: <a href="mailto:kjones@shy2shy.com">kjones@shy2shy.com</a></div>
+          <div>Reference: Asset Audit &amp; Logistics</div>
+        </div>
+        <div class="team-forward">
+          GA pickup logistics <span class="fwd-arrow">→</span> Lighthouse Storage (770) 920-2228 · Sherrie &amp; Doug Appleby
+        </div>
+      </div>
+
+      <!-- FINANCE ADVISOR -->
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--bg3); border-color:rgba(212,146,31,0.2); color:var(--amber);">$</div>
+        <div class="team-name">Finance Advisory</div>
+        <div class="team-title">Accounting · CPA Review · Fund Management</div>
+        <div class="team-desc">
+          Advises on fundraiser proceeds allocation, nonprofit financial compliance, QRE documentation for IRC §41 R&amp;D credits, OBBBA §174A retroactive elections, and coordinates with CPA for amended returns and tax filings.
+        </div>
+        <div class="team-contact">
+          <div>Route via: <a href="mailto:kjones@shy2shy.com">kjones@shy2shy.com</a></div>
+          <div>CPA: Point CPA / ZMC / Eide Bailly</div>
+        </div>
+        <div class="team-forward">
+          Proceeds → GPU cluster fund → 501(c)(3) operational reserve
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AI PHONE SYSTEM / TWILIO -->
+<section id="ai-system">
+  <div class="container">
+    <div class="section-label">Telephony & AI</div>
+    <h2 class="section-heading">Audry <em>AI System</em></h2>
+    <p style="font-family:var(--ff-body); font-size:0.95rem; color:var(--text-dim); margin-top:1rem; max-width:65ch; line-height:1.7;">
+      All inbound calls and SMS to <strong style="color:var(--gold)">+1 866 736 2349</strong> are handled by Audry Harper, an AI acquisition agent. Audry qualifies buyers, answers asset questions, and routes hot leads to Kenyon's personal line.
+    </p>
+
+    <!-- Call routing flow -->
+    <div class="routing-block">
+      <div class="routing-title">// INBOUND CALL ROUTING FLOW — +1 866 736 2349</div>
+      <div class="routing-flow">
+        <div class="flow-node primary">+1 866 736 2349<small>Twilio Number</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node ai-node">Twilio TwiML<small>/voice/inbound</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node ai-node">Bland AI · Audry<small>Asset Agent</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-split">
+          <div class="flow-node human">Hot Lead → Kenyon<small>701-870-5235</small></div>
+          <div class="flow-node ai-node">Lead Logged → CRM<small>GCP Firestore</small></div>
+          <div class="flow-node ai-node">SMS Follow-up<small>Twilio</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GCP credits -->
+    <h3 style="font-family:var(--ff-condensed); font-size:1.2rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text); margin-top:3rem; margin-bottom:0.25rem;">Available Infrastructure Credits</h3>
+    <div class="credit-grid">
+      <div class="credit-card">
+        <div class="credit-platform">GCP — New Account</div>
+        <div class="credit-amount">$300</div>
+        <div class="credit-type">Google Cloud Platform</div>
+        <div class="credit-bar"><div class="credit-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="credit-card">
+        <div class="credit-platform">GCP — AI Credits</div>
+        <div class="credit-amount">$1,000</div>
+        <div class="credit-type">Vertex AI · Gemini API</div>
+        <div class="credit-bar"><div class="credit-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="credit-card">
+        <div class="credit-platform">GCP — Renewable</div>
+        <div class="credit-amount">$10</div>
+        <div class="credit-type">Renewable Account Credits</div>
+        <div class="credit-bar"><div class="credit-bar-fill" style="width:100%"></div></div>
+      </div>
+      <div class="credit-card">
+        <div class="credit-platform">Twilio</div>
+        <div class="credit-amount">$15</div>
+        <div class="credit-type">Trial Balance · +1 866 736 2349</div>
+        <div class="credit-bar"><div class="credit-bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="credit-card">
+        <div class="credit-platform">Bland AI</div>
+        <div class="credit-amount">~$2</div>
+        <div class="credit-type">Active Account · Audry Persona</div>
+        <div class="credit-bar"><div class="credit-bar-fill" style="width:30%"></div></div>
+      </div>
+      <div class="credit-card">
+        <div class="credit-platform">GCP Dialogflow CX</div>
+        <div class="credit-amount">Free</div>
+        <div class="credit-type">180 sessions/day free tier</div>
+        <div class="credit-bar"><div class="credit-bar-fill" style="width:60%"></div></div>
+      </div>
+    </div>
+
+    <!-- Twilio endpoints -->
+    <div class="twilio-grid" style="margin-top:2rem;">
+      <div class="twilio-card">
+        <div class="twilio-card-title">
+          <div class="twilio-icon icon-twilio">T</div>
+          Twilio TwiML Endpoints
+        </div>
+        <ul class="endpoint-list">
+          <li>
+            <span class="method m-post">POST</span>
+            <span class="path">/voice/inbound</span>
+            <span class="endpoint-desc">Bland AI handoff</span>
+          </li>
+          <li>
+            <span class="method m-post">POST</span>
+            <span class="path">/voice/menu</span>
+            <span class="endpoint-desc">IVR asset menu</span>
+          </li>
+          <li>
+            <span class="method m-post">POST</span>
+            <span class="path">/voice/status</span>
+            <span class="endpoint-desc">Call status callback</span>
+          </li>
+          <li>
+            <span class="method m-post">POST</span>
+            <span class="path">/sms/inbound</span>
+            <span class="endpoint-desc">SMS inquiry handler</span>
+          </li>
+          <li>
+            <span class="method m-post">POST</span>
+            <span class="path">/webhook/bland</span>
+            <span class="endpoint-desc">Transcript + lead log</span>
+          </li>
+          <li>
+            <span class="method m-get">GET</span>
+            <span class="path">/health</span>
+            <span class="endpoint-desc">Railway health check</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="twilio-card">
+        <div class="twilio-card-title">
+          <div class="twilio-icon icon-bland">A</div>
+          Audry — Bland AI Agent Config
+        </div>
+        <ul class="endpoint-list">
+          <li>
+            <span class="method m-post">VOICE</span>
+            <span class="path">Voice: Alley (American F)</span>
+            <span class="endpoint-desc">Neutral professional</span>
+          </li>
+          <li>
+            <span class="method m-get">WAIT</span>
+            <span class="path">Wait for greeting: ON</span>
+            <span class="endpoint-desc">Caller speaks first</span>
+          </li>
+          <li>
+            <span class="method m-post">XFER</span>
+            <span class="path">Transfer → 701-870-5235</span>
+            <span class="endpoint-desc">Hot lead: Kenyon</span>
+          </li>
+          <li>
+            <span class="method m-post">SMS</span>
+            <span class="path">Lead SMS → Kenyon</span>
+            <span class="endpoint-desc">Offer/pickup/wire</span>
+          </li>
+          <li>
+            <span class="method m-get">SCOPE</span>
+            <span class="path">Assets: MKZ, Town Car,</span>
+            <span class="endpoint-desc">F-350, Jayco, GPU</span>
+          </li>
+          <li>
+            <span class="method m-post">LOG</span>
+            <span class="path">GCP Firestore → leads/</span>
+            <span class="endpoint-desc">Per-call transcript</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="twilio-card">
+        <div class="twilio-card-title">
+          <div class="twilio-icon icon-gcp">G</div>
+          GCP Dialogflow CX — Fallback
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:0.75rem; line-height:1.6;">
+          Dialogflow CX handles complex multi-turn conversations and IVR routing when Bland AI is unavailable. Routes: asset info → lead capture → escalation → voicemail.
+        </p>
+        <ul class="endpoint-list">
+          <li><span class="method m-post">POST</span><span class="path">/webhook/dialogflow</span><span class="endpoint-desc">CX fulfillment</span></li>
+          <li><span class="method m-get">GET</span><span class="path">/voice/assets/mkz</span><span class="endpoint-desc">MKZ info TwiML</span></li>
+          <li><span class="method m-get">GET</span><span class="path">/voice/assets/f350</span><span class="endpoint-desc">F-350 info TwiML</span></li>
+          <li><span class="method m-get">GET</span><span class="path">/voice/assets/jayco</span><span class="endpoint-desc">Jayco info TwiML</span></li>
+        </ul>
+      </div>
+
+      <div class="twilio-card">
+        <div class="twilio-card-title">
+          <div class="twilio-icon icon-diag">✉</div>
+          Email Forwarding — audry@shy2shy.com
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:0.75rem; line-height:1.6;">
+          All mail to audry@shy2shy.com forwards to Kenyon. Replies from Audry's mailbox are monitored and classified by Gemini 1.5 Flash. Escalations notify Kenyon via SMS.
+        </p>
+        <ul class="endpoint-list">
+          <li><span class="method m-get">FROM</span><span class="path">audry@shy2shy.com</span><span class="endpoint-desc">Buyer-facing</span></li>
+          <li><span class="method m-post">FWD →</span><span class="path">kjones@shy2shy.com</span><span class="endpoint-desc">Primary inbox</span></li>
+          <li><span class="method m-post">FWD →</span><span class="path">kjones.px10pro@gmail.com</span><span class="endpoint-desc">GCP + Pixel</span></li>
+          <li><span class="method m-post">FWD →</span><span class="path">kjonesmle@gmail.com</span><span class="endpoint-desc">Backup Gmail</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- IVR Menu reference -->
+    <div class="routing-block" style="margin-top:1.5rem;">
+      <div class="routing-title">// TWILIO IVR — PRESS [KEY] FOR ASSET</div>
+      <div style="font-family:var(--ff-mono); font-size:0.75rem; line-height:2.2; color:var(--text-dim);">
+        <span style="color:var(--amber)">Press 1</span> — 2016 Lincoln MKZ Hybrid (Beulah ND · $3,500–$5,500) <span style="color:var(--rust)">⚡ PRIORITY</span><br>
+        <span style="color:var(--amber)">Press 2</span> — 1988 Lincoln Town Car Signature (Hazen ND · $10k–$14k)<br>
+        <span style="color:var(--amber)">Press 3</span> — 2006 Ford F-350 King Ranch V10 (Douglasville GA · $28k–$36k)<br>
+        <span style="color:var(--amber)">Press 4</span> — 2017 Jayco Eagle HT 26.5BHS (Douglasville GA · $27k–$35k)<br>
+        <span style="color:var(--amber)">Press 5</span> — GPU Compute Sponsorship (Arc Badlands · Hazen ND · Q3 2026)<br>
+        <span style="color:var(--amber)">Press 9</span> — Speak to Kenyon Jones (urgent / offer / title transfer)<br>
+        <span style="color:var(--amber)">Press 0</span> — Leave voicemail — transcribed and sent to team
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QRE CLAIMS -->
+<section id="qre">
+  <div class="container">
+    <div class="section-label">R&D Tax Credits</div>
+    <h2 class="section-heading">QRE Documentation <em>2022–2025</em></h2>
+    <p style="font-family:var(--ff-body); font-size:0.95rem; color:var(--text-dim); margin-top:1rem; max-width:70ch; line-height:1.7;">
+      Qualified Research Expenditures under IRC §41 and OBBBA §174A retroactive election (deadline July 6, 2026). All activities listed meet the four-part test: permitted purpose, technological uncertainty, process of experimentation, qualified purpose.
+    </p>
+
+    <div class="obbba-note">
+      <strong>OBBBA §174A Retroactive Election — DEADLINE JULY 6, 2026:</strong> Under the One Big Beautiful Bill Act (OBBBA, Pub. L. 119-21), eligible taxpayers may elect to apply §174A retroactively to tax years beginning after Dec 31, 2021 (i.e., 2022–2024). This allows immediate expensing of domestic R&D costs that were previously required to be amortized over 5 years. The election must be filed via Form 1040-X for each affected year. Arc Badlands Compute LLC and Kenyon T. Jones individually qualify as eligible taxpayers under the §448(c) gross receipts test. <strong>This election is being coordinated with CPA — Point CPA / ZMC / Eide Bailly.</strong>
+    </div>
+
+    <div class="qre-grid">
+      <div class="qre-card">
+        <div class="qre-year">2022</div>
+        <div style="font-family:var(--ff-mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--text-muted); text-transform:uppercase;">Foundational R&D Phase</div>
+        <ul class="qre-activities">
+          <li><div><div>GPU infrastructure architecture research</div><div class="qre-code">QRE-03 · IRC §41 · §174A eligible</div></div></li>
+          <li><div><div>Machine learning platform design & experimentation</div><div class="qre-code">QRE-03</div></div></li>
+          <li><div><div>V100 SXM2 performance baseline testing</div><div class="qre-code">QRE-01</div></div></li>
+          <li><div><div>Early Arc Badlands system architecture</div><div class="qre-code">QRE-03 · Software dev</div></div></li>
+          <li><div><div>Renewable energy system initial design</div><div class="qre-code">QRE-06 · IRC §48 ITC</div></div></li>
+        </ul>
+        <div class="qre-est">
+          <div class="qre-est-label">Est. QRE Wages + Materials</div>
+          <div class="qre-est-val">§174A Election Pending</div>
+        </div>
+      </div>
+
+      <div class="qre-card">
+        <div class="qre-year">2023</div>
+        <div style="font-family:var(--ff-mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--text-muted); text-transform:uppercase;">Infrastructure Build Phase</div>
+        <ul class="qre-activities">
+          <li><div><div>Aquaponics thermal integration R&D (biological + compute heat recovery)</div><div class="qre-code">QRE-04 · Novel process dev</div></div></li>
+          <li><div><div>BGA rework process development (GPU board repair)</div><div class="qre-code">QRE-05</div></div></li>
+          <li><div><div>CommPlex AI agent architecture (early design)</div><div class="qre-code">QRE-03 · Software</div></div></li>
+          <li><div><div>InfiniBand SXM2 interconnect fabric research</div><div class="qre-code">QRE-08</div></div></li>
+          <li><div><div>Renewable energy site assessment (Hazen ND)</div><div class="qre-code">QRE-06</div></div></li>
+        </ul>
+        <div class="qre-est">
+          <div class="qre-est-label">Est. QRE Wages + Materials</div>
+          <div class="qre-est-val">§174A Election Pending</div>
+        </div>
+      </div>
+
+      <div class="qre-card">
+        <div class="qre-year">2024</div>
+        <div style="font-family:var(--ff-mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--text-muted); text-transform:uppercase;">Active Development Phase</div>
+        <ul class="qre-activities">
+          <li><div><div>Arc Badlands CommPlex full-stack AI agent development</div><div class="qre-code">QRE-03 · IRC §41 primary</div></div></li>
+          <li><div><div>vGPU unlock / BIOS flash research</div><div class="qre-code">QRE-02 · Hardware R&D</div></div></li>
+          <li><div><div>V100 SXM2 thermal optimization and performance benchmarking</div><div class="qre-code">QRE-01</div></div></li>
+          <li><div><div>Bland AI + Twilio + GCP Dialogflow CX integration (CommConQualiPsi)</div><div class="qre-code">QRE-03 · Novel AI pipeline</div></div></li>
+          <li><div><div>WOTC workforce R&D program — Cynthia, Charles (DVR-referred)</div><div class="qre-code">WOTC · IRC §51</div></div></li>
+          <li><div><div>Grant technical narratives (DLT, NSF SBIR, REAP)</div><div class="qre-code">QRE-07</div></div></li>
+        </ul>
+        <div class="qre-est">
+          <div class="qre-est-label">W-2 Income (basis for QRE wages)</div>
+          <div class="qre-est-val">~$141,209 (Travel Leaders)</div>
+        </div>
+      </div>
+
+      <div class="qre-card">
+        <div class="qre-year">2025</div>
+        <div style="font-family:var(--ff-mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--text-muted); text-transform:uppercase;">Compute Deployment Phase</div>
+        <ul class="qre-activities">
+          <li><div><div>Penguin Relion XE4118GTS acquisition and deployment (Sep 26, 2025)</div><div class="qre-code">QRE-01 · §168(k) 100% Bonus Dep</div></div></li>
+          <li><div><div>V100 SXM2 parallel performance optimization (8-GPU cluster)</div><div class="qre-code">QRE-01 · Primary QRE</div></div></li>
+          <li><div><div>ML infrastructure architecture for GPU rental platform</div><div class="qre-code">QRE-03</div></div></li>
+          <li><div><div>Arc Badlands CommPlex RV liquidation AI campaign system</div><div class="qre-code">QRE-03 · Novel software</div></div></li>
+          <li><div><div>Aquaponics Tier 1-3 buildout (thermal R&D)</div><div class="qre-code">QRE-04</div></div></li>
+          <li><div><div>Network fabric architecture (InfiniBand SXM2)</div><div class="qre-code">QRE-08</div></div></li>
+        </ul>
+        <div class="qre-est">
+          <div class="qre-est-label">Penguin Server (§168k) + QRE Wages</div>
+          <div class="qre-est-val">$3,195 + Schedule C wages</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QRE Code Reference -->
+    <div class="routing-block" style="margin-top:2rem;">
+      <div class="routing-title">// QRE ACTIVITY CODE REFERENCE — IRC §41 FOUR-PART TEST ✓</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:0.5rem; font-family:var(--ff-mono); font-size:0.72rem; line-height:1.8; color:var(--text-dim);">
+        <div><span style="color:var(--rust)">QRE-01</span> V100 SXM2 performance optimization · GPU bringup</div>
+        <div><span style="color:var(--rust)">QRE-02</span> vGPU unlock / BIOS flash · Hardware modification R&D</div>
+        <div><span style="color:var(--rust)">QRE-03</span> ML infrastructure architecture · Software development</div>
+        <div><span style="color:var(--rust)">QRE-04</span> Aquaponics thermal integration · Biological + compute</div>
+        <div><span style="color:var(--rust)">QRE-05</span> BGA rework process development · Micro-soldering R&D</div>
+        <div><span style="color:var(--rust)">QRE-06</span> Renewable energy system design · IRC §48 ITC co-eligible</div>
+        <div><span style="color:var(--rust)">QRE-07</span> Grant application technical content · Sec. 41(d) support</div>
+        <div><span style="color:var(--rust)">QRE-08</span> Network / fabric architecture · InfiniBand SXM2 design</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-heading">Contact <em>& Inquiries</em></h2>
+
+    <div class="contact-banner">
+      <div>
+        <div class="contact-banner-title">Ready to make an <em>offer?</em></div>
+        <div class="contact-banner-sub">Audry answers 24/7 · Human team available Mon–Sat</div>
+        <div style="margin-top:1rem; font-family:var(--ff-mono); font-size:0.68rem; color:var(--text-muted); line-height:2;">
+          Wire transfer preferred · Bill of sale provided · Certified check accepted<br>
+          Title delivery within 5 business days · Remote inspection accommodated<br>
+          GA assets: coordinate pickup with Lighthouse Storage (770) 920-2228
+        </div>
+      </div>
+      <div class="contact-options">
+        <a href="tel:+18667362349" class="contact-row">
+          <div class="contact-icon">📞</div>
+          <div class="contact-info">
+            <div class="contact-method">Call or SMS · 24/7 AI</div>
+            <div class="contact-value">+1 866 736 2349</div>
+          </div>
+        </a>
+        <a href="mailto:audry@shy2shy.com" class="contact-row">
+          <div class="contact-icon">🤖</div>
+          <div class="contact-info">
+            <div class="contact-method">AI Agent Email</div>
+            <div class="contact-value">audry@shy2shy.com</div>
+          </div>
+        </a>
+        <a href="mailto:kjones@shy2shy.com" class="contact-row">
+          <div class="contact-icon">👤</div>
+          <div class="contact-info">
+            <div class="contact-method">Kenyon Jones · Lead</div>
+            <div class="contact-value">kjones@shy2shy.com</div>
+          </div>
+        </a>
+        <a href="mailto:ccp@shy2shy.com" class="contact-row">
+          <div class="contact-icon">📋</div>
+          <div class="contact-info">
+            <div class="contact-method">Charles Perrine · Grants/Comms</div>
+            <div class="contact-value">ccp@shy2shy.com</div>
+          </div>
+        </a>
+        <a href="mailto:thia@shy2shy.com" class="contact-row">
+          <div class="contact-icon">🔧</div>
+          <div class="contact-info">
+            <div class="contact-method">Cynthia Ennis · Ops/Logistics</div>
+            <div class="contact-value">thia@shy2shy.com</div>
+          </div>
+        </a>
+        <a href="mailto:kjonesmle@gmail.com" class="contact-row">
+          <div class="contact-icon">📱</div>
+          <div class="contact-info">
+            <div class="contact-method">Kenyon · Alt / Personal</div>
+            <div class="contact-value">kjonesmle@gmail.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <div class="container">
+    <p>
+      Arc Badlands Compute LLC — Hazen, North Dakota 58552 · 501(c)(3) pending · EIN on file ·
+      All asset prices are asking ranges; final sale price determined by negotiation with Kenyon T. Jones.
+      VINs verified against title documents; buyers are encouraged to conduct independent inspections.
+      All fundraiser proceeds directed to GPU infrastructure buildout and nonprofit operational reserve.
+      QRE documentation and OBBBA §174A election to be finalized with CPA by July 6, 2026 deadline.
+      GCP account: kjones.px10pro@gmail.com · commplex-493805 · Twilio: +1 866 736 2349 ·
+      This page is not an IRS or legal document. Consult a licensed CPA or attorney before relying on any tax information herein.
+      Audry Harper is an AI agent; all offers and binding agreements require confirmation from Kenyon T. Jones.
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Arc Badlands Compute · Hazen, ND</div>
+  <div class="footer-copy">
+    +1 866 736 2349 · audry@shy2shy.com · kjones@shy2shy.com ·
+    Arc Badlands Compute LLC · 501(c)(3) pending
+  </div>
+
+  <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--ff-mono);font-size:0.62rem">
+    <a href="index.html" style="color:var(--text-muted);text-decoration:none">Main Site</a>
+    <a href="fundraiser.html" style="color:var(--text-muted);text-decoration:none">Fundraiser</a>
+    <a href="consulting.html" style="color:var(--text-muted);text-decoration:none">Consulting</a>
+    <a href="privacy-policy.html" style="color:var(--text-muted);text-decoration:none">Privacy Policy</a>
+    <a href="terms.html" style="color:var(--text-muted);text-decoration:none">Terms</a>
+    <a href="sms-consent.html" style="color:var(--text-muted);text-decoration:none">SMS Opt-Out</a>
+  </div>
+</footer>
+
+<script>
+// Animate progress bar on load
+window.addEventListener('load', () => {
+  const fill = document.getElementById('progress-fill');
+  if (fill) {
+    setTimeout(() => { fill.style.width = '24%'; }, 300);
+  }
+});
+</script>
+
+</body>
+</html>
