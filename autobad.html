@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoBäad — Vehicle Liquidation · Hazen, ND</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0d;--paper:#f5f2eb;--rust:#b84a1e;--rust-light:#e8c4b0;--steel:#3a4a5c;--sage:#5a7a5a;--muted:#7a7060;--border:#d4cfc4;--card:#fffdf8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;}
+a{color:var(--rust);text-decoration:none;}
+nav{background:var(--ink);padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--paper);letter-spacing:2px;}
+.nav-brand span{color:var(--rust);}
+.nav-links{display:flex;gap:24px;}
+.nav-links a{color:#aab;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{background:var(--rust);color:#fff !important;padding:6px 16px;border-radius:3px;}
+.hero{padding:70px 5vw 50px;display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1200px;margin:0 auto;align-items:center;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,7vw,88px);line-height:.95;margin-bottom:24px;}
+.hero h1 em{color:var(--rust);font-style:normal;}
+.hero p{font-size:16px;color:var(--muted);margin-bottom:32px;font-weight:300;}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;}
+.stat{border:1px solid var(--border);padding:12px 16px;border-radius:4px;background:var(--card);}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--steel);line-height:1;}
+.stat-l{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-primary{background:var(--rust);color:#fff;padding:11px 26px;border-radius:3px;font-weight:500;font-size:14px;}
+.btn-primary:hover{opacity:.85;color:#fff;}
+.btn-secondary{border:1px solid var(--ink);color:var(--ink);padding:11px 26px;border-radius:3px;font-weight:500;font-size:14px;}
+.btn-secondary:hover{background:var(--ink);color:var(--paper);}
+.chat-panel{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+.chat-header{background:var(--steel);padding:12px 16px;display:flex;align-items:center;gap:12px;}
+.chat-avatar{width:36px;height:36px;border-radius:50%;background:var(--rust);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;color:#fff;font-weight:500;flex-shrink:0;}
+.chat-info p:first-child{color:#fff;font-size:13px;font-weight:500;}
+.chat-info p:last-child{color:#99a;font-size:11px;font-family:'DM Mono',monospace;}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:#4caf50;margin-left:auto;}
+.chat-messages{height:300px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fafaf7;}
+.msg-out{background:#fff;border:1px solid var(--border);border-radius:12px 12px 12px 3px;padding:8px 12px;font-size:13px;max-width:85%;line-height:1.5;}
+.msg-in{background:var(--rust);color:#fff;border-radius:12px 12px 3px 12px;padding:8px 12px;font-size:13px;max-width:85%;align-self:flex-end;line-height:1.5;}
+.typing{padding:10px 12px;font-size:20px;color:var(--muted);letter-spacing:3px;}
+.chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:#fff;}
+#chat-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:var(--paper);}
+#chat-input:focus{border-color:var(--rust);}
+#chat-send{background:var(--rust);color:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#chat-send:disabled{opacity:.4;cursor:default;}
+.chat-chips{padding:8px 12px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;background:#fff;}
+.chip{font-size:11px;padding:4px 10px;border:1px solid var(--border);border-radius:20px;cursor:pointer;font-family:'DM Mono',monospace;color:var(--steel);background:var(--paper);transition:all .15s;}
+.chip:hover{border-color:var(--rust);color:var(--rust);}
+.vehicles{padding:60px 5vw;max-width:1200px;margin:0 auto;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:10px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,5vw,54px);text-align:center;margin-bottom:36px;}
+.vehicle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;}
+.vehicle-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+.vehicle-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.1);}
+.vehicle-badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;text-transform:uppercase;color:#fff;}
+.badge-ga{background:var(--steel);}
+.badge-nd{background:var(--sage);}
+.badge-caution{background:var(--rust);}
+.vehicle-body{padding:16px;}
+.vehicle-body h3{font-family:'Bebas Neue',sans-serif;font-size:20px;margin-bottom:3px;}
+.vin{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:10px;}
+.spec-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;}
+.spec-row span:first-child{color:var(--muted);}
+.spec-row span:last-child{font-family:'DM Mono',monospace;font-weight:500;}
+.vehicle-price{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--rust);margin-top:10px;}
+.vehicle-note{font-size:11px;color:var(--muted);border-top:1px solid var(--border);margin-top:10px;padding-top:8px;line-height:1.5;}
+.vehicle-cta{display:block;text-align:center;background:var(--ink);color:var(--paper) !important;padding:9px;margin:12px 16px 16px;border-radius:3px;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;}
+.vehicle-cta:hover{background:var(--rust);}
+.invest{background:var(--ink);color:var(--paper);padding:70px 5vw;}
+.invest-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.invest .section-label{color:var(--rust-light);text-align:left;}
+.invest h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,5vw,56px);margin-bottom:16px;line-height:1;}
+.invest>div>p{color:#999;font-weight:300;margin-bottom:28px;font-size:16px;}
+.invest-items{display:flex;flex-direction:column;gap:14px;}
+.invest-item{border:1px solid #2a2a2a;border-radius:4px;padding:14px 18px;display:flex;gap:14px;align-items:flex-start;}
+.invest-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+.invest-item h4{font-size:13px;font-weight:500;color:#fff;margin-bottom:3px;}
+.invest-item p{font-size:12px;color:#777;margin:0;}
+.invest-form{background:#181818;border:1px solid #2a2a2a;border-radius:6px;padding:24px;}
+.invest-form h3{font-family:'Bebas Neue',sans-serif;font-size:26px;margin-bottom:4px;}
+.invest-form>p{font-size:12px;color:#777;margin-bottom:20px;}
+.form-group{margin-bottom:12px;}
+.form-group label{display:block;font-size:10px;color:#777;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:#0f0f0f;border:1px solid #2a2a2a;color:#fff;padding:9px 12px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--rust);}
+.form-group textarea{height:70px;resize:vertical;}
+.form-group select option{background:#111;}
+.form-submit{background:var(--rust);color:#fff;border:none;width:100%;padding:11px;border-radius:3px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px;}
+.form-submit:hover{opacity:.85;}
+.form-success{display:none;text-align:center;padding:20px;color:#4caf50;font-family:'DM Mono',monospace;font-size:12px;}
+footer{background:var(--ink);color:#555;padding:28px 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer .brand{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--paper);}
+footer .brand span{color:var(--rust);}
+footer p{font-size:11px;font-family:'DM Mono',monospace;}
+@media(max-width:768px){.hero,.invest-inner{grid-template-columns:1fr;}.hero-stats{grid-template-columns:1fr 1fr;}.chat-panel{order:-1;}nav .nav-links{display:none;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Auto<span>Bäad</span></div>
+  <div class="nav-links">
+    <a href="#vehicles">Vehicles</a>
+    <a href="#demo">Talk to Audry</a>
+    <a href="#invest">Partner / Invest</a>
+    <a href="tel:+18667362349" class="nav-cta">(866) 736-2349</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Hazen · North Dakota · Private Liquidation</div>
+    <h1>Four <em>Rare</em><br>Vehicles.<br>One Seller.</h1>
+    <p>Direct from owner — no auction markup, no dealer overhead. Collector-grade survivors and working units across ND and GA. Talk to Audry or call Kenyon direct.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">31,511</div><div class="stat-l">Town Car miles</div></div>
+      <div class="stat"><div class="stat-n">47k</div><div class="stat-l">F-350 miles</div></div>
+      <div class="stat"><div class="stat-n">2,400</div><div class="stat-l">Jayco tow miles</div></div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">Available now</div></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#vehicles" class="btn-primary">View All Vehicles</a>
+      <a href="tel:+18667362349" class="btn-secondary">(866) 736-2349</a>
+    </div>
+  </div>
+  <div id="demo" class="chat-panel">
+    <div class="chat-header">
+      <div class="chat-avatar">AH</div>
+      <div class="chat-info">
+        <p>Audry Harper</p>
+        <p>AutoBäad · AI Sales Agent</p>
+      </div>
+      <div class="chat-dot"></div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-out">Hi! This is Audry with AutoBäad — Kenyon Jones's private vehicle liquidation out of Hazen, ND. We have four vehicles: an '88 Town Car (31k mi), 2016 MKZ Hybrid, 2006 F-350 King Ranch (47k mi), and a 2017 Jayco Eagle HT (2.4k mi). Which one can I tell you about?</div>
+    </div>
+    <div class="chat-input-row">
+      <input id="chat-input" type="text" placeholder="Ask about any vehicle..." autocomplete="off" />
+      <button id="chat-send" onclick="sendMsg()">&#10148;</button>
+    </div>
+    <div class="chat-chips">
+      <span class="chip" onclick="quickSend('Tell me about the 1988 Town Car')">Town Car</span>
+      <span class="chip" onclick="quickSend('F-350 and Jayco package deal in Georgia')">F-350 + Jayco</span>
+      <span class="chip" onclick="quickSend('What is the title situation on the MKZ?')">MKZ title?</span>
+      <span class="chip" onclick="quickSend('I want to make an offer on one of the vehicles')">Make offer</span>
+    </div>
+  </div>
+</section>
+
+<section id="vehicles" class="vehicles">
+  <p class="section-label">Current Inventory</p>
+  <h2 class="section-title">Four Vehicles · One Owner</h2>
+  <div class="vehicle-grid">
+
+    <div class="vehicle-card">
+      <div class="vehicle-badge badge-ga">Georgia · Clean Title</div>
+      <div class="vehicle-body">
+        <h3>2006 F-350 King Ranch</h3>
+        <div class="vin">1FTWW31Y86EA12357</div>
+        <div class="spec-row"><span>Miles</span><span>47,000 actual</span></div>
+        <div class="spec-row"><span>Engine</span><span>6.8L Triton V10</span></div>
+        <div class="spec-row"><span>Drive</span><span>4x4 Selectable</span></div>
+        <div class="spec-row"><span>Hitch</span><span>Factory 5th Wheel Kingpin</span></div>
+        <div class="spec-row"><span>Location</span><span>Douglasville GA</span></div>
+        <div class="vehicle-price">$24k–$32k</div>
+        <div class="vehicle-note">Same lot as Jayco — truck can tow camper out in one trip. V10 gas, no DEF, no diesel complexity.</div>
+      </div>
+      <a href="https://tinyurl.com/Ford-KR-F350V10-ExtBedCab" target="_blank" class="vehicle-cta">Sales Packet →</a>
+    </div>
+
+    <div class="vehicle-card">
+      <div class="vehicle-badge badge-ga">Georgia · Clean Title</div>
+      <div class="vehicle-body">
+        <h3>2017 Jayco Eagle HT 26.5BHS</h3>
+        <div class="vin">1UJCJ0BPXH1P20237</div>
+        <div class="spec-row"><span>Tow miles</span><span>2,400 actual</span></div>
+        <div class="spec-row"><span>Season</span><span>4-season (rated 0°F)</span></div>
+        <div class="spec-row"><span>Towable</span><span>Half-ton compatible</span></div>
+        <div class="spec-row"><span>Sleeps</span><span>8–10 bunkhouse</span></div>
+        <div class="spec-row"><span>Location</span><span>Douglasville GA</span></div>
+        <div class="vehicle-price">$24k–$32k</div>
+        <div class="vehicle-note">Disclosed: tire age, underbelly patch, Lippert jacks disengaged (manual works), one cabinet hinge. All priced in (~$950–$1,200 total).</div>
+      </div>
+      <a href="https://tinyurl.com/Jayco-Eagle-BHS-26p5-HT-2017" target="_blank" class="vehicle-cta">Sales Packet →</a>
+    </div>
+
+    <div class="vehicle-card">
+      <div class="vehicle-badge badge-caution">ND · Bill of Sale Only</div>
+      <div class="vehicle-body">
+        <h3>2016 Lincoln MKZ Hybrid</h3>
+        <div class="vin">3LN6L2LUXGR630397</div>
+        <div class="spec-row"><span>Miles</span><span>~100,000</span></div>
+        <div class="spec-row"><span>MPG</span><span>41 city / 39 hwy</span></div>
+        <div class="spec-row"><span>Title</span><span>Bill of Sale only</span></div>
+        <div class="spec-row"><span>Battery</span><span>12V needs replacement</span></div>
+        <div class="spec-row"><span>Location</span><span>Lucky's Towing, Beulah ND</span></div>
+        <div class="vehicle-price">$4k–$12k</div>
+        <div class="vehicle-note">No title in hand — original retained by shipper. ND bonded title path is next step. Priced to reflect. Best fit: dealers/flippers comfortable with Bill of Sale.</div>
+      </div>
+      <a href="https://tinyurl.com/MKZ-2016-Hybrid-Rebuild-100k" target="_blank" class="vehicle-cta">Sales Packet →</a>
+    </div>
+
+    <div class="vehicle-card">
+      <div class="vehicle-badge badge-nd">North Dakota · Clean Title</div>
+      <div class="vehicle-body">
+        <h3>1988 Lincoln Town Car Signature</h3>
+        <div class="vin">1LNBM82FXJY779113</div>
+        <div class="spec-row"><span>Miles</span><span>31,511 actual</span></div>
+        <div class="spec-row"><span>Engine</span><span>5.0L Windsor V8</span></div>
+        <div class="spec-row"><span>Interior</span><span>Navy Windsor Velour</span></div>
+        <div class="spec-row"><span>Airbags</span><span>None (1988 predates)</span></div>
+        <div class="spec-row"><span>Location</span><span>Hazen ND</span></div>
+        <div class="vehicle-price">$8k–$16k</div>
+        <div class="vehicle-note">BaT/Mecum reserve $8k. Upholstery restoration needed (driver side, passenger corners). Window module, cig lighter fuse, air ride serviced. Suspension chains need stowing.</div>
+      </div>
+      <a href="https://tinyurl.com/Lincoln-Town-Car-1988-Sig" target="_blank" class="vehicle-cta">Sales Packet →</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="invest" class="invest">
+  <div class="invest-inner">
+    <div>
+      <p class="section-label">Arc Badlands · 501(c)(3) Pending</p>
+      <h2>Partner with Arc Badlands Compute</h2>
+      <p>North Dakota's first rural GPU compute nonprofit — building AI infrastructure for educational failover, vocational training, and regional resilience out of Hazen, ND.</p>
+      <div class="invest-items">
+        <div class="invest-item">
+          <div class="invest-icon">⚡</div>
+          <div><h4>USDA REAP + Innovate ND Eligible</h4><p>Mercer County qualifying entity — applying for rural energy and technology grants in next funding window.</p></div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-icon">🖥</div>
+          <div><h4>NVIDIA V100 SXM2 · 8-Count Server</h4><p>Penguin Relion XE4118 live on Vast.ai. Expanding to A100/H100 with grant co-funding. NVIDIA Inception member.</p></div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-icon">🎓</div>
+          <div><h4>Educational Failover Infrastructure</h4><p>Mission: provide GPU-backed AI infrastructure and vocational GCP/NVIDIA certification to rural ND communities.</p></div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-icon">🤝</div>
+          <div><h4>PNY · GCP · Co-Location Partners Welcome</h4><p>Seeking hardware vendors, co-location partners, and mission-aligned funders. No current partnerships established.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="invest-form">
+      <h3>Get in Touch</h3>
+      <p>Dealers, consignors, investors, or partners — tell us who you are.</p>
+      <div id="form-fields">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="f-name" placeholder="First Last" />
+        </div>
+        <div class="form-group">
+          <label>Company / Organization</label>
+          <input type="text" id="f-company" placeholder="Dealer, auction house, fund..." />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="f-phone" placeholder="+1 701 ..." />
+        </div>
+        <div class="form-group">
+          <label>I am a...</label>
+          <select id="f-type">
+            <option value="">Select role</option>
+            <option>Vehicle dealer / buyer</option>
+            <option>RV / auction consignor</option>
+            <option>Transport / logistics partner</option>
+            <option>Investor / grant funder</option>
+            <option>Technology / hardware partner</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="f-message" placeholder="Vehicle interest, offer, partnership inquiry..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Send to Kenyon →</button>
+      </div>
+      <div class="form-success" id="form-success">✓ Received. Kenyon reviews these each evening and calls back the strongest leads directly.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">Auto<span>Bäad</span> · Arc Badlands</div>
+  <p>Hazen ND 58545 · (866) 736-2349 · kjones@shy2shy.com</p>
+  <p>© 2026 Arc Badlands Compute LLC</p>
+</footer>
+
+<script>
+const SYSTEM = `You are Audry Harper, AI sales representative for AutoBäad — Kenyon Jones's private vehicle liquidation out of Hazen, North Dakota.
+
+THE 4 VEHICLES:
+1. 2006 F-350 King Ranch — 47k miles, 6.8L V10 gas (NO diesel), 4x4, factory 5th wheel hitch, clean GA title, Douglasville GA. $24k-$32k. Packet: tinyurl.com/Ford-KR-F350V10-ExtBedCab. Same lot as Jayco.
+2. 2017 Jayco Eagle HT 26.5BHS — 2,400 tow miles, 4-season Climate Shield (0°F rated), half-ton towable, bunkhouse sleeps 8-10, clean GA title, Douglasville GA. Disclosed: tire age, underbelly coroplast patch, Lippert jacks disengaged (manual works), cabinet hinge. $24k-$32k. Packet: tinyurl.com/Jayco-Eagle-BHS-26p5-HT-2017
+3. 2016 Lincoln MKZ Hybrid — 100k miles, BILL OF SALE ONLY (no title — retained by shipper), 12V battery dead from sitting ($150-200 fix, NOT the hybrid pack), Lucky's Towing Beulah ND. ALWAYS disclose title situation upfront. $4k-$12k. Packet: tinyurl.com/MKZ-2016-Hybrid-Rebuild-100k
+4. 1988 Lincoln Town Car — 31,511 miles, 5.0L Windsor V8, Oxford White/Navy Windsor Velour, NO AIRBAGS (1988 predates them). Disclosed: driver door panel upholstery disintegrated (needs restoration), passenger corner upholstery peeled, driver window module needs replacement, cigarette lighter fuse blown, high idle from 1990s engine cleaner (not a defect), air ride bags applied/springs solid/chains need stowing. Clean ND title, Hazen ND. $8k-$16k. BaT/Mecum reserve $8k. Packet: tinyurl.com/Lincoln-Town-Car-1988-Sig. Town Car + MKZ = 2-car carrier deal from western ND.
+
+RULES:
+1. Keep SMS/chat replies SHORT — 2-3 sentences max.
+2. After every fact, ask one qualifying question (timeline, location, budget).
+3. NEVER give Kenyon's number proactively. Capture their number first. Close: "Kenyon reviews offers each evening — what's the best callback number for him?"
+4. OFFER GATEKEEPER: below floor ($24k F-350/Jayco, $8k Town Car, $4k MKZ) → "We're a bit far apart — can you get closer to our floor?"
+5. CROSS-SELL: F-350 → mention Jayco same lot. Town Car → mention MKZ 2-car carrier. 
+6. DISCLOSURE: proactively state all disclosed items before they ask.
+7. Be warm, direct, conversational. Not robotic.`;
+
+let history = [];
+
+function addMsg(text, role) {
+  const wrap = document.getElementById('chat-messages');
+  const d = document.createElement('div');
+  d.className = role === 'user' ? 'msg-in' : 'msg-out';
+  d.textContent = text;
+  wrap.appendChild(d);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function setTyping(on) {
+  const existing = document.getElementById('typing-bubble');
+  if(on && !existing) {
+    const wrap = document.getElementById('chat-messages');
+    const d = document.createElement('div');
+    d.id = 'typing-bubble';
+    d.className = 'typing';
+    d.textContent = '···';
+    wrap.appendChild(d);
+    wrap.scrollTop = wrap.scrollHeight;
+  } else if(!on && existing) {
+    existing.remove();
+  }
+}
+
+async function callAudry(userMsg) {
+  history.push({role:'user', content: userMsg});
+  document.getElementById('chat-send').disabled = true;
+  setTyping(true);
+  const msgs = history.map(m => ({role: m.role === 'user' ? 'user' : 'assistant', content: m.content}));
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:200, system:SYSTEM, messages:msgs})
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Thanks for reaching out! Kenyon will follow up at (866) 736-2349.';
+    setTyping(false);
+    history.push({role:'assistant', content: reply});
+    addMsg(reply, 'audry');
+  } catch(e) {
+    setTyping(false);
+    addMsg('Thanks for reaching out to AutoBäad. Call or text (866) 736-2349 to connect with Kenyon directly.', 'audry');
+  }
+  document.getElementById('chat-send').disabled = false;
+}
+
+async function sendMsg() {
+  const input = document.getElementById('chat-input');
+  const txt = input.value.trim();
+  if(!txt) return;
+  input.value = '';
+  addMsg(txt, 'user');
+  await callAudry(txt);
+}
+
+function quickSend(txt) {
+  document.getElementById('chat-input').value = txt;
+  sendMsg();
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if(e.key === 'Enter') sendMsg();
+});
+
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if(!name || !phone) { alert('Please fill in your name and phone number.'); return; }
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
