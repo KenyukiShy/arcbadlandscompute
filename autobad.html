@@ -320,16 +320,65 @@ function setTyping(on) {
   }
 }
 
+
+let isLoading = false; // Persistent lock
+
 async function callAudry(text) {
-  if (!text) return;
+  if (!text || isLoading) return; // Hard gate
   
-  if (typeof isLoading !== 'undefined') isLoading = true;
-  document.getElementById('chat-send').disabled = true;
-  const input = document.getElementById('chat-input');
-  if (input) {
-    input.value = '';
-    input.style.height = 'auto';
+  isLoading = true;
+  const sendBtn = document.getElementById('chat-send');
+  const chatInput = document.getElementById('chat-input');
+  
+  // 1. Lock UI
+  if(sendBtn) sendBtn.disabled = true;
+  if(chatInput) {
+    chatInput.disabled = true;
+    chatInput.placeholder = "Audry is thinking...";
   }
+
+  // 2. Add User Message
+  const histArr = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
+  histArr.push({ role: 'user', content: text });
+  if (typeof appendMessage === 'function') appendMessage('user', text);
+  else if (typeof addMsg === 'function') addMsg(text, 'user');
+  
+  if (typeof showTyping === 'function') showTyping();
+  else if (typeof setTyping === 'function') setTyping(true);
+
+  try {
+    const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: histArr, agent: 'audry' })
+    });
+
+    const data = await res.json();
+    if (typeof removeTyping === 'function') removeTyping();
+    else if (typeof setTyping === 'function') setTyping(false);
+
+    const reply = data.reply || "I'm having trouble connecting. Please text Kenyon at (866) 736-2349.";
+    histArr.push({ role: 'assistant', content: reply });
+    
+    if (typeof appendMessage === 'function') appendMessage('assistant', reply);
+    else if (typeof addMsg === 'function') addMsg(reply, 'audry');
+
+  } catch (err) {
+    console.error("API Error:", err);
+    if (typeof removeTyping === 'function') removeTyping();
+    if (typeof appendMessage === 'function') appendMessage('assistant', "Connection lost.");
+  } finally {
+    // 3. Unlock UI
+    isLoading = false;
+    if(sendBtn) sendBtn.disabled = false;
+    if(chatInput) {
+      chatInput.disabled = false;
+      chatInput.placeholder = "Type your message...";
+      chatInput.focus();
+    }
+  }
+}
+
 
   // Handle both versions of your UI arrays
   const histArr = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
