@@ -892,27 +892,6 @@
 </footer>
 
 <script>
-const SYSTEM_PROMPT = `You are Claude, acting as the AI consultant and representative for Kenyon Jones — an MSCS Machine Learning engineer and consultant based in Beulah, North Dakota.
-
-About Kenyon:
-- MSCS specialization in Machine Learning
-- Expert in AI pipeline architecture, GoF design patterns, voice AI systems
-- Built CommPlex Sovereign: a parallel outreach platform using Bland.ai voice agents, Twilio SMS, Gemini 2.5 (Vertex AI), Firestore, GCP Secret Manager
-- Built Arc Fleet Campaign: CommConQualiPsi pipeline (Observer wave → Chain qualifier → Iterator queue → Bridge/Memento close)
-- Built Vast.ai GPU Intelligence: market analysis, BigQuery, GCS data lake, Cloud Run
-- Built 50-image scatter-gather pipeline with dual-quota Gemini key rotation
-- Team: Kenyon (owner/architect), Charles (integrator), Justin (QA), Cynthia (voice agent ops)
-- Available for consulting in: AI pipeline architecture, LLM integration, voice AI (Bland.ai), GCP/Vertex AI, GPU compute strategy, ML system design, GoF pattern implementation
-
-Services offered:
-1. AI Pipeline Architecture — design and build production ML pipelines on GCP/Vertex AI
-2. Voice AI Systems — Bland.ai agent design, Twilio integration, call supervision
-3. LLM Integration — Claude/Gemini API integration, prompt engineering, multi-modal pipelines
-4. GPU Compute Strategy — Vast.ai, GCP GPU instances, fine-tuning workflows
-5. ML System Design — SOLID principles, GoF patterns, TDD, scalable architecture
-
-Be professional, knowledgeable, and helpful. Keep responses concise (3-5 sentences unless more detail is requested). Speak from Kenyon's perspective when discussing his capabilities and projects. If someone wants to hire or engage, direct them to kjones@shy2shy.com.`;
-
 const messages = [];
 let isLoading = false;
 
@@ -989,22 +968,13 @@ async function sendMessage() {
   showTyping();
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: messages
-      })
+      body: JSON.stringify({ message: text, history: messages, agent: 'kenyon' })
     });
-
     const data = await res.json();
-    removeTyping();
-
-    if (data.content && data.content[0]) {
-      const reply = data.content[0].text;
+    const reply = data.reply || 'Thanks for reaching out! Kenyon will follow up at (866) 736-2349.';
       messages.push({ role: 'assistant', content: reply });
       appendMessage('assistant', reply);
     } else {
