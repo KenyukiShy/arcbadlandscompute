@@ -320,28 +320,65 @@ function setTyping(on) {
   }
 }
 
-async function callAudry(userMsg) {
-  history.push({role:'user', content: userMsg});
+async function callAudry(text) {
+  if (!text) return;
+  
+  if (typeof isLoading !== 'undefined') isLoading = true;
   document.getElementById('chat-send').disabled = true;
-  setTyping(true);
-  const msgs = history.map(m => ({role: m.role === 'user' ? 'user' : 'assistant', content: m.content}));
+  const input = document.getElementById('chat-input');
+  if (input) {
+    input.value = '';
+    input.style.height = 'auto';
+  }
+
+  // Handle both versions of your UI arrays
+  const histArr = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
+  histArr.push({ role: 'user', content: text });
+  
+  // Handle both versions of your UI functions
+  if (typeof appendMessage === 'function') appendMessage('user', text);
+  else if (typeof addMsg === 'function') addMsg(text, 'user');
+  
+  if (typeof showTyping === 'function') showTyping();
+  else if (typeof setTyping === 'function') setTyping(true);
+
   try {
     const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: txt, history: history, agent: 'audry' })
+      body: JSON.stringify({
+        message: text,
+        history: histArr,
+        agent: 'audry'
+      })
     });
+
     const data = await res.json();
-    const reply = data.reply || 'Thanks for reaching out! Kenyon will follow up at (866) 736-2349.';
-    setTyping(false);
-    history.push({role:'assistant', content: reply});
-    addMsg(reply, 'audry');
-  } catch(e) {
-    setTyping(false);
-    addMsg('Thanks for reaching out to AutoBäad. Call or text (866) 736-2349 to connect with Kenyon directly.', 'audry');
+    
+    if (typeof removeTyping === 'function') removeTyping();
+    else if (typeof setTyping === 'function') setTyping(false);
+
+    const reply = (data.status === 'ok' && data.reply) ? data.reply : (data.reply || 'Thanks for reaching out! Please text (866) 736-2349.');
+    histArr.push({ role: 'assistant', content: reply });
+    
+    if (typeof appendMessage === 'function') appendMessage('audry', reply);
+    else if (typeof addMsg === 'function') addMsg(reply, 'audry');
+
+  } catch (err) {
+    if (typeof removeTyping === 'function') removeTyping();
+    else if (typeof setTyping === 'function') setTyping(false);
+    
+    console.error("Chat Error:", err);
+    const errReply = 'Network error. Please call or text (866) 736-2349.';
+    
+    if (typeof appendMessage === 'function') appendMessage('audry', errReply);
+    else if (typeof addMsg === 'function') addMsg(errReply, 'audry');
   }
+
+  if (typeof isLoading !== 'undefined') isLoading = false;
   document.getElementById('chat-send').disabled = false;
 }
+
 
 async function sendMsg() {
   const input = document.getElementById('chat-input');
