@@ -326,55 +326,55 @@ let isLoading = false; // Persistent lock
 
 let isLoading = false;
 
+
+let isLoading = false;
 async function callAudry(text) {
-  if (!text || isLoading) return;
-  
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
-  
-  isLoading = true;
-  const btn = document.getElementById('chat-send');
-  const input = document.getElementById('chat-input');
-  if(btn) btn.disabled = true;
-  if(input) input.disabled = true;
-
-  const hist = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
-  hist.push({ role: 'user', content: text });
-  
-  if (typeof appendMessage === 'function') appendMessage('user', text);
-  else if (typeof addMsg === 'function') addMsg(text, 'user');
-  
-  if (typeof showTyping === 'function') showTyping();
-
-  try {
-    const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, history: hist, agent: 'audry' }),
-      signal: controller.signal
-    });
-
-    clearTimeout(timeoutId);
-    const data = await res.json();
-    if (typeof removeTyping === 'function') removeTyping();
-
-    const reply = data.reply || "I'm processing that. One moment...";
-    hist.push({ role: 'assistant', content: reply });
+    if (!text || isLoading) return;
+    isLoading = true;
     
-    if (typeof appendMessage === 'function') appendMessage('assistant', reply);
-    else if (typeof addMsg === 'function') addMsg(reply, 'audry');
+    const btn = document.getElementById('chat-send');
+    const input = document.getElementById('chat-input');
+    if(btn) btn.disabled = true;
+    if(input) {
+        input.disabled = true;
+        input.placeholder = "Audry is thinking...";
+    }
 
-  } catch (err) {
-    if (typeof removeTyping === 'function') removeTyping();
-    console.error("Fetch error:", err);
-    const msg = err.name === 'AbortError' ? "Audry is taking a while to think. Try again?" : "Connection issue.";
-    if (typeof appendMessage === 'function') appendMessage('assistant', msg);
-  } finally {
-    isLoading = false;
-    if(btn) btn.disabled = false;
-    if(input) { input.disabled = false; input.focus(); }
-  }
+    const messages = (window.messages || window.history || []);
+    messages.push({ role: 'user', content: text });
+    
+    if (typeof appendMessage === 'function') appendMessage('user', text);
+    else if (typeof addMsg === 'function') addMsg(text, 'user');
+    if (typeof showTyping === 'function') showTyping();
+
+    try {
+        const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, history: messages, agent: 'audry' })
+        });
+        const data = await res.json();
+        const reply = data.reply || "I'm having trouble connecting.";
+        messages.push({ role: 'assistant', content: reply });
+        
+        if (typeof removeTyping === 'function') removeTyping();
+        if (typeof appendMessage === 'function') appendMessage('assistant', reply);
+        else if (typeof addMsg === 'function') addMsg(reply, 'audry');
+    } catch (e) {
+        console.error(e);
+        if (typeof removeTyping === 'function') removeTyping();
+        if (typeof appendMessage === 'function') appendMessage('assistant', "Connection lost.");
+    } finally {
+        isLoading = false;
+        if(btn) btn.disabled = false;
+        if(input) {
+            input.disabled = false;
+            input.placeholder = "Type your message...";
+            input.focus();
+        }
+    }
 }
+
 
   // 2. Add User Message
   const histArr = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
