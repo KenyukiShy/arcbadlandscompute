@@ -295,6 +295,7 @@ footer p{font-size:11px;font-family:'DM Mono',monospace;}
 
 <script>
 let history = [];
+let isLoading = false;
 
 function addMsg(text, role) {
   const wrap = document.getElementById('chat-messages');
@@ -307,7 +308,7 @@ function addMsg(text, role) {
 
 function setTyping(on) {
   const existing = document.getElementById('typing-bubble');
-  if(on && !existing) {
+  if (on && !existing) {
     const wrap = document.getElementById('chat-messages');
     const d = document.createElement('div');
     d.id = 'typing-bubble';
@@ -315,163 +316,49 @@ function setTyping(on) {
     d.textContent = '···';
     wrap.appendChild(d);
     wrap.scrollTop = wrap.scrollHeight;
-  } else if(!on && existing) {
+  } else if (!on && existing) {
     existing.remove();
   }
 }
 
-
-let isLoading = false; // Persistent lock
-
-
-let isLoading = false;
-
-
-let isLoading = false;
 async function callAudry(text) {
-    if (!text || isLoading) return;
-    isLoading = true;
-    
-    const btn = document.getElementById('chat-send');
-    const input = document.getElementById('chat-input');
-    if(btn) btn.disabled = true;
-    if(input) {
-        input.disabled = true;
-        input.placeholder = "Audry is thinking...";
-    }
+  if (!text || isLoading) return;
+  isLoading = true;
 
-    const messages = (window.messages || window.history || []);
-    messages.push({ role: 'user', content: text });
-    
-    if (typeof appendMessage === 'function') appendMessage('user', text);
-    else if (typeof addMsg === 'function') addMsg(text, 'user');
-    if (typeof showTyping === 'function') showTyping();
+  const btn = document.getElementById('chat-send');
+  const input = document.getElementById('chat-input');
+  if (btn) btn.disabled = true;
+  if (input) { input.disabled = true; input.placeholder = 'Audry is thinking...'; }
 
-    try {
-        const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text, history: messages, agent: 'audry' })
-        });
-        const data = await res.json();
-        const reply = data.reply || "I'm having trouble connecting.";
-        messages.push({ role: 'assistant', content: reply });
-        
-        if (typeof removeTyping === 'function') removeTyping();
-        if (typeof appendMessage === 'function') appendMessage('assistant', reply);
-        else if (typeof addMsg === 'function') addMsg(reply, 'audry');
-    } catch (e) {
-        console.error(e);
-        if (typeof removeTyping === 'function') removeTyping();
-        if (typeof appendMessage === 'function') appendMessage('assistant', "Connection lost.");
-    } finally {
-        isLoading = false;
-        if(btn) btn.disabled = false;
-        if(input) {
-            input.disabled = false;
-            input.placeholder = "Type your message...";
-            input.focus();
-        }
-    }
-}
-
-
-  // 2. Add User Message
-  const histArr = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
-  histArr.push({ role: 'user', content: text });
-  if (typeof appendMessage === 'function') appendMessage('user', text);
-  else if (typeof addMsg === 'function') addMsg(text, 'user');
-  
-  if (typeof showTyping === 'function') showTyping();
-  else if (typeof setTyping === 'function') setTyping(true);
+  history.push({ role: 'user', content: text });
+  setTyping(true);
 
   try {
     const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, history: histArr, agent: 'audry' })
+      body: JSON.stringify({ message: text, history: history, agent: 'audry' })
     });
-
     const data = await res.json();
-    if (typeof removeTyping === 'function') removeTyping();
-    else if (typeof setTyping === 'function') setTyping(false);
-
-    const reply = data.reply || "I'm having trouble connecting. Please text Kenyon at (866) 736-2349.";
-    histArr.push({ role: 'assistant', content: reply });
-    
-    if (typeof appendMessage === 'function') appendMessage('assistant', reply);
-    else if (typeof addMsg === 'function') addMsg(reply, 'audry');
-
-  } catch (err) {
-    console.error("API Error:", err);
-    if (typeof removeTyping === 'function') removeTyping();
-    if (typeof appendMessage === 'function') appendMessage('assistant', "Connection lost.");
+    setTyping(false);
+    const reply = data.reply || "I'm having trouble connecting. Please text (866) 736-2349.";
+    history.push({ role: 'assistant', content: reply });
+    addMsg(reply, 'audry');
+  } catch (e) {
+    setTyping(false);
+    console.error('Fetch error:', e);
+    addMsg("Connection issue. Please call or text (866) 736-2349.", 'audry');
   } finally {
-    // 3. Unlock UI
     isLoading = false;
-    if(sendBtn) sendBtn.disabled = false;
-    if(chatInput) {
-      chatInput.disabled = false;
-      chatInput.placeholder = "Type your message...";
-      chatInput.focus();
-    }
+    if (btn) btn.disabled = false;
+    if (input) { input.disabled = false; input.placeholder = 'Ask about any vehicle...'; input.focus(); }
   }
 }
-
-
-  // Handle both versions of your UI arrays
-  const histArr = (typeof messages !== 'undefined') ? messages : (typeof history !== 'undefined' ? history : []);
-  histArr.push({ role: 'user', content: text });
-  
-  // Handle both versions of your UI functions
-  if (typeof appendMessage === 'function') appendMessage('user', text);
-  else if (typeof addMsg === 'function') addMsg(text, 'user');
-  
-  if (typeof showTyping === 'function') showTyping();
-  else if (typeof setTyping === 'function') setTyping(true);
-
-  try {
-    const res = await fetch('https://commplex-api-349126848698.us-central1.run.app/chat/web', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: text,
-        history: histArr,
-        agent: 'audry'
-      })
-    });
-
-    const data = await res.json();
-    
-    if (typeof removeTyping === 'function') removeTyping();
-    else if (typeof setTyping === 'function') setTyping(false);
-
-    const reply = (data.status === 'ok' && data.reply) ? data.reply : (data.reply || 'Thanks for reaching out! Please text (866) 736-2349.');
-    histArr.push({ role: 'assistant', content: reply });
-    
-    if (typeof appendMessage === 'function') appendMessage('audry', reply);
-    else if (typeof addMsg === 'function') addMsg(reply, 'audry');
-
-  } catch (err) {
-    if (typeof removeTyping === 'function') removeTyping();
-    else if (typeof setTyping === 'function') setTyping(false);
-    
-    console.error("Chat Error:", err);
-    const errReply = 'Network error. Please call or text (866) 736-2349.';
-    
-    if (typeof appendMessage === 'function') appendMessage('audry', errReply);
-    else if (typeof addMsg === 'function') addMsg(errReply, 'audry');
-  }
-
-  if (typeof isLoading !== 'undefined') isLoading = false;
-  document.getElementById('chat-send').disabled = false;
-}
-
 
 async function sendMsg() {
   const input = document.getElementById('chat-input');
   const txt = input.value.trim();
-  if(!txt) return;
+  if (!txt) return;
   input.value = '';
   addMsg(txt, 'user');
   await callAudry(txt);
@@ -483,13 +370,13 @@ function quickSend(txt) {
 }
 
 document.getElementById('chat-input').addEventListener('keydown', e => {
-  if(e.key === 'Enter') sendMsg();
+  if (e.key === 'Enter') sendMsg();
 });
 
 function submitForm() {
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
-  if(!name || !phone) { alert('Please fill in your name and phone number.'); return; }
+  if (!name || !phone) { alert('Please fill in your name and phone number.'); return; }
   document.getElementById('form-fields').style.display = 'none';
   document.getElementById('form-success').style.display = 'block';
 }

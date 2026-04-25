@@ -959,7 +959,8 @@ async function sendMessage() {
   if (!text || isLoading) return;
 
   isLoading = true;
-  document.getElementById('chat-send').disabled = true;
+  const btn = document.getElementById('chat-send');
+  if (btn) btn.disabled = true;
   input.value = '';
   input.style.height = 'auto';
 
@@ -974,19 +975,17 @@ async function sendMessage() {
       body: JSON.stringify({ message: text, history: messages, agent: 'kenyon' })
     });
     const data = await res.json();
+    removeTyping();
     const reply = data.reply || 'Thanks for reaching out! Kenyon will follow up at (866) 736-2349.';
-      messages.push({ role: 'assistant', content: reply });
-      appendMessage('assistant', reply);
-    } else {
-      appendMessage('assistant', 'Something went wrong. Please email kjones@shy2shy.com directly.');
-    }
+    messages.push({ role: 'assistant', content: reply });
+    appendMessage('assistant', reply);
   } catch (err) {
     removeTyping();
     appendMessage('assistant', 'Network error. Please reach out directly at kjones@shy2shy.com.');
+  } finally {
+    isLoading = false;
+    if (btn) btn.disabled = false;
   }
-
-  isLoading = false;
-  document.getElementById('chat-send').disabled = false;
 }
 
 // Scroll reveal
