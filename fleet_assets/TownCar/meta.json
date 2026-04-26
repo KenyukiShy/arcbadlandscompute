@@ -1,0 +1,27 @@
+{
+  "asset": "1988 Lincoln Town Car Signature",
+  "hub": "North Central Logistics Hub",
+  "location": "Hazen, ND",
+  "docs_on_hand": "Verified",
+  "files": [
+    "01_TC_Stance.jpg",
+    "02_TC_Front.jpg",
+    "03_TC_Profile.jpg",
+    "04_TC_Rear_Angle.jpg",
+    "05_TC_Rear.jpg",
+    "06_TC_Wheel.jpg",
+    "07_TC_Cabin.jpg",
+    "08_TC_Dash.jpg",
+    "09_TC_Miles.jpg",
+    "10_TC_Door.jpg",
+    "11_TC_Center.jpg",
+    "12_TC_Lights.jpg",
+    "13_TC_Sticker.jpg",
+    "14_TC_Logs.jpg",
+    "15_TC_Grille_Alt.jpg",
+    "16_TC_Side_Low.jpg",
+    "17_TC_Trunk.jpg",
+    "18_TC_Vinyl.jpg",
+    "19_TC_Doc.jpg"
+  ]
+}

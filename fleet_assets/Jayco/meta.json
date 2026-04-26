@@ -1,0 +1,18 @@
+{
+  "asset": "2017 Jayco Eagle HT 26.5BHS",
+  "hub": "North Central Logistics Hub",
+  "location": "Hazen, ND",
+  "layout": "Bunkhouse Slide",
+  "auto_level": "LCI Ground Control 3.0",
+  "files": [
+    "01_Jayco_Rear.jpg",
+    "02_Jayco_Entry.jpg",
+    "04_Jayco_Slide.jpg",
+    "05_Jayco_Fireplace.jpg",
+    "06_Jayco_Bunks.jpg",
+    "07_Jayco_Bed.jpg",
+    "08_Jayco_Panel.jpg",
+    "09_Jayco_Jacks.jpg",
+    "10_Jayco_Slide.jpg"
+  ]
+}

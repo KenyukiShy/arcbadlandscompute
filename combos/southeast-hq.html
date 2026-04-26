@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HQ Partner Package | F-350 King Ranch + Jayco Eagle HT — AutoBäad</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0d;--paper:#f5f2eb;--rust:#b84a1e;--rust-light:#e8c4b0;--steel:#3a4a5c;--sage:#5a7a5a;--muted:#7a7060;--border:#d4cfc4;--card:#fffdf8;--gold:#8B6914;--se:#7a3a1e;--nc:#1e4a6a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;}
+a{color:var(--rust);text-decoration:none;}
+nav{background:var(--ink);padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--paper);letter-spacing:2px;}
+.nav-brand span{color:var(--rust);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:#aab;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-back{color:var(--rust-light) !important;border:1px solid #333;padding:5px 12px;border-radius:3px;}
+.nav-back:hover{color:#fff !important;border-color:var(--rust);}
+
+.hero-strip{background:var(--ink);color:var(--paper);padding:48px 5vw 40px;}
+.hero-inner{max-width:1100px;margin:0 auto;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,74px);line-height:.95;margin-bottom:8px;}
+.hero-title em{color:var(--rust);font-style:normal;}
+.hero-sub{font-family:'DM Mono',monospace;font-size:12px;color:#8899aa;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+.badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;padding:5px 12px;border-radius:2px;text-transform:uppercase;}
+.badge-gold{background:var(--gold);color:#fff;}
+.badge-steel{background:var(--steel);color:#fff;}
+.badge-rust{background:var(--rust);color:#fff;}
+.badge-sage{background:var(--sage);color:#fff;}
+.badge-se{background:var(--se);color:#fff;}
+.badge-nc{background:var(--nc);color:#fff;}
+.price-row{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+.price-main{font-family:'Bebas Neue',sans-serif;font-size:54px;color:var(--rust);line-height:1;}
+.price-range{font-family:'DM Mono',monospace;font-size:12px;color:#8899aa;align-self:center;}
+.hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+.btn-primary{background:var(--rust);color:#fff;padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-primary:hover{opacity:.85;color:#fff;}
+.btn-secondary{border:1px solid #444;color:var(--paper);padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-secondary:hover{border-color:var(--rust);color:var(--rust);}
+
+/* Cross-hub logistics banner */
+.hub-bridge{background:#1a1a2e;color:#e0e8f0;padding:32px 5vw;}
+.hub-bridge-inner{max-width:1100px;margin:0 auto;}
+.hub-bridge h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3vw,32px);color:#fff;margin-bottom:18px;letter-spacing:1px;}
+.hub-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;}
+.hub-card{border-radius:6px;padding:20px 24px;}
+.hub-card.se{background:rgba(122,58,30,.25);border:1px solid rgba(184,74,30,.4);}
+.hub-card.nc{background:rgba(30,74,106,.25);border:1px solid rgba(30,122,180,.4);}
+.hub-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+.hub-card.se .hub-label{color:#e8a080;}
+.hub-card.nc .hub-label{color:#80b8e8;}
+.hub-card h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:4px;color:#fff;}
+.hub-card p{font-size:12px;color:#9aacbe;line-height:1.5;}
+.hub-arrow{text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:#556;line-height:1.6;}
+.hub-arrow .arrow-glyph{font-size:24px;display:block;margin:4px 0;}
+.hub-note{margin-top:16px;font-family:'DM Mono',monospace;font-size:10px;color:#667;letter-spacing:1px;border-top:1px solid #2a2a3e;padding-top:14px;}
+
+.content-wrap{max-width:1100px;margin:0 auto;padding:0 5vw 60px;}
+
+.section-block{padding:40px 0 0;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.section-label.se{color:var(--se);}
+.section-label.nc{color:var(--nc);}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,3.5vw,40px);margin-bottom:6px;}
+.section-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:20px;}
+
+.gallery-strip{margin-bottom:16px;}
+.photo-card{display:inline-block;margin:4px;border-radius:4px;overflow:hidden;background:var(--card);border:1px solid var(--border);vertical-align:top;width:calc(33% - 10px);}
+.photo-card img{width:100%;height:180px;object-fit:cover;display:block;}
+.photo-card .caption{padding:10px 12px;}
+.photo-card .caption h4{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ink);margin-bottom:3px;}
+.photo-card .caption p{font-size:11px;color:var(--muted);line-height:1.4;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;}
+.specs-block{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:24px;}
+.specs-block h3{font-family:'Bebas Neue',sans-serif;font-size:20px;margin-bottom:14px;color:var(--steel);}
+.spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.spec-row:last-child{border-bottom:none;}
+.spec-row .s-label{color:var(--muted);}
+.spec-row .s-val{font-family:'DM Mono',monospace;font-weight:500;text-align:right;max-width:58%;}
+.hub-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;padding:3px 8px;border-radius:2px;text-transform:uppercase;margin-left:8px;vertical-align:middle;}
+.hub-tag.se{background:rgba(122,58,30,.12);color:var(--se);border:1px solid rgba(122,58,30,.25);}
+.hub-tag.nc{background:rgba(30,74,106,.12);color:var(--nc);border:1px solid rgba(30,74,106,.25);}
+
+.divider{border:none;border-top:2px solid var(--border);margin:40px 0;}
+
+.logistics-block{background:#f0f4f8;border:1px solid #b0c4d8;border-radius:6px;padding:28px;margin-bottom:32px;}
+.logistics-block h3{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--nc);margin-bottom:16px;}
+.logistics-item{display:flex;gap:14px;margin-bottom:14px;font-size:13px;line-height:1.5;}
+.logistics-item .l-icon{flex-shrink:0;margin-top:2px;}
+.logistics-item strong{color:var(--ink);}
+.logistics-item .l-text{color:var(--muted);}
+
+.contact-block{background:var(--ink);color:var(--paper);border-radius:6px;padding:32px;text-align:center;margin-top:40px;}
+.contact-block h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--rust);margin-bottom:8px;}
+.contact-block p{color:#8899aa;font-size:14px;margin-bottom:20px;}
+.contact-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+footer{background:var(--ink);color:#555;padding:24px 5vw;text-align:center;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;border-top:1px solid #1a1a1a;}
+
+@media(max-width:768px){
+  .hub-grid{grid-template-columns:1fr;gap:12px;}
+  .hub-arrow{display:none;}
+  .two-col{grid-template-columns:1fr;}
+  .photo-card{width:calc(50% - 10px);}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../autobad.html" class="nav-brand">Auto<span>Bä</span>ad</a>
+  <div class="nav-links">
+    <a href="../autobad.html" class="nav-back">← All Vehicles</a>
+    <a href="../autobad.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">HQ / Colocation / Partner Package · Dual-Hub Fleet</div>
+    <div class="hero-title">F-350 King Ranch<br><em>+ Jayco Eagle HT</em></div>
+    <div class="hero-sub">Turnkey Infrastructure · Two Regional Logistics Hubs · Acquire Together or Separately</div>
+    <div class="badge-row">
+      <span class="badge badge-se">SE Hub · Douglasville, GA</span>
+      <span class="badge badge-nc">NC Hub · Hazen, ND</span>
+      <span class="badge badge-gold">King Ranch</span>
+      <span class="badge badge-sage">4-Season Rated</span>
+      <span class="badge badge-steel">5th Wheel Matched</span>
+    </div>
+    <div class="price-row">
+      <div class="price-main">$48K–$64K</div>
+      <div class="price-range">Combined package asking range<br>Individual listings also available</div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="tel:7018705235" class="btn-primary">Call (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the F-350 and Jayco partner package" class="btn-secondary">Text Audry</a>
+      <a href="../autobad.html#contact" class="btn-secondary">Submit Inquiry</a>
+    </div>
+  </div>
+</div>
+
+<!-- CROSS-HUB LOGISTICS BRIDGE -->
+<div class="hub-bridge">
+  <div class="hub-bridge-inner">
+    <h2>Two-Hub Logistics Structure</h2>
+    <div class="hub-grid">
+      <div class="hub-card se">
+        <div class="hub-label">South East Logistics Hub</div>
+        <h3>2006 Ford F-350 King Ranch</h3>
+        <p>Douglasville, Georgia<br>
+        On-site coordinator: Sherrie Appleby<br>
+        6.8L V10 · 47K mi · Clean GA Title<br>
+        Factory 5th wheel hitch installed</p>
+      </div>
+      <div class="hub-arrow">
+        <span>Matched &amp; Verified</span>
+        <span class="arrow-glyph">&#8652;</span>
+        <span>1,400 mi corridor</span>
+      </div>
+      <div class="hub-card nc">
+        <div class="hub-label">North Central Logistics Hub</div>
+        <h3>2017 Jayco Eagle HT 26.5BHS</h3>
+        <p>Hazen, North Dakota<br>
+        Owner: Kenyon Jones (701) 870-5235<br>
+        2,400 tow mi · ClimateShield 4-Season<br>
+        LCI Ground Control 3.0 Auto-Leveling</p>
+      </div>
+    </div>
+    <div class="hub-note">
+      The F-350 and Jayco Eagle HT were operated as a matched tow pair. The truck is factory-hitched and weight-rated for this trailer. Assets are currently held at separate regional hubs: the F-350 in Douglasville, GA (South East Hub) and the Jayco in Hazen, ND (North Central Hub). Buyer may acquire either asset independently or negotiate a combined package. The F-350 can be driven or transported to the Jayco's location for full-rig inspection — coordinate through Kenyon Jones.
+    </div>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- F-350 SECTION -->
+  <div class="section-block">
+    <div class="section-label se">South East Logistics Hub · Douglasville, GA</div>
+    <div class="section-title">2006 Ford F-350 King Ranch <span class="hub-tag se">SE Hub</span></div>
+    <div class="section-meta">47,000 actual miles · 6.8L V10 Triton · Clean GA Title · $24,000–$32,000</div>
+    <div class="gallery-strip">
+      <div id="gallery-f350"></div>
+    </div>
+    <div class="two-col">
+      <div class="specs-block">
+        <h3>F-350 Specifications</h3>
+        <div class="spec-row"><span class="s-label">Year / Model</span><span class="s-val">2006 Ford F-350 Super Duty</span></div>
+        <div class="spec-row"><span class="s-label">Trim</span><span class="s-val">King Ranch</span></div>
+        <div class="spec-row"><span class="s-label">Cab / Bed</span><span class="s-val">Crew Cab / Long Bed</span></div>
+        <div class="spec-row"><span class="s-label">Drivetrain</span><span class="s-val">4×4</span></div>
+        <div class="spec-row"><span class="s-label">Engine</span><span class="s-val">6.8L V10 Triton (Gas)</span></div>
+        <div class="spec-row"><span class="s-label">Actual Miles</span><span class="s-val">47,000</span></div>
+        <div class="spec-row"><span class="s-label">Interior</span><span class="s-val">Saddle Brown King Ranch leather</span></div>
+        <div class="spec-row"><span class="s-label">Hitch</span><span class="s-val">Factory 5th wheel kingpin — installed</span></div>
+        <div class="spec-row"><span class="s-label">Hub Location</span><span class="s-val">Douglasville, GA (SE Hub)</span></div>
+        <div class="spec-row"><span class="s-label">Title</span><span class="s-val">Clean GA · No liens</span></div>
+        <div class="spec-row"><span class="s-label">Asking</span><span class="s-val">$24,000–$32,000</span></div>
+      </div>
+      <div class="specs-block">
+        <h3>SE Hub Logistics</h3>
+        <div class="spec-row"><span class="s-label">On-Site Contact</span><span class="s-val">Sherrie Appleby</span></div>
+        <div class="spec-row"><span class="s-label">Inspection</span><span class="s-val">Available by appointment</span></div>
+        <div class="spec-row"><span class="s-label">Photo Shoot</span><span class="s-val">Pre-listing prep via Sherrie, $400–$900</span></div>
+        <div class="spec-row"><span class="s-label">Transport Option</span><span class="s-val">Drive or ship to NC Hub for full-rig demo</span></div>
+        <div class="spec-row"><span class="s-label">Hitch Match</span><span class="s-val">Verified for Jayco Eagle HT 26.5BHS</span></div>
+        <div class="spec-row"><span class="s-label">VIN</span><span class="s-val">1FTWW31Y86EA12357</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- JAYCO SECTION -->
+  <div class="section-block">
+    <div class="section-label nc">North Central Logistics Hub · Hazen, ND</div>
+    <div class="section-title">2017 Jayco Eagle HT 26.5BHS <span class="hub-tag nc">NC Hub</span></div>
+    <div class="section-meta">2,400 tow miles · ClimateShield 4-Season · LCI Auto-Leveling · $24,000–$32,000</div>
+    <div class="gallery-strip">
+      <div id="gallery-jayco"></div>
+    </div>
+    <div class="two-col">
+      <div class="specs-block">
+        <h3>Jayco Specifications</h3>
+        <div class="spec-row"><span class="s-label">Year / Model</span><span class="s-val">2017 Jayco Eagle HT 26.5BHS</span></div>
+        <div class="spec-row"><span class="s-label">Layout</span><span class="s-val">Rear Bunkhouse with Slide</span></div>
+        <div class="spec-row"><span class="s-label">Tow Miles</span><span class="s-val">2,400</span></div>
+        <div class="spec-row"><span class="s-label">Rating</span><span class="s-val">ClimateShield 4-Season</span></div>
+        <div class="spec-row"><span class="s-label">Leveling</span><span class="s-val">LCI Ground Control 3.0 Auto-Level</span></div>
+        <div class="spec-row"><span class="s-label">Hitch Match</span><span class="s-val">Verified for 2006 F-350 King Ranch</span></div>
+        <div class="spec-row"><span class="s-label">Hub Location</span><span class="s-val">Hazen, ND (NC Hub)</span></div>
+        <div class="spec-row"><span class="s-label">Title</span><span class="s-val">Clean GA Title</span></div>
+        <div class="spec-row"><span class="s-label">Asking</span><span class="s-val">$24,000–$32,000</span></div>
+      </div>
+      <div class="specs-block">
+        <h3>NC Hub Logistics</h3>
+        <div class="spec-row"><span class="s-label">On-Site Contact</span><span class="s-val">Kenyon Jones (701) 870-5235</span></div>
+        <div class="spec-row"><span class="s-label">Coordination</span><span class="s-val">Charles Perrine (701) 870-5448</span></div>
+        <div class="spec-row"><span class="s-label">Inspection</span><span class="s-val">Hazen ND · by appointment</span></div>
+        <div class="spec-row"><span class="s-label">Full-Rig Option</span><span class="s-val">F-350 can be transported to ND for coupled demo</span></div>
+        <div class="spec-row"><span class="s-label">4-Season Capable</span><span class="s-val">Year-round ND siting available</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LOGISTICS RELATIONSHIP -->
+  <div class="logistics-block">
+    <h3>Why This Package Works Across Two Hubs</h3>
+    <div class="logistics-item">
+      <span class="l-icon">&#x1F517;</span>
+      <div><strong>Matched and verified.</strong><br><span class="l-text">The F-350 King Ranch carries a factory-installed 5th wheel kingpin hitch that was matched and operated with this exact Jayco Eagle HT 26.5BHS. These are not arbitrary pairings — they were used as a set.</span></div>
+    </div>
+    <div class="logistics-item">
+      <span class="l-icon">&#x1F4CD;</span>
+      <div><strong>Separate hubs, independent acquisition.</strong><br><span class="l-text">The F-350 is currently held at the South East Logistics Hub in Douglasville, GA. The Jayco Eagle HT is held at the North Central Logistics Hub in Hazen, ND. Each can be purchased and titled independently without requiring the other.</span></div>
+    </div>
+    <div class="logistics-item">
+      <span class="l-icon">&#x1F6E3;</span>
+      <div><strong>Full-rig inspection is possible.</strong><br><span class="l-text">If a buyer wants to inspect the coupled pair, the F-350 can be driven or transported from Douglasville, GA to Hazen, ND (~1,400 miles). Coordinate timing and cost directly with Kenyon Jones. Alternatively, ship the Jayco to Georgia.</span></div>
+    </div>
+    <div class="logistics-item">
+      <span class="l-icon">&#x2714;</span>
+      <div><strong>Package pricing available.</strong><br><span class="l-text">Combined asking range is $48,000–$64,000 for both assets. Individual pricing: F-350 at $24,000–$32,000 (SE Hub, GA); Jayco at $24,000–$32,000 (NC Hub, ND). All pricing flexible — contact Kenyon Jones directly for package negotiation.</span></div>
+    </div>
+  </div>
+
+  <div class="contact-block">
+    <h3>Inquire on the Package</h3>
+    <p>Kenyon Jones handles all pricing and closing decisions.<br>
+    Cynthia Ennis handles warm calls · Audry responds to texts 24/7<br>
+    F-350: Douglasville, GA (Sherrie Appleby on-site) · Jayco: Hazen, ND</p>
+    <div class="contact-btns">
+      <a href="tel:7018705235" class="btn-primary">Call (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the F-350 and Jayco partner package" class="btn-secondary">Text Audry About Package</a>
+      <a href="../autobad.html#contact" class="btn-secondary">Submit Inquiry Form</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  AutoBäad · Arc Badlands Compute LLC · Hazen, ND 58545 · (701) 870-5235 · <a href="../autobad.html">← All Vehicles</a>
+</footer>
+
+<script src="../gallery.js"></script>
+<script>
+  loadFleetGallery('F350', 9, '..', 'gallery-f350');
+  loadFleetGallery('Jayco', 9, '..', 'gallery-jayco');
+</script>
+</body>
+</html>

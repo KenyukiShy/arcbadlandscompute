@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2006 Ford F-350 King Ranch — AutoBäad · Hazen, ND</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0d;--paper:#f5f2eb;--rust:#b84a1e;--rust-light:#e8c4b0;--steel:#3a4a5c;--sage:#5a7a5a;--muted:#7a7060;--border:#d4cfc4;--card:#fffdf8;--gold:#8B6914;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;}
+a{color:var(--rust);text-decoration:none;}
+nav{background:var(--ink);padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--paper);letter-spacing:2px;}
+.nav-brand span{color:var(--rust);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:#aab;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-back{color:var(--rust-light) !important;border:1px solid #333;padding:5px 12px;border-radius:3px;}
+.nav-back:hover{color:#fff !important;border-color:var(--rust);}
+
+.hero-strip{background:var(--ink);color:var(--paper);padding:48px 5vw 40px;}
+.hero-inner{max-width:1100px;margin:0 auto;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,82px);line-height:.95;margin-bottom:8px;}
+.hero-title em{color:var(--rust);font-style:normal;}
+.hero-sub{font-family:'DM Mono',monospace;font-size:12px;color:#8899aa;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+.badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;padding:5px 12px;border-radius:2px;text-transform:uppercase;}
+.badge-gold{background:var(--gold);color:#fff;}
+.badge-steel{background:var(--steel);color:#fff;}
+.badge-rust{background:var(--rust);color:#fff;}
+.badge-sage{background:var(--sage);color:#fff;}
+.price-row{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+.price-main{font-family:'Bebas Neue',sans-serif;font-size:54px;color:var(--rust);line-height:1;}
+.price-range{font-family:'DM Mono',monospace;font-size:12px;color:#8899aa;align-self:center;}
+.hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+.btn-primary{background:var(--rust);color:#fff;padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-primary:hover{opacity:.85;color:#fff;}
+.btn-secondary{border:1px solid #444;color:var(--paper);padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-secondary:hover{border-color:var(--rust);color:var(--rust);}
+
+.stats-bar{background:var(--gold);padding:18px 5vw;}
+.stats-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;flex-wrap:wrap;}
+.stat-item{flex:1;min-width:100px;padding:0 20px;border-right:1px solid rgba(255,255,255,.2);text-align:center;}
+.stat-item:first-child{padding-left:0;text-align:left;}
+.stat-item:last-child{border-right:none;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1.1;}
+.stat-l{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;}
+
+.gallery-section{padding:48px 5vw;max-width:1100px;margin:0 auto;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);margin-bottom:24px;}
+
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:8px;margin-bottom:8px;}
+.gallery-grid .photo{border-radius:4px;overflow:hidden;cursor:pointer;position:relative;background:#ddd8ce;}
+.gallery-grid .photo.large{grid-row:1/3;}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s;}
+.photo:hover img{transform:scale(1.03);}
+.photo-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#ddd8ce 0%,#c8c2b4 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.photo-placeholder .upload-icon{font-size:28px;opacity:.4;}
+.photo-placeholder .ph-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:center;padding:0 16px;letter-spacing:1px;text-transform:uppercase;}
+.photo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));padding:24px 12px 10px;color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;opacity:0;transition:opacity .2s;}
+.photo:hover .photo-caption{opacity:1;}
+.gallery-add-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
+.gallery-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:8px;font-style:italic;}
+
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;align-items:center;justify-content:center;cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;}
+.lb-close{position:absolute;top:20px;right:24px;color:#fff;font-size:28px;cursor:pointer;font-family:'DM Mono',monospace;background:none;border:none;opacity:.7;}
+.lb-close:hover{opacity:1;}
+.lb-caption{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#ccc;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;}
+
+.content-wrap{max-width:1100px;margin:0 auto;padding:0 5vw 60px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:40px;}
+.specs-block{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:24px;}
+.specs-block h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:16px;color:var(--steel);}
+.spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.spec-row:last-child{border-bottom:none;}
+.spec-row .s-label{color:var(--muted);}
+.spec-row .s-val{font-family:'DM Mono',monospace;font-weight:500;text-align:right;max-width:60%;}
+
+.pitch-block{background:#fff8f0;border:1px solid var(--gold);border-radius:6px;padding:24px;}
+.pitch-block h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:16px;color:var(--gold);}
+.pitch-item{display:flex;gap:12px;margin-bottom:14px;font-size:13px;line-height:1.5;}
+.pitch-item .p-icon{flex-shrink:0;margin-top:2px;}
+.pitch-item strong{color:var(--ink);}
+.pitch-item .p-text{color:var(--muted);}
+
+.disclosure-block{background:#fff8f5;border:1px solid var(--rust-light);border-radius:6px;padding:24px;margin-bottom:40px;}
+.disclosure-block h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:16px;color:var(--rust);}
+.disclosure-item{display:flex;gap:12px;margin-bottom:12px;font-size:13px;line-height:1.5;}
+.disclosure-item .d-icon{flex-shrink:0;margin-top:2px;}
+.disclosure-item .d-text{color:var(--muted);}
+
+.contact-block{background:var(--ink);color:var(--paper);border-radius:6px;padding:32px;text-align:center;}
+.contact-block h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--rust);margin-bottom:8px;}
+.contact-block p{color:#8899aa;font-size:14px;margin-bottom:20px;}
+.contact-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+footer{background:var(--ink);color:#555;padding:24px 5vw;text-align:center;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;border-top:1px solid #1a1a1a;}
+
+@media(max-width:768px){
+  .two-col{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px 200px;}
+  .gallery-grid .photo.large{grid-row:auto;grid-column:1/3;}
+  .gallery-add-row{grid-template-columns:1fr 1fr;}
+  .stats-inner{gap:12px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="autobad.html" class="nav-brand">Auto<span>Bä</span>ad</a>
+  <div class="nav-links">
+    <a href="autobad.html" class="nav-back">← All Vehicles</a>
+    <a href="autobad.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Available Now · Douglasville, GA</div>
+    <div class="hero-title">2006 Ford<br><em>F-350</em><br>King Ranch</div>
+    <div class="hero-sub">Crew Cab · Long Bed · 4×4 · 47,000 Actual Miles</div>
+    <div class="badge-row">
+      <span class="badge badge-gold">King Ranch</span>
+      <span class="badge badge-steel">6.8L V10 Triton</span>
+      <span class="badge badge-sage">5th Wheel Ready</span>
+      <span class="badge badge-rust">47K Miles</span>
+      <span class="badge badge-steel">Clean GA Title</span>
+    </div>
+    <div class="price-row">
+      <div class="price-main">$18K–$28K</div>
+      <div class="price-range">Asking · BaT reserve $18K<br>Collector/dealer offers welcome</div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="tel:7018705235" class="btn-primary">📞 Call (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the F-350 King Ranch" class="btn-secondary">💬 Text Audry</a>
+      <a href="autobad.html#contact" class="btn-secondary">Submit Inquiry</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-n">47,000</div>
+      <div class="stat-l">Actual Miles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">6.8L</div>
+      <div class="stat-l">V10 Triton</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">4×4</div>
+      <div class="stat-l">Drivetrain</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">Crew</div>
+      <div class="stat-l">Cab Config</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">King</div>
+      <div class="stat-l">Ranch Trim</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">5W</div>
+      <div class="stat-l">Hitch Ready</div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section">
+  <div class="section-label">Photo Gallery</div>
+  <div class="section-title">Actual Vehicle — Douglasville, GA</div>
+
+  <div class="gallery-grid">
+    <div class="photo large" onclick="openLightbox(this)" data-caption="F-350 King Ranch — Connected to Jayco Eagle HT, Douglasville GA">
+      <div class="photo-placeholder">
+        <div class="upload-icon">🚛</div>
+        <div class="ph-label">Full Profile · Connected<br>to Jayco Eagle HT<br>(actual vehicle — Douglasville GA)</div>
+      </div>
+      <div class="photo-caption">Driver Profile — With Jayco in Tow</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="5th Wheel Kingpin Hitch Engaged">
+      <div class="photo-placeholder">
+        <div class="upload-icon">🔩</div>
+        <div class="ph-label">5th Wheel<br>Kingpin Hitch</div>
+      </div>
+      <div class="photo-caption">5th Wheel Kingpin</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="King Ranch Castaño Leather Interior">
+      <div class="photo-placeholder">
+        <div class="upload-icon">🪑</div>
+        <div class="ph-label">King Ranch<br>Castaño Leather</div>
+      </div>
+      <div class="photo-caption">Castaño Leather Interior</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="6.8L V10 Triton Engine Bay">
+      <div class="photo-placeholder">
+        <div class="upload-icon">⚙️</div>
+        <div class="ph-label">6.8L V10<br>Engine Bay</div>
+      </div>
+      <div class="photo-caption">V10 Engine Bay</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="Odometer — 47,000 Actual Miles">
+      <div class="photo-placeholder">
+        <div class="upload-icon">📍</div>
+        <div class="ph-label">Odometer<br>47,000 Miles</div>
+      </div>
+      <div class="photo-caption">Odometer Reading</div>
+    </div>
+  </div>
+
+  <div class="gallery-add-row">
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Exterior — Front 3/4 View">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">📸</div>
+        <div class="ph-label">Front 3/4</div>
+      </div>
+      <div class="photo-caption">Front 3/4</div>
+    </div>
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Rear 3/4 View — Long Bed">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">📸</div>
+        <div class="ph-label">Rear 3/4<br>Long Bed</div>
+      </div>
+      <div class="photo-caption">Rear 3/4</div>
+    </div>
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Dashboard & Interior">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">🎛</div>
+        <div class="ph-label">Dashboard<br>Interior</div>
+      </div>
+      <div class="photo-caption">Dashboard</div>
+    </div>
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Bed Cap / Cargo Bed">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">📦</div>
+        <div class="ph-label">Bed Cap<br>Cargo Bed</div>
+      </div>
+      <div class="photo-caption">Bed Cap</div>
+    </div>
+  </div>
+  <div class="gallery-note">Both profile photos shown are actual vehicle — F-350 King Ranch connected to Jayco Eagle HT, Douglasville GA. Pre-listing professional photo shoot (50–80 shots) coordinated through Sherrie Appleby.</div>
+</div>
+
+<!-- SPECS + PITCH -->
+<div class="content-wrap">
+  <div class="two-col">
+    <div class="specs-block">
+      <h3>Specifications</h3>
+      <div class="spec-row"><span class="s-label">Year / Model</span><span class="s-val">2006 Ford F-350 Super Duty</span></div>
+      <div class="spec-row"><span class="s-label">Trim</span><span class="s-val">King Ranch</span></div>
+      <div class="spec-row"><span class="s-label">Cab / Bed</span><span class="s-val">Crew Cab / Long Bed</span></div>
+      <div class="spec-row"><span class="s-label">Drivetrain</span><span class="s-val">4×4</span></div>
+      <div class="spec-row"><span class="s-label">Engine</span><span class="s-val">6.8L V10 Triton (Gas)</span></div>
+      <div class="spec-row"><span class="s-label">Actual Miles</span><span class="s-val">47,000</span></div>
+      <div class="spec-row"><span class="s-label">Interior</span><span class="s-val">Castaño leather — bright, unsoiled</span></div>
+      <div class="spec-row"><span class="s-label">Hitch</span><span class="s-val">Factory 5th wheel kingpin (installed)</span></div>
+      <div class="spec-row"><span class="s-label">Bed Cap</span><span class="s-val">Included</span></div>
+      <div class="spec-row"><span class="s-label">Location</span><span class="s-val">Douglasville, GA</span></div>
+      <div class="spec-row"><span class="s-label">Title</span><span class="s-val">Clean GA · VIN 1FTWW31Y86EA12357</span></div>
+      <div class="spec-row"><span class="s-label">Asking</span><span class="s-val">$18,000–$28,000</span></div>
+    </div>
+
+    <div class="pitch-block">
+      <h3>Why This Truck</h3>
+      <div class="pitch-item">
+        <span class="p-icon">📊</span>
+        <div><strong>47K miles on a 2006 is the entire pitch.</strong><br><span class="p-text">One-owner rarity — this truck spent its life towing, not highway commuting. Verifiable, low use.</span></div>
+      </div>
+      <div class="pitch-item">
+        <span class="p-icon">🪑</span>
+        <div><strong>Castaño leather in bright, unsoiled condition.</strong><br><span class="p-text">Adds $5,000–$8,000 over typical high-mileage examples per collector market comps.</span></div>
+      </div>
+      <div class="pitch-item">
+        <span class="p-icon">⚙️</span>
+        <div><strong>V10 gas — no diesel headaches.</strong><br><span class="p-text">No DEF, no injector risk, no emissions regen. Simple, proven workhorse.</span></div>
+      </div>
+      <div class="pitch-item">
+        <span class="p-icon">🔩</span>
+        <div><strong>Factory 5th wheel hitch installed.</strong><br><span class="p-text">Day-one tow-ready. Matched and verified with the Jayco Eagle HT 26.5BHS.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclosure-block" style="margin-bottom:40px;">
+    <h3>Full Disclosure</h3>
+    <div class="two-col" style="margin-bottom:0;">
+      <div>
+        <div class="disclosure-item">
+          <span class="d-icon">✅</span>
+          <span class="d-text">Clean Georgia title in hand — no liens</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">✅</span>
+          <span class="d-text">47,000 actual miles — verifiable odometer reading</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">⚠️</span>
+          <span class="d-text">Pre-listing detail and professional photo shoot required before BaT or public listing — coordinate with Sherrie Appleby in Douglasville, GA. Budget $400–$900.</span>
+        </div>
+      </div>
+      <div>
+        <div class="disclosure-item">
+          <span class="d-icon">ℹ️</span>
+          <span class="d-text">BaT comparable sales (April 2026) reviewed — reserve set at $18K protects floor; target outcome $22K–$28K hammer</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">ℹ️</span>
+          <span class="d-text">Sold as-is unless specific prep/repair terms agreed in writing prior to sale</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">ℹ️</span>
+          <span class="d-text">Vehicle located Douglasville, GA — Sherrie Appleby on-site for inspection coordination</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-block">
+    <h3>Ready to Deal?</h3>
+    <p>Call, text, or submit an inquiry. Audry responds to texts 24/7. Cynthia handles phone intake.<br>Located in Douglasville, GA · Contact via (701) 870-5235 · kjonesmle@gmail.com</p>
+    <div class="contact-btns">
+      <a href="tel:7018705235" class="btn-primary">📞 (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the F-350 King Ranch" class="btn-secondary">💬 Text About F-350</a>
+      <a href="autobad.html#contact" class="btn-secondary">Submit Form</a>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
+
+<footer>
+  AutoBäad · Arc Badlands Compute LLC · Hazen, ND 58545 · (701) 870-5235 · <a href="autobad.html">← All Vehicles</a>
+</footer>
+
+<script>
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  if (!img) return;
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lb-caption').textContent = el.dataset.caption || '';
+  lb.classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+</script>
+</body>
+</html>

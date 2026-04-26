@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2016 Lincoln MKZ Hybrid — AutoBäad · Hazen, ND</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0d;--paper:#f5f2eb;--rust:#b84a1e;--rust-light:#e8c4b0;--steel:#3a4a5c;--sage:#5a7a5a;--muted:#7a7060;--border:#d4cfc4;--card:#fffdf8;--campaign:#4a6a4a;--pewter:#5a6a7a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;}
+a{color:var(--rust);text-decoration:none;}
+nav{background:var(--ink);padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--paper);letter-spacing:2px;}
+.nav-brand span{color:var(--rust);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:#aab;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-back{color:var(--rust-light) !important;border:1px solid #333;padding:5px 12px;border-radius:3px;}
+.nav-back:hover{color:#fff !important;border-color:var(--rust);}
+
+.hero-strip{background:var(--pewter);color:var(--paper);padding:48px 5vw 40px;}
+.hero-inner{max-width:1100px;margin:0 auto;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,82px);line-height:.95;margin-bottom:8px;}
+.hero-title em{color:var(--rust);font-style:normal;}
+.hero-sub{font-family:'DM Mono',monospace;font-size:12px;color:#b0c0cc;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+.badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;padding:5px 12px;border-radius:2px;text-transform:uppercase;}
+.badge-sage{background:var(--campaign);color:#fff;}
+.badge-steel{background:var(--steel);color:#fff;}
+.badge-rust{background:var(--rust);color:#fff;}
+.badge-pewter{background:#7a8a9a;color:#fff;}
+.badge-caution{background:#b07000;color:#fff;}
+.price-row{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+.price-main{font-family:'Bebas Neue',sans-serif;font-size:54px;color:var(--rust);line-height:1;}
+.price-range{font-family:'DM Mono',monospace;font-size:12px;color:#b0c0cc;align-self:center;}
+.hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+.btn-primary{background:var(--rust);color:#fff;padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-primary:hover{opacity:.85;color:#fff;}
+.btn-secondary{border:1px solid #8a9aaa;color:var(--paper);padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-secondary:hover{border-color:var(--rust);color:var(--rust);}
+
+.stats-bar{background:var(--campaign);padding:18px 5vw;}
+.stats-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;flex-wrap:wrap;}
+.stat-item{flex:1;min-width:100px;padding:0 20px;border-right:1px solid rgba(255,255,255,.15);text-align:center;}
+.stat-item:first-child{padding-left:0;text-align:left;}
+.stat-item:last-child{border-right:none;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1.1;}
+.stat-l{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;}
+
+.gallery-section{padding:48px 5vw;max-width:1100px;margin:0 auto;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);margin-bottom:24px;}
+
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:8px;margin-bottom:8px;}
+.gallery-grid .photo{border-radius:4px;overflow:hidden;cursor:pointer;position:relative;background:#ddd8ce;}
+.gallery-grid .photo.large{grid-row:1/3;}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s;}
+.photo:hover img{transform:scale(1.03);}
+.photo-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#ddd8ce 0%,#c8c2b4 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.photo-placeholder .upload-icon{font-size:28px;opacity:.4;}
+.photo-placeholder .ph-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:center;padding:0 16px;letter-spacing:1px;text-transform:uppercase;}
+.photo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));padding:24px 12px 10px;color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;opacity:0;transition:opacity .2s;}
+.photo:hover .photo-caption{opacity:1;}
+.gallery-add-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
+.gallery-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:8px;font-style:italic;}
+
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;align-items:center;justify-content:center;cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;}
+.lb-close{position:absolute;top:20px;right:24px;color:#fff;font-size:28px;cursor:pointer;font-family:'DM Mono',monospace;background:none;border:none;opacity:.7;}
+.lb-close:hover{opacity:1;}
+.lb-caption{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#ccc;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;}
+
+.content-wrap{max-width:1100px;margin:0 auto;padding:0 5vw 60px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:40px;}
+.specs-block{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:24px;}
+.specs-block h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:16px;color:var(--steel);}
+.spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.spec-row:last-child{border-bottom:none;}
+.spec-row .s-label{color:var(--muted);}
+.spec-row .s-val{font-family:'DM Mono',monospace;font-weight:500;text-align:right;max-width:60%;}
+
+/* Title/docs block — special treatment for MKZ */
+.docs-chain{background:#f5faf5;border:1px solid #9abc9a;border-radius:6px;padding:24px;}
+.docs-chain h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:6px;color:var(--campaign);}
+.docs-chain .sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--campaign);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+.doc-check{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px;font-size:13px;line-height:1.4;}
+.doc-check .chk{color:var(--campaign);font-size:14px;flex-shrink:0;margin-top:2px;}
+.doc-check span{color:var(--muted);}
+
+.title-alert{background:#fff8e6;border:1px solid #d4a800;border-radius:6px;padding:20px 24px;margin-bottom:40px;}
+.title-alert h4{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#8B6000;margin-bottom:10px;}
+.title-alert p{font-size:13px;color:#5a4800;line-height:1.6;}
+
+.disclosure-block{background:#fff8f5;border:1px solid var(--rust-light);border-radius:6px;padding:24px;margin-bottom:40px;}
+.disclosure-block h3{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:16px;color:var(--rust);}
+.disclosure-item{display:flex;gap:12px;margin-bottom:12px;font-size:13px;line-height:1.5;}
+.disclosure-item .d-icon{flex-shrink:0;margin-top:2px;}
+.disclosure-item .d-text{color:var(--muted);}
+
+.contact-block{background:var(--pewter);color:var(--paper);border-radius:6px;padding:32px;text-align:center;}
+.contact-block h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--rust);margin-bottom:8px;}
+.contact-block p{color:#b0c0cc;font-size:14px;margin-bottom:20px;}
+.contact-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+footer{background:var(--ink);color:#555;padding:24px 5vw;text-align:center;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;border-top:1px solid #1a1a1a;}
+
+@media(max-width:768px){
+  .two-col{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px 200px;}
+  .gallery-grid .photo.large{grid-row:auto;grid-column:1/3;}
+  .gallery-add-row{grid-template-columns:1fr 1fr;}
+  .stats-inner{gap:12px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="autobad.html" class="nav-brand">Auto<span>Bä</span>ad</a>
+  <div class="nav-links">
+    <a href="autobad.html" class="nav-back">← All Vehicles</a>
+    <a href="autobad.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Available Now · Hazen, ND</div>
+    <div class="hero-title">2016 Lincoln<br><em>MKZ</em><br>Hybrid</div>
+    <div class="hero-sub">Select / Premier Trim · Campaign Metallic (Graphite/Pewter) · 41 MPG City</div>
+    <div class="badge-row">
+      <span class="badge badge-sage">41 MPG City</span>
+      <span class="badge badge-pewter">Campaign Metallic</span>
+      <span class="badge badge-steel">~100K Miles</span>
+      <span class="badge badge-caution">Rebuilt Title</span>
+      <span class="badge badge-steel">8" SYNC Touchscreen</span>
+    </div>
+    <div class="price-row">
+      <div class="price-main">$4K–$12K</div>
+      <div class="price-range">Asking · Full doc chain provided<br>Bonded title in process</div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="tel:7018705235" class="btn-primary">📞 Call (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the 2016 Lincoln MKZ Hybrid" class="btn-secondary">💬 Text Audry</a>
+      <a href="autobad.html#contact" class="btn-secondary">Submit Inquiry</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-n">41</div>
+      <div class="stat-l">MPG City</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">~100K</div>
+      <div class="stat-l">Miles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">2016</div>
+      <div class="stat-l">Model Year</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">8"</div>
+      <div class="stat-l">SYNC Screen</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">Hybrid</div>
+      <div class="stat-l">Powertrain</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">ND</div>
+      <div class="stat-l">Bonded Title</div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section">
+  <div class="section-label">Photo Gallery</div>
+  <div class="section-title">Reference &amp; Actual Photos</div>
+
+  <div class="gallery-grid">
+    <div class="photo large" onclick="openLightbox(this)" data-caption="2016 MKZ Hybrid — Campaign Metallic (Graphite/Pewter)">
+      <div class="photo-placeholder">
+        <div class="upload-icon">🚗</div>
+        <div class="ph-label">Exterior — Campaign Metallic<br>Graphite / Pewter<br>Actual vehicle — Hazen ND</div>
+      </div>
+      <div class="photo-caption">Campaign Metallic Exterior</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="Front 3/4 — Campaign Metallic">
+      <div class="photo-placeholder">
+        <div class="upload-icon">📸</div>
+        <div class="ph-label">Front 3/4</div>
+      </div>
+      <div class="photo-caption">Front 3/4</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="8-Inch SYNC Touchscreen / Center Console">
+      <div class="photo-placeholder">
+        <div class="upload-icon">📱</div>
+        <div class="ph-label">SYNC 8" Touchscreen<br>Center Console</div>
+      </div>
+      <div class="photo-caption">SYNC Touchscreen</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="Interior — Premium Fabric / Miko Suede">
+      <div class="photo-placeholder">
+        <div class="upload-icon">🪑</div>
+        <div class="ph-label">Interior<br>Premium Fabric<br>Miko Suede</div>
+      </div>
+      <div class="photo-caption">Interior</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)" data-caption="Rear Seating Area">
+      <div class="photo-placeholder">
+        <div class="upload-icon">🪑</div>
+        <div class="ph-label">Rear Seating<br>Area</div>
+      </div>
+      <div class="photo-caption">Rear Seats</div>
+    </div>
+  </div>
+
+  <div class="gallery-add-row">
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Rear 3/4 View">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">📸</div>
+        <div class="ph-label">Rear 3/4</div>
+      </div>
+      <div class="photo-caption">Rear 3/4</div>
+    </div>
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Dashboard & Instrument Cluster">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">🎛</div>
+        <div class="ph-label">Dashboard<br>Instruments</div>
+      </div>
+      <div class="photo-caption">Dashboard</div>
+    </div>
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="Odometer Reading">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">📍</div>
+        <div class="ph-label">Odometer<br>~100K Miles</div>
+      </div>
+      <div class="photo-caption">Odometer</div>
+    </div>
+    <div class="photo" style="height:160px;border-radius:4px;" onclick="openLightbox(this)" data-caption="VIN Plate / Door Jamb">
+      <div class="photo-placeholder" style="height:160px;">
+        <div class="upload-icon">🔎</div>
+        <div class="ph-label">VIN / Door<br>Jamb</div>
+      </div>
+      <div class="photo-caption">VIN Plate</div>
+    </div>
+  </div>
+  <div class="gallery-note">Exterior and interior reference images faithfully represent actual vehicle color, trim, and material. Actual vehicle available for inspection at lot — Hazen, ND by appointment.</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- TITLE ALERT -->
+  <div class="title-alert">
+    <h4>⚠️ Title Disclosure — Please Read</h4>
+    <p>This vehicle carries a <strong>rebuilt (previously salvaged) title</strong>. The salvage event originated in California. The vehicle has been in North Dakota for over one year. A <strong>ND bonded title is actively in process</strong> (NDCC §39-05-20.3). The buyer is responsible for acquiring the title through the standard ND bonded title process — seller provides the complete documentation chain needed to do so. All documentation is available on request prior to purchase.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="specs-block">
+      <h3>Specifications</h3>
+      <div class="spec-row"><span class="s-label">Year / Model</span><span class="s-val">2016 Lincoln MKZ Hybrid</span></div>
+      <div class="spec-row"><span class="s-label">Trim</span><span class="s-val">Select / Premier</span></div>
+      <div class="spec-row"><span class="s-label">Powertrain</span><span class="s-val">Hybrid — 41 MPG city</span></div>
+      <div class="spec-row"><span class="s-label">Miles</span><span class="s-val">~100,000</span></div>
+      <div class="spec-row"><span class="s-label">Exterior</span><span class="s-val">Campaign Metallic (Graphite/Pewter)</span></div>
+      <div class="spec-row"><span class="s-label">Interior</span><span class="s-val">Premium Fabric / Miko Suede</span></div>
+      <div class="spec-row"><span class="s-label">Infotainment</span><span class="s-val">8" SYNC touchscreen</span></div>
+      <div class="spec-row"><span class="s-label">Title</span><span class="s-val">Rebuilt — CA origin, ND bonded in process</span></div>
+      <div class="spec-row"><span class="s-label">Battery Note</span><span class="s-val">12V aux battery needs deep-cycle recharge (AGM/glass mat)</span></div>
+      <div class="spec-row"><span class="s-label">Location</span><span class="s-val">Hazen, ND 58545</span></div>
+      <div class="spec-row"><span class="s-label">Asking</span><span class="s-val">$4,000–$12,000</span></div>
+    </div>
+
+    <div class="docs-chain">
+      <h3>Documentation Chain</h3>
+      <div class="sub">Complete ownership history on file</div>
+      <div class="doc-check"><span class="chk">✓</span><span>Signed California DMV Bill of Sale — Patrick Walsh to Kenyon Jones, 2/19/2025, $5,000</span></div>
+      <div class="doc-check"><span class="chk">✓</span><span>Zelle payment records $4,995 confirmed (Conf. #3733403997) — United Community Bank verified</span></div>
+      <div class="doc-check"><span class="chk">✓</span><span>Seller letter 4/11/2025 + email 6/2/2025 — complete chain of custody documented in writing</span></div>
+      <div class="doc-check"><span class="chk">✓</span><span>AutoStar Transport Express confirmation — Dana Point CA to Hazen ND route</span></div>
+      <div class="doc-check"><span class="chk">✓</span><span>Active GEICO ND Policy 6201-05-75-41 — Kenyon Jones named insured on this VIN</span></div>
+      <div class="doc-check"><span class="chk">✓</span><span>ND Bonded Title application filed — NDCC §39-05-20.3</span></div>
+    </div>
+  </div>
+
+  <div class="disclosure-block">
+    <h3>Full Disclosure</h3>
+    <div class="two-col" style="margin-bottom:0;">
+      <div>
+        <div class="disclosure-item">
+          <span class="d-icon">⚠️</span>
+          <span class="d-text">Rebuilt title — California-origin salvage event. ND bonded title in process. Buyer acquires title; seller provides complete documentation chain.</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">⚠️</span>
+          <span class="d-text">12V auxiliary battery dead — needs deep-cycle recharge (AGM or glass mat type). Vehicle has been stationary since January.</span>
+        </div>
+      </div>
+      <div>
+        <div class="disclosure-item">
+          <span class="d-icon">ℹ️</span>
+          <span class="d-text">Idle runs high after recent engine cleaner treatment — likely oil viscosity related; ND-appropriate oil recommended</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">ℹ️</span>
+          <span class="d-text">Sold as-is. Vehicle available for inspection at lot, Hazen ND, by appointment.</span>
+        </div>
+        <div class="disclosure-item">
+          <span class="d-icon">ℹ️</span>
+          <span class="d-text">All documentation available on request. Actual vehicle photos available at lot inspection.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-block">
+    <h3>Ready to Deal?</h3>
+    <p>Call, text, or submit an inquiry. Audry responds to texts 24/7. Cynthia handles phone intake.<br>Located in Hazen, ND · (701) 870-5235 · kjonesmle@gmail.com</p>
+    <div class="contact-btns">
+      <a href="tel:7018705235" class="btn-primary">📞 (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the 2016 Lincoln MKZ Hybrid" class="btn-secondary">💬 Text About MKZ</a>
+      <a href="autobad.html#contact" class="btn-secondary">Submit Form</a>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
+
+<footer>
+  AutoBäad · Arc Badlands Compute LLC · Hazen, ND 58545 · (701) 870-5235 · <a href="autobad.html">← All Vehicles</a>
+</footer>
+
+<script>
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  if (!img) return;
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lb-caption').textContent = el.dataset.caption || '';
+  lb.classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+</script>
+</body>
+</html>
