@@ -1,9 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>SMS Consent</title></head>
-<body style="font-family:sans-serif; padding:40px;">
-    <h1>SMS Opt-In</h1>
-    <p>By providing your number, you consent to receive text messages from <strong>Arc Badlands Compute LLC</strong> regarding vehicle inquiries. Msg/data rates apply. Reply STOP to opt-out.</p>
-    <label><input type="checkbox"> I agree to receive automated messages. Consent is not a condition of purchase.</label>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMS Consent & Opt-Out — Arc Badlands Compute LLC</title>
+<meta name="description" content="Manage your SMS and voice communication preferences with Arc Badlands Compute LLC. Opt out at any time. TCPA compliant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090b; --bg2: #0e1014; --bg3: #131519;
+  --rust: #c4561e; --rust-light: #e0713a;
+  --amber: #d4921f; --amber-light: #f0b53a;
+  --cyan: #00c8e0; --cyan-dim: #0097aa;
+  --sage: #7aad8a; --sand: #c8b894;
+  --text: #e8e4dc; --text-dim: #8a8880; --text-muted: #545250;
+  --border: rgba(200,184,148,0.12);
+  --border-warm: rgba(196,86,30,0.25);
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-condensed: 'Barlow Condensed', sans-serif;
+  --ff-body: 'Barlow', sans-serif;
+  --ff-mono: 'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size:16px;line-height:1.6;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--rust);border-radius:2px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(8,9,11,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--ff-condensed);font-size:1.1rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.75rem}
+.nav-logo-mark{width:28px;height:28px;border:2px solid var(--rust);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--rust-light);font-weight:900;background:rgba(196,86,30,0.1)}
+.nav-back{font-family:var(--ff-mono);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border:1px solid var(--border);padding:0.3em 0.9em;border-radius:2px;transition:all 0.2s}
+.nav-back:hover{color:var(--rust-light);border-color:var(--rust)}
+
+.page-header{padding:8rem 2.5rem 3rem;max-width:940px;margin:0 auto}
+.page-label{font-family:var(--ff-mono);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
+.page-label::before{content:'';display:block;width:2rem;height:1px;background:var(--sage)}
+.page-title{font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:600;line-height:1.0;letter-spacing:-0.01em;margin-bottom:1rem}
+.page-title em{font-style:italic;color:var(--sage)}
+.page-desc{font-size:0.95rem;color:var(--text-dim);max-width:60ch;line-height:1.8;margin-top:1rem}
+
+.page-body{max-width:940px;margin:0 auto;padding:0 2.5rem 6rem}
+
+/* Quick action cards */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:3rem}
+.action-card{border:1px solid var(--border);padding:2rem;background:var(--bg2);position:relative;transition:border-color 0.3s}
+.action-card.opt-out{border-top:2px solid var(--sage)}
+.action-card.opt-in{border-top:2px solid var(--cyan)}
+.action-card:hover{border-color:var(--border-warm)}
+.action-title{font-family:var(--ff-condensed);font-size:1.3rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.5rem}
+.action-title.sage{color:var(--sage)}
+.action-title.cyan{color:var(--cyan)}
+.action-desc{font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.25rem}
+.action-method{font-family:var(--ff-mono);font-size:0.78rem;color:var(--text-dim);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem}
+.action-method strong{color:var(--text)}
+.action-method::before{content:'↳';color:var(--rust-light);font-size:0.65rem}
+
+/* Opt-out form */
+.optout-form{border:1px solid rgba(122,173,138,0.35);background:linear-gradient(135deg,rgba(122,173,138,0.04),transparent);padding:2.5rem;position:relative;margin-bottom:2.5rem}
+.optout-form::before{content:'OPT-OUT REQUEST FORM';position:absolute;top:-0.6rem;left:1.5rem;font-family:var(--ff-mono);font-size:0.62rem;letter-spacing:0.2em;color:var(--sage);background:var(--bg);padding:0 0.75rem}
+.form-row{margin-bottom:1.25rem}
+.form-label{font-family:var(--ff-mono);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:0.5rem}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:var(--ff-mono);font-size:0.82rem;padding:0.75rem 1rem;border-radius:2px;outline:none;transition:border-color 0.2s}
+.form-input:focus{border-color:rgba(122,173,138,0.5)}
+.form-input::placeholder{color:var(--text-muted)}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.form-select{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:var(--ff-mono);font-size:0.82rem;padding:0.75rem 1rem;border-radius:2px;outline:none;transition:border-color 0.2s;cursor:pointer}
+.form-select:focus{border-color:rgba(122,173,138,0.5)}
+.form-select option{background:var(--bg2)}
+.btn-optout{font-family:var(--ff-condensed);font-size:0.92rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--bg);background:var(--sage);border:none;padding:0.85rem 2rem;cursor:pointer;border-radius:2px;transition:all 0.2s;display:inline-block}
+.btn-optout:hover{background:#8ec49c;transform:translateY(-1px)}
+.form-note{font-family:var(--ff-mono);font-size:0.68rem;color:var(--text-muted);margin-top:0.75rem;line-height:1.6}
+.success-msg{display:none;background:rgba(122,173,138,0.1);border:1px solid rgba(122,173,138,0.3);border-left:3px solid var(--sage);padding:1.25rem 1.5rem;font-family:var(--ff-mono);font-size:0.78rem;color:var(--sage);line-height:1.7;margin-top:1rem}
+
+/* Consent documentation - for Twilio proof */
+.consent-doc{border:1px solid var(--border);padding:2rem;background:var(--bg2);margin-bottom:2rem}
+.consent-doc h2{font-family:var(--ff-condensed);font-size:1.2rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem}
+.consent-doc h2::after{content:'';flex:1;height:1px;background:var(--border)}
+.consent-doc h3{font-family:var(--ff-condensed);font-size:0.95rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--sage);margin:1.25rem 0 0.75rem}
+.consent-doc p{font-size:0.88rem;color:var(--text-dim);line-height:1.8;margin-bottom:0.75rem}
+.consent-doc ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.75rem}
+.consent-doc ul li{font-size:0.86rem;color:var(--text-dim);line-height:1.7;display:flex;align-items:flex-start;gap:0.75rem}
+.consent-doc ul li::before{content:'✓';color:var(--sage);font-size:0.72rem;flex-shrink:0;margin-top:0.2rem;font-family:var(--ff-mono)}
+
+.msg-sample{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--sage);padding:1.25rem 1.5rem;margin:0.75rem 0;font-family:var(--ff-mono);font-size:0.78rem;color:var(--text-dim);line-height:1.65}
+.msg-label{color:var(--sage);display:block;margin-bottom:0.5rem;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase}
+.msg-number{color:var(--cyan);font-size:0.65rem;display:block;margin-bottom:0.35rem}
+
+.keywords-grid{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.5rem}
+.kw{font-family:var(--ff-mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem;border:1px solid;border-radius:2px}
+.kw-join{color:var(--sage);border-color:rgba(122,173,138,0.4);background:rgba(122,173,138,0.08)}
+.kw-stop{color:var(--rust-light);border-color:rgba(196,86,30,0.35);background:rgba(196,86,30,0.06)}
+.kw-help{color:var(--amber-light);border-color:rgba(212,146,31,0.35);background:rgba(212,146,31,0.06)}
+
+/* Legal links */
+.legal-links{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.legal-link-card{border:1px solid var(--border);padding:1.25rem;background:var(--bg2);text-decoration:none;transition:all 0.2s;display:block}
+.legal-link-card:hover{border-color:rgba(0,200,224,0.3);transform:translateY(-2px)}
+.llc-label{font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.35rem}
+.llc-title{font-family:var(--ff-condensed);font-size:1rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text);margin-bottom:0.25rem}
+.llc-desc{font-size:0.78rem;color:var(--text-dim)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.footer-left{font-family:var(--ff-mono);font-size:0.65rem;color:var(--text-muted);line-height:1.8}
+.footer-right{display:flex;gap:2rem}
+.footer-link{font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:var(--rust-light)}
+
+@media(max-width:700px){.action-grid,.form-row-2,.legal-links{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://kenyukishy.github.io/arcbadlandscompute/index.html">
+    <div class="nav-logo-mark">AB</div>
+    Arc Badlands Compute
+  </a>
+  <a class="nav-back" href="https://kenyukishy.github.io/arcbadlandscompute/index.html">← Main Site</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-label">Communication Preferences</div>
+  <h1 class="page-title">SMS Consent<br>&amp; <em>Opt-Out</em></h1>
+  <p class="page-desc">Manage your communication preferences with Arc Badlands Compute LLC. Opting out is immediate and permanent. Consent is never required to receive services.</p>
+</div>
+
+<div class="page-body">
+
+  <!-- Quick action cards -->
+  <div class="action-grid">
+    <div class="action-card opt-out">
+      <div class="action-title sage">Opt Out — Stop All SMS</div>
+      <div class="action-desc">Stop receiving text messages from Arc Badlands immediately. Multiple ways to opt out — all are honored within 24 hours.</div>
+      <div class="action-method"><strong>Text STOP</strong> to (866) 736-2349</div>
+      <div class="action-method"><strong>Text STOP</strong> to (701) 870-5235</div>
+      <div class="action-method"><strong>Use the form</strong> below ↓</div>
+      <div class="action-method"><strong>Call</strong> (701) 870-5235</div>
+      <div class="action-method"><strong>Email</strong> kjonesmle@gmail.com · Subject: SMS OPT-OUT</div>
+    </div>
+    <div class="action-card opt-in">
+      <div class="action-title cyan">Opt In — Receive SMS Updates</div>
+      <div class="action-desc">Subscribe to receive B2B updates, service notifications, and partnership communications from Arc Badlands.</div>
+      <div class="action-method"><strong>Text JOIN</strong> to (866) 736-2349</div>
+      <div class="action-method"><strong>Text START</strong> to (866) 736-2349</div>
+      <div class="action-method" style="margin-top:0.75rem;color:var(--text-muted);font-size:0.7rem">Consent is not required for any purchase or service. Msg&amp;data rates may apply. ~2–10 msgs/month.</div>
+      <div class="action-method" style="margin-top:0.5rem;color:var(--text-muted);font-size:0.7rem">Reply STOP at any time to unsubscribe.</div>
+    </div>
+  </div>
+
+  <!-- Opt-out form -->
+  <div class="optout-form" id="optout-form">
+    <div class="form-row-2">
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label" for="phone">Phone Number *</label>
+        <input class="form-input" type="tel" id="phone" name="phone" placeholder="(701) 555-0100" required>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label" for="name">Full Name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Your name">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="opt-type">Opt-Out Scope *</label>
+      <select class="form-select" id="opt-type" name="opt-type">
+        <option value="sms-all">All SMS messages</option>
+        <option value="sms-marketing">Marketing SMS only (keep transactional)</option>
+        <option value="voice">Voice calls only</option>
+        <option value="all">All communications (SMS + voice + email)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="reason">Reason (optional)</label>
+      <input class="form-input" type="text" id="reason" name="reason" placeholder="Optional — helps us improve">
+    </div>
+    <button class="btn-optout" onclick="submitOptOut(event)">Submit Opt-Out Request</button>
+    <p class="form-note">Your request will be processed within 24 hours. You will receive one final confirmation SMS and then no further messages. For immediate processing, text STOP directly to (866) 736-2349 or (701) 870-5235.</p>
+    <div class="success-msg" id="success-msg">
+      ✓ Opt-out request received. Your number will be removed from all Arc Badlands messaging lists within 24 hours. You'll receive one final confirmation text and then no further messages. Questions: (701) 870-5235 or kjonesmle@gmail.com.
+    </div>
+  </div>
+
+  <!-- Consent documentation (Twilio proof-of-consent content) -->
+  <div class="consent-doc" id="consent-documentation">
+    <h2>How We Collect Consent</h2>
+    <p>Arc Badlands Compute LLC collects opt-in consent through the following documented methods. This page serves as proof-of-consent documentation for our telecommunications carrier (Twilio Inc.) and regulatory compliance purposes.</p>
+
+    <h3>Method 1: Keyword Opt-In via SMS</h3>
+    <p>Individuals may text any of the following keywords to (866) 736-2349 to opt in:</p>
+    <div class="keywords-grid">
+      <span class="kw kw-join">JOIN</span>
+      <span class="kw kw-join">START</span>
+      <span class="kw kw-join">YES</span>
+      <span class="kw kw-join">SUBSCRIBE</span>
+      <span class="kw kw-stop">STOP</span>
+      <span class="kw kw-stop">STOPALL</span>
+      <span class="kw kw-stop">UNSUBSCRIBE</span>
+      <span class="kw kw-stop">CANCEL</span>
+      <span class="kw kw-help">HELP</span>
+      <span class="kw kw-help">INFO</span>
+    </div>
+    <p style="margin-top:0.75rem;font-size:0.82rem">Upon texting JOIN or START, the individual receives an immediate opt-in confirmation:</p>
+    <div class="msg-sample">
+      <span class="msg-label">Opt-In Confirmation (sent automatically)</span>
+      <span class="msg-number">From: (866) 736-2349</span>
+      You're now subscribed to Arc Badlands Compute LLC updates. Reply STOP to unsubscribe, HELP for help. Msg&amp;data rates may apply. https://kenyukishy.github.io/arcbadlandscompute/sms-consent.html
+    </div>
+
+    <h3>Method 2: Website Contact Form</h3>
+    <p>When a visitor submits their phone number through arcbadlandscompute.com, the contact form includes an explicit SMS consent checkbox (unchecked by default). Checking the box and submitting constitutes consent. The form displays the following disclosure:</p>
+    <div class="msg-sample">
+      <span class="msg-label">Web Form Consent Disclosure (displayed at point of submission)</span>
+      ☐ By providing my phone number and checking this box, I consent to receive automated text messages and/or calls from Arc Badlands Compute LLC at this number about its services. Consent is not required to purchase. Msg&amp;data rates may apply. Reply STOP to opt out. <a href="https://kenyukishy.github.io/arcbadlandscompute/privacy-policy.html" style="color:var(--cyan)">Privacy Policy</a> · <a href="sms-consent.html" style="color:var(--cyan)">SMS Terms</a>
+    </div>
+
+    <h3>Method 3: Verbal Consent During Call</h3>
+    <p>During inbound or outbound calls, Arc Badlands representatives or its voice AI agent (Audry Harper) may request verbal consent to send follow-up SMS. Verbal consent is logged in our CRM with timestamp, agent ID, and call recording reference.</p>
+
+    <h3>STOP / Opt-Out Response</h3>
+    <div class="msg-sample">
+      <span class="msg-label">STOP Response (sent automatically on STOP, STOPALL, UNSUBSCRIBE, CANCEL, END, QUIT)</span>
+      <span class="msg-number">From: (866) 736-2349</span>
+      You have been unsubscribed from Arc Badlands Compute LLC. No further messages will be sent. Text JOIN to re-subscribe. https://kenyukishy.github.io/arcbadlandscompute/sms-consent.html
+    </div>
+
+    <h3>HELP Response</h3>
+    <div class="msg-sample">
+      <span class="msg-label">HELP Response (sent automatically on HELP or INFO)</span>
+      <span class="msg-number">From: (866) 736-2349</span>
+      Arc Badlands Compute LLC. Support: (701) 870-5235 or kjonesmle@gmail.com. Reply STOP to unsubscribe, JOIN to subscribe. Msg&amp;data rates may apply. https://kenyukishy.github.io/arcbadlandscompute/sms-consent.html
+    </div>
+
+    <h3>Sample Outbound Message</h3>
+    <div class="msg-sample">
+      <span class="msg-label">Sample B2B Outreach SMS</span>
+      <span class="msg-number">From: (866) 736-2349</span>
+      Hi, this is Audry from Arc Badlands. You recently inquired about our GPU compute services. Are you available for a quick call this week? Reply STOP to opt out, HELP for info. https://kenyukishy.github.io/arcbadlandscompute/sms-consent.html
+    </div>
+
+    <h3>Use Case</h3>
+    <ul>
+      <li>B2B outreach to businesses and professionals inquiring about GPU compute rental services</li>
+      <li>Vehicle transaction coordination for buyers, sellers, and dealers (AutoBäad brand)</li>
+      <li>Partnership and consulting inquiry follow-up</li>
+      <li>Appointment scheduling and operational notifications for active clients</li>
+      <li>Grant and government program status updates for educational institution partners</li>
+    </ul>
+
+    <h3>What We Do Not Send</h3>
+    <ul>
+      <li>Bulk promotional blasts to lists of individuals who have not opted in</li>
+      <li>Third-party marketing or affiliate promotions</li>
+      <li>Messages to individuals on the national Do Not Call Registry (for consumer numbers)</li>
+      <li>Messages after a STOP request has been received</li>
+      <li>Age-gated, adult, or regulated content</li>
+    </ul>
+
+    <h3>Carrier & Platform</h3>
+    <p>SMS and voice services are provided through Twilio Inc. Toll-free number: (866) 736-2349. Local number: (701) 870-5235. All traffic is subject to Twilio's Acceptable Use Policy and CTIA Messaging Principles.</p>
+  </div>
+
+  <!-- Legal links -->
+  <div class="legal-links">
+    <a href="https://kenyukishy.github.io/arcbadlandscompute/privacy-policy.html" class="legal-link-card">
+      <div class="llc-label">Legal</div>
+      <div class="llc-title">Privacy Policy</div>
+      <div class="llc-desc">How we collect, use, and protect your information. Full TCPA disclosure.</div>
+    </a>
+    <a href="https://kenyukishy.github.io/arcbadlandscompute/terms.html" class="legal-link-card">
+      <div class="llc-label">Legal</div>
+      <div class="llc-title">Terms of Service</div>
+      <div class="llc-desc">Terms governing our services, communications, and platform use.</div>
+    </a>
+    <a href="https://kenyukishy.github.io/arcbadlandscompute/index.html" class="legal-link-card">
+      <div class="llc-label">Navigation</div>
+      <div class="llc-title">Main Site</div>
+      <div class="llc-desc">Arc Badlands Compute — GPU compute, grants, and AI research infrastructure.</div>
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">
+    Arc Badlands Compute LLC · 218 1st Ave NW, Hazen, ND 58545 · (701) 870-5235<br>
+    SMS opt-outs honored within 24 hours · TCPA compliant · © 2025–2026 Arc Badlands
+  </div>
+  <div class="footer-right">
+    <a href="https://kenyukishy.github.io/arcbadlandscompute/index.html" class="footer-link">Main Site</a>
+    <a href="https://kenyukishy.github.io/arcbadlandscompute/privacy-policy.html" class="footer-link">Privacy</a>
+    <a href="https://kenyukishy.github.io/arcbadlandscompute/terms.html" class="footer-link">Terms</a>
+  </div>
+</footer>
+
+<script>
+function submitOptOut(e) {
+  e.preventDefault();
+  const phone = document.getElementById('phone').value;
+  if (!phone || phone.length < 7) {
+    document.getElementById('phone').style.borderColor = 'rgba(196,86,30,0.6)';
+    return;
+  }
+  const btn = e.target;
+  btn.textContent = 'Processing…';
+  btn.style.background = 'var(--text-muted)';
+  btn.disabled = true;
+  // In production: POST to your backend/Zapier/GSheet webhook here
+  // fetch('/api/optout', { method:'POST', body: JSON.stringify({phone, name, type, reason}) })
+  setTimeout(() => {
+    document.getElementById('success-msg').style.display = 'block';
+    btn.textContent = '✓ Request Submitted';
+    btn.style.background = 'rgba(122,173,138,0.4)';
+    document.getElementById('phone').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('reason').value = '';
+  }, 800);
+}
+</script>
 </body>
 </html>
