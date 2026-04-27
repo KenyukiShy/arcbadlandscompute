@@ -15,7 +15,7 @@ async function loadFleetGallery(folder, count, prefix) {
                 const meta = await response.json();
                 const title = meta.title || meta.upper_caption || "Asset Detail";
                 const high = meta.upper_caption || meta.caption_high || "";
-                const low = meta.caption_low || meta.lower_caption || "";
+                const low = meta.lower_caption || meta.caption_low || "";
 
                 container.innerHTML += `
                     <div class="photo-card" onclick="openLightbox(this)">
