@@ -1,0 +1,222 @@
+/mnt/chromeos/MyFiles/Downloads/Arc-Badlands-Site
+├── .claude
+│   └── settings.local.json
+├── claude.md
+├── combos
+│   ├── nd-regional.html
+│   └── southeast-hq.html
+├── f350.html
+├── fleet_assets
+│   ├── F350
+│   │   ├── 01_F350_Stance.jpg
+│   │   ├── 01_F350_Stance.jpg.meta.json
+│   │   ├── 02_F350_Profile.jpg
+│   │   ├── 02_F350_Profile.jpg.meta.json
+│   │   ├── 03_F350_Tailgate.jpg
+│   │   ├── 03_F350_Tailgate.jpg.meta.json
+│   │   ├── 04_F350_Exterior_Tailgate.jpg
+│   │   ├── 04_F350_Seats.jpg
+│   │   ├── 04_F350_Seats.jpg.meta.json
+│   │   ├── 05_F350_Axle.jpg
+│   │   ├── 05_F350_Axle.jpg.meta.json
+│   │   ├── 05_F350_Interior_Front_Seats.jpg
+│   │   ├── 06_F350_Hitch.jpg
+│   │   ├── 06_F350_Hitch.jpg.meta.json
+│   │   ├── 06_F350_Interior_Rear_Seats.jpg
+│   │   ├── 07_F350_Interior_Driver_Dash.jpg
+│   │   ├── 07_F350_Tires.jpg
+│   │   ├── 07_F350_Tires.jpg.meta.json
+│   │   ├── 08_F350_Grille.jpg
+│   │   ├── 08_F350_Grille.jpg.meta.json
+│   │   ├── 08_F350_Odometer.jpg
+│   │   ├── 09_F350_Engine_Bay.jpg
+│   │   ├── 09_F350_Extra.jpg
+│   │   ├── 09_F350_Extra.jpg.meta.json
+│   │   ├── 10_F350_Tire_Tread.jpg
+│   │   ├── 11_F350_Exterior_Extra.jpg
+│   │   ├── index.html
+│   │   └── meta.json
+│   ├── Jayco
+│   │   ├── 01_Camper_Exterior_Rear_Angle.jpg
+│   │   ├── 01_Jayco_Rear.jpg
+│   │   ├── 01_Jayco_Rear.jpg.meta.json
+│   │   ├── 02_Camper_Exterior_Entry.jpg
+│   │   ├── 02_Jayco_Entry.jpg
+│   │   ├── 02_Jayco_Entry.jpg.meta.json
+│   │   ├── 04_Jayco_Slide.jpg
+│   │   ├── 04_Jayco_Slide.jpg.meta.json
+│   │   ├── 05_Jayco_Fireplace.jpg
+│   │   ├── 05_Jayco_Fireplace.jpg.meta.json
+│   │   ├── 06_Jayco_Bunks.jpg
+│   │   ├── 06_Jayco_Bunks.jpg.meta.json
+│   │   ├── 07_Jayco_Bed.jpg
+│   │   ├── 07_Jayco_Bed.jpg.meta.json
+│   │   ├── 08_Jayco_Panel.jpg
+│   │   ├── 08_Jayco_Panel.jpg.meta.json
+│   │   ├── 08_Jayco_Rear.jpg
+│   │   ├── 08_Jayco_Rear.jpg.meta.json
+│   │   ├── 09_Jayco_Entry.jpg
+│   │   ├── 09_Jayco_Entry.jpg.meta.json
+│   │   ├── 09_Jayco_Jacks.jpg
+│   │   ├── 09_Jayco_Jacks.jpg.meta.json
+│   │   ├── 10_Jayco_Slide.jpg
+│   │   ├── 10_Jayco_Slide.jpg.meta.json
+│   │   ├── 11_Jayco_Fireplace.jpg
+│   │   ├── 11_Jayco_Fireplace.jpg.meta.json
+│   │   ├── 12_Jayco_Bunks.jpg
+│   │   ├── 12_Jayco_Bunks.jpg.meta.json
+│   │   ├── 13_Jayco_Bed.jpg
+│   │   ├── 13_Jayco_Bed.jpg.meta.json
+│   │   ├── 14_Jayco_Panel.jpg
+│   │   ├── 14_Jayco_Panel.jpg.meta.json
+│   │   ├── 15_Jayco_Jacks.jpg
+│   │   ├── 15_Jayco_Jacks.jpg.meta.json
+│   │   ├── 16_Jayco_Seals.jpg
+│   │   ├── 16_Jayco_Seals.jpg.meta.json
+│   │   ├── 17_Jayco_Underside.jpg
+│   │   ├── 17_Jayco_Underside.jpg.meta.json
+│   │   ├── index.html
+│   │   └── meta.json
+│   ├── MKZ
+│   │   ├── 01_MKZ_Exterior_Front.jpg
+│   │   ├── 01_MKZ_Front.jpg
+│   │   ├── 01_MKZ_Front.jpg.meta.json
+│   │   ├── 02_MKZ_Dash.webp
+│   │   ├── 02_MKZ_Dash.webp.meta.json
+│   │   ├── 02_MKZ_Interior_Dash_Wide.webp
+│   │   ├── 03_MKZ_Driver_Gauges.jpg
+│   │   ├── 03_MKZ_Gauges.jpg
+│   │   ├── 03_MKZ_Gauges.jpg.meta.json
+│   │   ├── 04_MKZ_Infotainment_Screen.webp
+│   │   ├── 04_MKZ_Sync.webp
+│   │   ├── 04_MKZ_Sync.webp.meta.json
+│   │   ├── 05_MKZ_Push_Button_Shifter.avif
+│   │   ├── 05_MKZ_Shifter.avif
+│   │   ├── 05_MKZ_Shifter.avif.meta.json
+│   │   ├── 06_MKZ_Exterior_Rear_34.avif
+│   │   ├── 06_MKZ_Grille.webp
+│   │   ├── 06_MKZ_Grille.webp.meta.json
+│   │   ├── 07_MKZ_Grille_Detail.webp
+│   │   ├── 07_MKZ_Roof.webp
+│   │   ├── 07_MKZ_Roof.webp.meta.json
+│   │   ├── 08_MKZ_Panoramic_Roof.webp
+│   │   ├── index.html
+│   │   └── meta.json
+│   └── TownCar
+│       ├── 01_TC_Stance.jpg
+│       ├── 01_TC_Stance.jpg.meta.json
+│       ├── 01_TownCar_Front_34_Driver.jpg
+│       ├── 02_TC_Front.jpg
+│       ├── 02_TC_Front.jpg.meta.json
+│       ├── 02_TownCar_Front.jpg
+│       ├── 03_TC_Profile.jpg
+│       ├── 03_TC_Profile.jpg.meta.json
+│       ├── 03_TownCar_Side_Profile.jpg
+│       ├── 04_TC_Rear_Angle.jpg
+│       ├── 04_TC_Rear_Angle.jpg.meta.json
+│       ├── 04_TownCar_Rear_34_Passenger.jpg
+│       ├── 05_TC_Rear.jpg
+│       ├── 05_TC_Rear.jpg.meta.json
+│       ├── 05_TownCar_Rear.jpg
+│       ├── 06_TC_Wheel.jpg
+│       ├── 06_TC_Wheel.jpg.meta.json
+│       ├── 06_TownCar_Wheel_Detail.jpg
+│       ├── 07_TC_Cabin.jpg
+│       ├── 07_TC_Cabin.jpg.meta.json
+│       ├── 07_TownCar_Interior_Cabin.jpg
+│       ├── 08_TC_Dash.jpg
+│       ├── 08_TC_Dash.jpg.meta.json
+│       ├── 08_TownCar_Driver_Dash.jpeg
+│       ├── 09_TC_Miles.jpg
+│       ├── 09_TC_Miles.jpg.meta.json
+│       ├── 09_TownCar_Odometer.jpeg
+│       ├── 10_TC_Door.jpg
+│       ├── 10_TC_Door.jpg.meta.json
+│       ├── 10_TownCar_Door_Controls.jpg
+│       ├── 11_TC_Center.jpg
+│       ├── 11_TC_Center.jpg.meta.json
+│       ├── 11_TownCar_Center_Stack.jpg
+│       ├── 12_TC_Lights.jpg
+│       ├── 12_TC_Lights.jpg.meta.json
+│       ├── 12_TownCar_Headlight_Detail.jpg
+│       ├── 13_TC_Sticker.jpg
+│       ├── 13_TC_Sticker.jpg.meta.json
+│       ├── 13_TownCar_Documentation.jpg
+│       ├── 14_TC_Logs.jpg
+│       ├── 14_TC_Logs.jpg.meta.json
+│       ├── 15_TC_Grille_Alt.jpg
+│       ├── 15_TC_Grille_Alt.jpg.meta.json
+│       ├── 16_TC_Side_Low.jpg
+│       ├── 16_TC_Side_Low.jpg.meta.json
+│       ├── 17_TC_Trunk.jpg
+│       ├── 17_TC_Trunk.jpg.meta.json
+│       ├── 18_TC_Vinyl.jpg
+│       ├── 18_TC_Vinyl.jpg.meta.json
+│       ├── 19_TC_Doc.jpg
+│       ├── 19_TC_Doc.jpg.meta.json
+│       ├── index.html
+│       └── meta.json
+├── gallery.js
+├── .git
+│   ├── branches
+│   ├── COMMIT_EDITMSG
+│   ├── config
+│   ├── description
+│   ├── HEAD
+│   ├── hooks
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── push-to-checkout.sample
+│   │   └── update.sample
+│   ├── index
+│   ├── info
+│   │   └── exclude
+│   ├── logs
+│   │   ├── HEAD
+│   │   └── refs
+│   │       └── heads
+│   │           └── master
+│   ├── objects
+│   │   ├── 11
+│   │   │   └── 9e6fa4f300a49442ae03b709b9475c12ff74ee
+│   │   ├── 15
+│   │   │   └── e3328a9a9605829ff7fd9f428865b878dca4d7
+│   │   ├── 1d
+│   │   │   └── 32dd3e8991259a6f74736b0181c03b402bb867
+│   │   ├── 20
+│   │   │   └── 4474b11a741243e05157fb06a3f44810203265
+│   │   ├── 35
+│   │   │   └── f5b8eb9da8c1300c8de0fee70a68ae33a64c10
+│   │   ├── 6a
+│   │   │   └── 13f723885b8c3c5f728a76dc1aa37571183bee
+│   │   ├── 6c
+│   │   │   └── cbec0d31b0e7a6b7158fe606a714eff8f30e71
+│   │   ├── bf
+│   │   │   └── cc9be00960baf3405b28f32d5ab9f2e6699b79
+│   │   ├── c6
+│   │   │   └── 59b1a5a326d3a16b8e53404fec7d04e8dc6428
+│   │   ├── cb
+│   │   │   └── 3f3d42c1f409fd807d3bb091ab910dba21f74a
+│   │   ├── df
+│   │   │   └── 09bc7e9453406f1bb82c265e1f7e0811db9ae1
+│   │   ├── info
+│   │   └── pack
+│   └── refs
+│       ├── heads
+│       │   └── master
+│       └── tags
+├── jayco.html
+├── mkz.html
+├── site_review.txt
+└── towncar.html
+
+32 directories, 188 files

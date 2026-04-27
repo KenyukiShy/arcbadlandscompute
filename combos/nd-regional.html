@@ -1,15 +1,200 @@
 <!DOCTYPE html>
-<html>
-<head><title>ND Regional | Town Car & MKZ</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North Central Logistics Hub Heritage Collection | Town Car &amp; MKZ — AutoBäad</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0d;--paper:#f5f2eb;--rust:#b84a1e;--rust-light:#e8c4b0;--steel:#3a4a5c;--sage:#5a7a5a;--muted:#7a7060;--border:#d4cfc4;--card:#fffdf8;--nc:#1e4a6a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;}
+a{color:var(--rust);text-decoration:none;}
+nav{background:var(--ink);padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--paper);letter-spacing:2px;}
+.nav-brand span{color:var(--rust);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:#aab;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-back{color:var(--rust-light) !important;border:1px solid #333;padding:5px 12px;border-radius:3px;}
+.nav-back:hover{color:#fff !important;border-color:var(--rust);}
+
+.hero-strip{background:var(--nc);color:var(--paper);padding:48px 5vw 40px;}
+.hero-inner{max-width:1100px;margin:0 auto;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,74px);line-height:.95;margin-bottom:8px;}
+.hero-title em{color:var(--rust-light);font-style:normal;}
+.hero-sub{font-family:'DM Mono',monospace;font-size:12px;color:#8899aa;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+.badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;padding:5px 12px;border-radius:2px;text-transform:uppercase;}
+.badge-nc{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);}
+.badge-rust{background:var(--rust);color:#fff;}
+.badge-steel{background:var(--steel);color:#fff;}
+.price-row{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+.price-main{font-family:'Bebas Neue',sans-serif;font-size:54px;color:var(--rust-light);line-height:1;}
+.price-range{font-family:'DM Mono',monospace;font-size:12px;color:#8899aa;align-self:center;}
+.hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+.btn-primary{background:var(--rust);color:#fff;padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-primary:hover{opacity:.85;color:#fff;}
+.btn-secondary{border:1px solid #668;color:var(--paper);padding:12px 28px;border-radius:3px;font-weight:500;font-size:14px;display:inline-block;}
+.btn-secondary:hover{border-color:var(--rust);color:var(--rust-light);}
+
+.content-wrap{max-width:1100px;margin:0 auto;padding:40px 5vw 60px;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--nc);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,3.5vw,40px);margin-bottom:6px;}
+.section-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:20px;}
+
+.gallery-strip{margin-bottom:16px;}
+.photo-card{display:inline-block;margin:4px;border-radius:4px;overflow:hidden;background:var(--card);border:1px solid var(--border);vertical-align:top;width:calc(33% - 10px);}
+.photo-card img{width:100%;height:180px;object-fit:cover;display:block;}
+.photo-card .caption{padding:10px 12px;}
+.photo-card .caption h4{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ink);margin-bottom:3px;}
+.photo-card .caption p{font-size:11px;color:var(--muted);line-height:1.4;}
+
+.divider{border:none;border-top:2px solid var(--border);margin:40px 0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;}
+.specs-block{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:24px;}
+.specs-block h3{font-family:'Bebas Neue',sans-serif;font-size:20px;margin-bottom:14px;color:var(--steel);}
+.spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.spec-row:last-child{border-bottom:none;}
+.spec-row .s-label{color:var(--muted);}
+.spec-row .s-val{font-family:'DM Mono',monospace;font-weight:500;text-align:right;max-width:58%;}
+
+.contact-block{background:var(--ink);color:var(--paper);border-radius:6px;padding:32px;text-align:center;margin-top:40px;}
+.contact-block h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--rust);margin-bottom:8px;}
+.contact-block p{color:#8899aa;font-size:14px;margin-bottom:20px;}
+.contact-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+footer{background:var(--ink);color:#555;padding:24px 5vw;text-align:center;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;border-top:1px solid #1a1a1a;}
+
+@media(max-width:768px){
+  .two-col{grid-template-columns:1fr;}
+  .photo-card{width:calc(50% - 10px);}
+}
+</style>
+</head>
 <body>
-    <h1>ND Regional Fleet: 1988 Town Car & 2016 MKZ</h1>
-    <p>Location: Hazen, ND</p>
-    <ul>
-        <li>1988 Town Car Signature: 31,511 miles, 5.0L Windsor V8</li>
-        <li>2016 MKZ Hybrid: 100,000 miles, Panoramic Roof</li>
-    </ul>
-    <div id="gallery-target"></div>
-    <script src="../gallery.js"></script>
-    <script>loadFleetGallery('TownCar', 19, 'TC'); loadFleetGallery('MKZ', 8, 'MKZ');</script>
+
+<nav>
+  <a href="../autobad.html" class="nav-brand">Auto<span>Bä</span>ad</a>
+  <div class="nav-links">
+    <a href="../autobad.html" class="nav-back">← All Vehicles</a>
+    <a href="../autobad.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">North Central Logistics Hub · Hazen, ND · Regional Heritage Collection</div>
+    <div class="hero-title">1988 Town Car<br><em>+ 2016 MKZ Hybrid</em></div>
+    <div class="hero-sub">Both Held at North Central Hub · Hazen, North Dakota</div>
+    <div class="badge-row">
+      <span class="badge badge-nc">NC Hub · Hazen, ND</span>
+      <span class="badge badge-rust">31K Original Miles</span>
+      <span class="badge badge-steel">41 MPG Hybrid</span>
+      <span class="badge badge-nc">Lincoln Pair</span>
+    </div>
+    <div class="price-row">
+      <div class="price-main">$12K–$28K</div>
+      <div class="price-range">Combined asking range<br>Individual listings also available</div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="tel:7018705235" class="btn-primary">Call (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the North Central Logistics Hub Heritage Lincoln pair" class="btn-secondary">Text Audry</a>
+      <a href="../autobad.html#contact" class="btn-secondary">Submit Inquiry</a>
+    </div>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- TOWN CAR SECTION -->
+  <div>
+    <div class="section-label">North Central Hub · Classic Survivor</div>
+    <div class="section-title">1988 Lincoln Town Car Signature</div>
+    <div class="section-meta">31,511 original miles · 5.0L Windsor V8 · Clean ND Title · $8,000–$16,000</div>
+    <div class="gallery-strip">
+      <div id="gallery-towncar"></div>
+    </div>
+    <div class="two-col">
+      <div class="specs-block">
+        <h3>Town Car Specifications</h3>
+        <div class="spec-row"><span class="s-label">Year / Model</span><span class="s-val">1988 Lincoln Town Car Signature</span></div>
+        <div class="spec-row"><span class="s-label">Engine</span><span class="s-val">5.0L Windsor V8</span></div>
+        <div class="spec-row"><span class="s-label">Original Miles</span><span class="s-val">31,511</span></div>
+        <div class="spec-row"><span class="s-label">Exterior</span><span class="s-val">Ivory</span></div>
+        <div class="spec-row"><span class="s-label">Interior</span><span class="s-val">Tan leather</span></div>
+        <div class="spec-row"><span class="s-label">Instruments</span><span class="s-val">Digital cluster</span></div>
+        <div class="spec-row"><span class="s-label">Provenance</span><span class="s-val">Original window sticker + service logs 2009–2022</span></div>
+        <div class="spec-row"><span class="s-label">Hub Location</span><span class="s-val">Hazen, ND (NC Hub)</span></div>
+        <div class="spec-row"><span class="s-label">Title</span><span class="s-val">Clean ND</span></div>
+        <div class="spec-row"><span class="s-label">Asking</span><span class="s-val">$8,000–$16,000</span></div>
+      </div>
+      <div class="specs-block">
+        <h3>Provenance &amp; Documentation</h3>
+        <div class="spec-row"><span class="s-label">Window Sticker</span><span class="s-val">Original — on hand</span></div>
+        <div class="spec-row"><span class="s-label">Service Records</span><span class="s-val">2009–2022 maintenance logs</span></div>
+        <div class="spec-row"><span class="s-label">Survivor Status</span><span class="s-val">Unrestored, preserved original</span></div>
+        <div class="spec-row"><span class="s-label">Inspection</span><span class="s-val">Hazen, ND — by appointment</span></div>
+        <div class="spec-row"><span class="s-label">Contact</span><span class="s-val">Kenyon Jones (701) 870-5235</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MKZ SECTION -->
+  <div>
+    <div class="section-label">North Central Hub · Modern Hybrid</div>
+    <div class="section-title">2016 Lincoln MKZ Hybrid</div>
+    <div class="section-meta">~100,000 miles · 41 MPG city · Bonded title in process · $4,000–$12,000</div>
+    <div class="gallery-strip">
+      <div id="gallery-mkz"></div>
+    </div>
+    <div class="two-col">
+      <div class="specs-block">
+        <h3>MKZ Specifications</h3>
+        <div class="spec-row"><span class="s-label">Year / Model</span><span class="s-val">2016 Lincoln MKZ Hybrid</span></div>
+        <div class="spec-row"><span class="s-label">Powertrain</span><span class="s-val">Hybrid — 41 MPG city</span></div>
+        <div class="spec-row"><span class="s-label">Miles</span><span class="s-val">~100,000</span></div>
+        <div class="spec-row"><span class="s-label">Roof</span><span class="s-val">Retractable panoramic glass</span></div>
+        <div class="spec-row"><span class="s-label">Infotainment</span><span class="s-val">SYNC 8" touchscreen</span></div>
+        <div class="spec-row"><span class="s-label">Hub Location</span><span class="s-val">Hazen, ND (NC Hub)</span></div>
+        <div class="spec-row"><span class="s-label">Title</span><span class="s-val">Bonded — CA origin, ND in process</span></div>
+        <div class="spec-row"><span class="s-label">Asking</span><span class="s-val">$4,000–$12,000</span></div>
+      </div>
+      <div class="specs-block">
+        <h3>Title &amp; Disclosures</h3>
+        <div class="spec-row"><span class="s-label">Title Type</span><span class="s-val">Rebuilt/bonded — CA origin salvage</span></div>
+        <div class="spec-row"><span class="s-label">ND Bonded Title</span><span class="s-val">In process — NDCC §39-05-20.3</span></div>
+        <div class="spec-row"><span class="s-label">12V Battery</span><span class="s-val">Needs AGM/glass mat deep-cycle recharge</span></div>
+        <div class="spec-row"><span class="s-label">Doc Chain</span><span class="s-val">Complete — CA BOS, Zelle records, transport</span></div>
+        <div class="spec-row"><span class="s-label">Inspection</span><span class="s-val">Hazen, ND — by appointment</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-block">
+    <h3>Inquire on the ND Collection</h3>
+    <p>Both vehicles located at the North Central Logistics Hub — Hazen, ND.<br>
+    Kenyon Jones handles all pricing and closing · (701) 870-5235</p>
+    <div class="contact-btns">
+      <a href="tel:7018705235" class="btn-primary">Call (701) 870-5235</a>
+      <a href="sms:8667362349?body=Hi, I'm interested in the North Central Logistics Hub Heritage Lincoln pair" class="btn-secondary">Text About Lincoln Pair</a>
+      <a href="../autobad.html#contact" class="btn-secondary">Submit Inquiry Form</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  AutoBäad · Arc Badlands Compute LLC · Hazen, ND 58545 · (701) 870-5235 · <a href="../autobad.html">← All Vehicles</a>
+</footer>
+
+<script src="../gallery.js"></script>
+<script>
+  loadFleetGallery('TownCar', 19, '..', 'gallery-towncar');
+  loadFleetGallery('MKZ', 7, '..', 'gallery-mkz');
+</script>
 </body>
 </html>

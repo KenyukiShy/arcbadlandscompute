@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -v 'meta\\\\.json$')",
+      "Bash(grep '\\\\.jpg\\\\.meta\\\\.json$')",
+      "Bash(grep '\\\\.meta\\\\.json$')",
+      "Bash(grep -v '^meta\\\\.json$')",
+      "Bash(grep -E '\\\\.\\(html|js|md\\)$')",
+      "Bash(git ls-remote *)",
+      "Bash(cp /mnt/chromeos/MyFiles/Downloads/Arc-Badlands-Site/gallery.js /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site/gallery.js)",
+      "Bash(cp /mnt/chromeos/MyFiles/Downloads/Arc-Badlands-Site/f350.html /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site/f350.html)",
+      "Bash(cp /mnt/chromeos/MyFiles/Downloads/Arc-Badlands-Site/jayco.html /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site/jayco.html)",
+      "Bash(cp /mnt/chromeos/MyFiles/Downloads/Arc-Badlands-Site/mkz.html /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site/mkz.html)",
+      "Bash(cp /mnt/chromeos/MyFiles/Downloads/Arc-Badlands-Site/towncar.html /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site/towncar.html)",
+      "Bash(git -C /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site status --short)",
+      "Bash(git -C /mnt/chromeos/MyFiles/arcbadlands-site/arcbadlands-site log --oneline -3)"
+    ]
+  }
+}

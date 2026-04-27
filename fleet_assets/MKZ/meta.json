@@ -1,0 +1,15 @@
+{
+  "asset": "2016 Lincoln MKZ Hybrid",
+  "hub": "North Central Logistics Hub",
+  "location": "Hazen, ND",
+  "panoramic_roof": "Yes",
+  "files": [
+    "01_MKZ_Front.jpg",
+    "02_MKZ_Dash.webp",
+    "03_MKZ_Gauges.jpg",
+    "04_MKZ_Sync.webp",
+    "05_MKZ_Shifter.avif",
+    "06_MKZ_Grille.webp",
+    "07_MKZ_Roof.webp"
+  ]
+}
