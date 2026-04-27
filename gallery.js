@@ -1,32 +1,33 @@
-async function loadFleetGallery(folder, count, basePath, targetId) {
-    if (basePath === undefined) basePath = '.';
-    if (targetId === undefined) targetId = 'gallery-target';
-    const container = document.getElementById(targetId);
-    if (!container) { console.warn(`gallery-target #${targetId} not found`); return; }
+async function loadFleetGallery(folder, count, prefix) {
+    const container = document.getElementById('gallery-target');
+    const isSubDir = window.location.pathname.includes('/combos/');
+    const basePath = isSubDir ? '../fleet_assets' : './fleet_assets';
+    const extensions = ['jpg', 'webp', 'avif'];
 
-    let manifest;
-    try {
-        const mr = await fetch(`${basePath}/fleet_assets/${folder}/meta.json`);
-        manifest = await mr.json();
-    } catch(e) {
-        console.warn(`Missing manifest for ${folder}`);
-        return;
-    }
+    for (let i = 1; i <= count; i++) {
+        const id = i.toString().padStart(2, '0');
+        let found = false;
+        for (const ext of extensions) {
+            const filename = `${id}_${prefix}.${ext}`;
+            try {
+                const response = await fetch(`${basePath}/${folder}/${filename}.meta.json`);
+                if (!response.ok) continue;
+                const meta = await response.json();
+                const title = meta.title || meta.upper_caption || "Asset Detail";
+                const high = meta.upper_caption || meta.caption_high || "";
+                const low = meta.caption_low || meta.lower_caption || "";
 
-    const files = (manifest.files || []).slice(0, count);
-    for (const filename of files) {
-        try {
-            const response = await fetch(`${basePath}/fleet_assets/${folder}/${filename}.meta.json`);
-            const meta = await response.json();
-            container.innerHTML += `
-                <div class="photo-card">
-                    <img src="${basePath}/fleet_assets/${folder}/${filename}" alt="${meta.title}">
-                    <div class="caption">
-                        <h4>${meta.title}</h4>
-                        <p><strong>${meta.subtitle}</strong></p>
-                        <p>${meta.upper_caption}</p>
-                    </div>
-                </div>`;
-        } catch (e) { console.warn(`Missing meta for ${filename}`); }
+                container.innerHTML += `
+                    <div class="photo-card" onclick="openLightbox(this)">
+                        <img src="${basePath}/${folder}/${filename}" alt="${title}">
+                        <div class="caption">
+                            <h4>${title}</h4>
+                            <p>${high}</p>
+                            <small>${low}</small>
+                        </div>
+                    </div>`;
+                found = true; break;
+            } catch (e) { continue; }
+        }
     }
 }
