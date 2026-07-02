@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoBäad Outreach Tracker v2</title>
+<style>
+:root{
+  --navy:#1b2b4b; --navy2:#243a63; --gold:#b8860b; --green:#1a5c38; --red:#8b1a1a;
+  --orange:#c96a00; --gray:#4a4a4a; --lgray:#d8d8d8; --llgray:#f2f2f2; --bg:#f7f6f3;
+  --white:#fff; --mint:#ebf5ee; --goldbg:#fdf6e3; --blue:#ebf0f8;
+  --nd-accent:#2c5f8a; --ga-accent:#2e7d32;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:#222;
+  padding:0 0 60px 0;
+}
+/* TOP BAR */
+.topbar{
+  background:linear-gradient(135deg,var(--navy),var(--navy2)); color:#fff;
+  padding:18px 24px 14px; position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,.3);
+}
+.topbar h1{margin:0 0 3px; font-size:20px; letter-spacing:.3px;}
+.topbar .sub{font-size:12px; color:#cdd6e8;}
+
+/* LAYOUT: main area + sidebar */
+.outer{display:flex; gap:0; min-height:calc(100vh - 60px);}
+.main-col{flex:1; min-width:0; padding:16px 16px 40px;}
+.sidebar{
+  width:320px; min-width:300px; background:#fff; border-left:1px solid var(--lgray);
+  padding:16px 14px; position:sticky; top:60px; height:calc(100vh - 60px);
+  overflow-y:auto; flex-shrink:0;
+}
+@media(max-width:900px){
+  .outer{flex-direction:column;}
+  .sidebar{width:100%; position:static; height:auto; border-left:none; border-top:1px solid var(--lgray);}
+}
+
+/* REGION GATE */
+.region-gate{
+  background:#fff; border:2px solid var(--lgray); border-radius:10px;
+  padding:28px 24px; text-align:center; margin-bottom:18px;
+}
+.region-gate h2{margin:0 0 8px; color:var(--navy); font-size:18px;}
+.region-gate p{margin:0 0 18px; color:var(--gray); font-size:14px;}
+.region-btns{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+.region-btn{
+  padding:12px 28px; border:2px solid; border-radius:8px; font-size:15px;
+  font-weight:bold; cursor:pointer; background:#fff; transition:all .2s;
+}
+.region-btn.nd{border-color:var(--nd-accent); color:var(--nd-accent);}
+.region-btn.ga{border-color:var(--ga-accent); color:var(--ga-accent);}
+.region-btn.nd:hover,.region-btn.nd.active{background:var(--nd-accent); color:#fff;}
+.region-btn.ga:hover,.region-btn.ga.active{background:var(--ga-accent); color:#fff;}
+
+/* CAT GATE (shows after region) */
+.cat-gate{
+  display:none; background:#fff; border:1px solid var(--lgray); border-radius:8px;
+  padding:18px 20px; margin-bottom:18px; text-align:center;
+}
+.cat-gate.visible{display:block;}
+.cat-gate h3{margin:0 0 12px; color:var(--navy); font-size:16px;}
+.cat-btns{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+.cat-btn{
+  padding:8px 20px; border:1.5px solid var(--lgray); border-radius:6px; font-size:13px;
+  font-weight:bold; cursor:pointer; background:#fff; color:var(--gray); transition:all .15s;
+}
+.cat-btn:hover{border-color:var(--navy); color:var(--navy);}
+.cat-btn.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+.cat-btn.active.consignment{background:var(--green); border-color:var(--green);}
+.cat-btn.active.auction{background:var(--red); border-color:var(--red);}
+.cat-btn.active.direct{background:var(--orange); border-color:var(--orange);}
+
+/* CONTENT AREA (hidden until gated) */
+.content-area{display:none;}
+.content-area.visible{display:block;}
+
+/* INTRO */
+.intro{
+  background:var(--white); border:1px solid var(--lgray); border-left:6px solid var(--gold);
+  border-radius:6px; padding:14px 16px; margin-bottom:14px; font-size:13.5px; line-height:1.5;
+}
+.intro h2{margin:0 0 6px; font-size:15px; color:var(--navy);}
+
+/* CONTROLS */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:14px;}
+button.ctl{
+  background:var(--navy); color:#fff; border:none; padding:8px 13px; border-radius:5px;
+  font-size:12.5px; cursor:pointer; font-weight:bold;
+}
+button.ctl.alt{background:#fff; color:var(--navy); border:1px solid var(--navy);}
+button.ctl:hover{opacity:.88;}
+select.filter{padding:7px 9px; border-radius:5px; border:1px solid var(--lgray); font-size:12.5px;}
+.savebadge{font-size:12px; color:var(--green); margin-left:auto; opacity:0; transition:opacity .3s;}
+.savebadge.show{opacity:1;}
+
+/* SUMMARY TABLE */
+.tablewrap{overflow-x:auto; background:#fff; border:1px solid var(--lgray); border-radius:6px; margin-bottom:18px;}
+table.summary{width:100%; border-collapse:collapse; font-size:12px;}
+table.summary th{
+  background:var(--navy); color:#fff; text-align:left; padding:7px 9px;
+}
+table.summary td{padding:6px 9px; border-bottom:1px solid var(--llgray); vertical-align:middle;}
+table.summary tr:hover{background:var(--llgray); cursor:pointer;}
+.pill{display:inline-block; padding:2px 7px; border-radius:10px; font-size:10.5px; font-weight:bold; color:#fff;}
+.tag-truck{background:var(--navy);} .tag-camper{background:var(--orange);}
+.tag-both{background:var(--green);} .tag-towncar{background:#5a2d82;} .tag-mkz{background:#1a6b8a;}
+.tag-tier1{background:#1a5c38;} .tag-tier2{background:#c96a00;} .tag-tier3{background:#8b1a1a;}
+.tag-consignment{background:#1a5c38;} .tag-auction{background:#8b1a1a;} .tag-direct{background:#c96a00;}
+
+/* GROUP HEADERS */
+.grouphead{
+  font-size:14px; font-weight:bold; color:var(--navy); margin:18px 0 7px; padding-bottom:5px;
+  border-bottom:2px solid var(--navy);
+}
+.grouphead.nd{color:var(--nd-accent); border-color:var(--nd-accent);}
+.grouphead.ga{color:var(--ga-accent); border-color:var(--ga-accent);}
+.grouphead.both{color:#5a3a00; border-color:#5a3a00;}
+
+/* CARDS */
+.card{
+  background:#fff; border:1px solid var(--lgray); border-radius:6px; margin-bottom:8px; overflow:hidden;
+}
+.card.highlight-consignment{border-left:4px solid var(--green);}
+.card.highlight-auction{border-left:4px solid var(--red);}
+.card.highlight-direct{border-left:4px solid var(--orange);}
+.card.highlight-both{border-left:4px solid var(--navy);}
+.card-head{
+  display:flex; justify-content:space-between; align-items:center; padding:11px 15px; cursor:pointer; gap:8px;
+}
+.card-head:hover{background:var(--llgray);}
+.card-title{font-weight:bold; font-size:13.5px; color:var(--navy);}
+.card-meta{font-size:11.5px; color:var(--gray);}
+.card-right{display:flex; align-items:center; gap:6px; flex-wrap:wrap; justify-content:flex-end;}
+.chev{font-size:12px; color:var(--gray); transition:transform .2s;}
+.card.open .chev{transform:rotate(90deg);}
+.card-body{display:none; padding:0 16px 16px;}
+.card.open .card-body{display:block;}
+
+/* STATUS PILLS */
+.statuspill{padding:2px 8px; border-radius:10px; font-size:10.5px; font-weight:bold; color:#fff;}
+.stat-notstarted{background:#888;} .stat-contacted{background:#3a6ea5;}
+.stat-followup{background:#c96a00;} .stat-appraisal{background:#9b6b00;}
+.stat-offer{background:#5a8f3c;} .stat-negotiating{background:#b8860b;}
+.stat-contract{background:#1a5c38;} .stat-closing{background:#0e7a6e;}
+.stat-closed{background:#145214;} .stat-payment{background:#0a3d0a;}
+.stat-dead{background:#8b1a1a;}
+
+/* CARD BODY CONTENT */
+.kv{display:grid; grid-template-columns:130px 1fr; gap:3px 8px; font-size:12.5px; margin-bottom:8px;}
+.kv div.k{font-weight:bold; color:var(--gray);}
+.kv div.v{color:#222;}
+h3.sec{font-size:12px; color:var(--gray); text-transform:uppercase; letter-spacing:.4px; margin:14px 0 6px; border-top:1px solid var(--llgray); padding-top:10px;}
+ul.tp{margin:0 0 4px; padding-left:18px; font-size:13px; line-height:1.5;}
+ul.tp li{margin-bottom:3px;}
+
+.smsbox{border:1px solid var(--lgray); border-radius:6px; overflow:hidden; margin-bottom:8px;}
+.smsbox .lbl{padding:6px 11px; font-size:12px; font-weight:bold; color:#fff;}
+.smsbox .msg{padding:9px 11px; font-size:12.5px; background:var(--mint); white-space:pre-wrap; line-height:1.45;}
+.smsbox .att{padding:5px 11px; font-size:11px; font-style:italic; color:var(--gray); background:var(--llgray); display:flex; justify-content:space-between; align-items:center;}
+.copybtn{background:var(--navy); color:#fff; border:none; padding:3px 9px; border-radius:4px; font-size:10.5px; cursor:pointer;}
+.copybtn:hover{opacity:.85;}
+
+/* STATUS GRID */
+.statusgrid{display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; margin-bottom:4px;}
+@media(max-width:600px){.statusgrid{grid-template-columns:1fr;}}
+.field{display:flex; flex-direction:column; gap:2px;}
+.field label{font-size:11px; font-weight:bold; color:var(--gray); text-transform:uppercase; letter-spacing:.3px;}
+.field select, .field textarea{
+  padding:6px 7px; border:1px solid var(--lgray); border-radius:4px; font-size:12.5px; font-family:inherit; width:100%;
+}
+.field textarea{min-height:58px; resize:vertical;}
+.hint{font-size:10.5px; color:#888; font-style:italic; margin-top:2px;}
+.con-pre{
+  background:var(--goldbg); border:1px solid #e8d080; border-radius:4px;
+  padding:8px 10px; font-size:12px; margin-top:6px; color:#5a4000;
+}
+
+/* CONTRACT TABLE */
+.contract-table{width:100%; border-collapse:collapse; font-size:12px; margin-top:6px;}
+.contract-table th{background:var(--navy); color:#fff; padding:6px 8px; text-align:left;}
+.contract-table td{padding:5px 8px; border-bottom:1px solid var(--llgray);}
+.contract-table tr:nth-child(even){background:var(--llgray);}
+
+/* SIDEBAR */
+.sidebar h2{font-size:15px; color:var(--navy); margin:0 0 4px;}
+.sidebar .sub{font-size:11.5px; color:var(--gray); margin-bottom:14px;}
+.sb-tabs{display:flex; gap:4px; margin-bottom:12px; flex-wrap:wrap;}
+.sb-tab{
+  padding:5px 10px; border-radius:4px; font-size:12px; font-weight:bold; cursor:pointer;
+  border:1px solid var(--lgray); background:#fff; color:var(--gray); transition:all .15s;
+}
+.sb-tab:hover{border-color:var(--navy); color:var(--navy);}
+.sb-tab.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+.sb-panel{display:none;}
+.sb-panel.active{display:block;}
+
+.vh-card{border:1px solid var(--lgray); border-radius:6px; margin-bottom:10px; overflow:hidden;}
+.vh-head{padding:8px 11px; font-weight:bold; font-size:13px; color:#fff;}
+.vh-body{padding:10px 11px; font-size:12px; line-height:1.6;}
+.vh-body .row{display:grid; grid-template-columns:110px 1fr; gap:2px 6px; margin-bottom:3px;}
+.vh-body .row .lbl{font-weight:bold; color:var(--gray);}
+.vh-body .row .val{color:#222;}
+.vh-tip{
+  background:var(--goldbg); border-left:3px solid var(--gold); border-radius:3px;
+  padding:6px 9px; font-size:11.5px; color:#5a4000; margin-top:8px; font-style:italic;
+}
+
+/* LEGEND */
+.legend{margin-top:4px;}
+.leg-item{display:flex; align-items:flex-start; gap:8px; margin-bottom:10px;}
+.leg-badge{
+  flex-shrink:0; width:68px; text-align:center; padding:3px 6px; border-radius:4px;
+  font-size:11px; font-weight:bold; color:#fff;
+}
+.leg-txt{font-size:12px; line-height:1.45; color:#333;}
+.leg-section{font-size:12px; font-weight:bold; color:var(--navy); margin:12px 0 6px; border-top:1px solid var(--lgray); padding-top:8px;}
+
+/* CONTRACT MODAL */
+.contract-section{
+  background:#fff; border:1px solid var(--lgray); border-radius:6px;
+  padding:14px 16px; margin-bottom:14px;
+}
+.contract-section h3{margin:0 0 10px; color:var(--navy); font-size:14px;}
+
+/* PRE-CONTRACT / POST-CONTRACT STAGES */
+.stage-pipeline{display:flex; flex-wrap:wrap; gap:4px; margin:8px 0;}
+.stage-dot{
+  padding:3px 10px; border-radius:12px; font-size:11px; font-weight:bold; color:#fff;
+  cursor:default;
+}
+.stage-active{opacity:1; box-shadow:0 0 0 2px #fff, 0 0 0 4px var(--gold);}
+.stage-inactive{opacity:.45;}
+
+footer.note{max-width:100%; margin:30px 16px 0; padding:0; font-size:11.5px; color:#888; text-align:center;}
+
+/* ── AUTH GATE ── */
+#authGate{
+  position:fixed; inset:0; background:linear-gradient(135deg,#1b2b4b,#243a63);
+  display:flex; align-items:center; justify-content:center; z-index:9999; padding:20px;
+}
+#authGate.hidden{display:none;}
+.auth-box{
+  background:#fff; border-radius:10px; padding:32px 28px; width:100%; max-width:360px;
+  box-shadow:0 10px 40px rgba(0,0,0,.4); text-align:center;
+}
+.auth-box h2{margin:0 0 6px; color:#1b2b4b; font-size:19px;}
+.auth-box p.sub{margin:0 0 20px; color:#666; font-size:12.5px; line-height:1.5;}
+.auth-box select, .auth-box input{
+  width:100%; padding:10px 11px; border:1px solid #d8d8d8; border-radius:6px;
+  font-size:14px; margin-bottom:12px; font-family:inherit; box-sizing:border-box;
+}
+.auth-box button{
+  width:100%; padding:11px; background:#1b2b4b; color:#fff; border:none; border-radius:6px;
+  font-size:14px; font-weight:bold; cursor:pointer;
+}
+.auth-box button:hover{opacity:.9;}
+.auth-box button:disabled{opacity:.5; cursor:not-allowed;}
+.auth-err{color:#8b1a1a; font-size:12.5px; margin:-4px 0 12px; min-height:16px;}
+.auth-step{display:none;}
+.auth-step.active{display:block;}
+</style>
+</head>
+<body>
+
+<!-- ── AUTH GATE ── -->
+<div id="authGate">
+  <div class="auth-box">
+    <h2>🛻🏕️ AutoBäad Tracker</h2>
+    <p class="sub">Team access only. Select your name to continue.</p>
+
+    <!-- Step 1: name select -->
+    <div class="auth-step active" id="authStepName">
+      <select id="authNameSelect">
+        <option value="">— Select your name —</option>
+        <option value="Doug Appleby">Doug Appleby</option>
+        <option value="Sherrie Appleby">Sherrie Appleby</option>
+        <option value="Kenyon Jones">Kenyon Jones</option>
+        <option value="Charles Perrine">Charles Perrine</option>
+        <option value="Cynthia Ennis">Cynthia Ennis</option>
+      </select>
+      <div class="auth-err" id="authNameErr"></div>
+      <button id="authNameNext">Continue</button>
+    </div>
+
+    <!-- Step 2a: existing user, enter password -->
+    <div class="auth-step" id="authStepLogin">
+      <p class="sub" id="authLoginLabel"></p>
+      <input type="password" id="authLoginPassword" placeholder="Password" autocomplete="current-password">
+      <div class="auth-err" id="authLoginErr"></div>
+      <button id="authLoginBtn">Enter</button>
+    </div>
+
+    <!-- Step 2b: first-time user, set password -->
+    <div class="auth-step" id="authStepSetup">
+      <p class="sub" id="authSetupLabel"></p>
+      <input type="password" id="authSetupPassword" placeholder="Choose a password" autocomplete="new-password">
+      <input type="password" id="authSetupPassword2" placeholder="Confirm password" autocomplete="new-password">
+      <div class="auth-err" id="authSetupErr"></div>
+      <button id="authSetupBtn">Set Password &amp; Enter</button>
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <h1>🛻🏕️ AutoBäad Outreach Tracker</h1>
+  <div class="sub">Shared live status board — Kenyon, Sherrie, Doug, Charles, Cynthia. Changes save automatically across all users.</div>
+</div>
+
+<div class="outer">
+<div class="main-col">
+
+  <!-- ── REGION GATE ── -->
+  <div class="region-gate" id="regionGate">
+    <h2>Select Region to Begin</h2>
+    <p>Vehicle inventory is split by region. Choose which market you are working today.</p>
+    <div class="region-btns">
+      <button class="region-btn nd" onclick="selectRegion('nd')">🏔️ North Dakota &amp; Surrounding<br><small>Town Car · MKZ</small></button>
+      <button class="region-btn ga" onclick="selectRegion('ga')">🌿 Georgia &amp; Surrounding<br><small>F-350 King Ranch · Jayco Eagle HT</small></button>
+    </div>
+  </div>
+
+  <!-- ── CAT GATE ── -->
+  <div class="cat-gate" id="catGate">
+    <h3 id="catGateTitle">Select Category</h3>
+    <div class="cat-btns" id="catBtns"></div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="content-area" id="contentArea">
+
+    <div class="intro" id="introBox">
+      <h2>General Introduction — applies to all engagements</h2>
+      <span id="introText"></span>
+    </div>
+
+    <div class="controls">
+      <button class="ctl" id="expandAllBtn">Expand All</button>
+      <button class="ctl alt" id="collapseAllBtn">Collapse All</button>
+      <button class="ctl alt" onclick="selectRegion(null)">← Change Region</button>
+      <select class="filter" id="filterAssigned">
+        <option value="all">Anyone Assigned</option>
+        <option value="Kenyon">Kenyon</option>
+        <option value="Sherrie">Sherrie</option>
+        <option value="Doug">Doug</option>
+        <option value="Charles">Charles</option>
+        <option value="Cynthia">Cynthia</option>
+        <option value="Unassigned">Unassigned</option>
+      </select>
+      <span class="savebadge" id="saveBadge">✓ Saved</span>
+    </div>
+
+    <!-- Contract summary table -->
+    <div class="contract-section" id="contractSection">
+      <h3>📋 Contract &amp; Pipeline Summary</h3>
+      <div class="tablewrap">
+        <table class="summary" id="summaryTable">
+          <thead>
+            <tr>
+              <th>Engagement</th><th>Vehicle</th><th>Type</th><th>Tier</th><th>Phone</th><th>Assigned</th><th>Stage</th>
+            </tr>
+          </thead>
+          <tbody id="summaryBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="cardsContainer"></div>
+
+  </div><!-- /content-area -->
+
+</div><!-- /main-col -->
+
+<!-- ── RIGHT SIDEBAR ── -->
+<div class="sidebar">
+  <h2>Reference Panel</h2>
+  <div class="sub" id="sidebarContext">Select a region and engagement to see details.</div>
+
+  <div class="sb-tabs">
+    <div class="sb-tab active" onclick="sbTab('vehicles')">Vehicles</div>
+    <div class="sb-tab" onclick="sbTab('legend')">Legend</div>
+    <div class="sb-tab" onclick="sbTab('contacts')">Contacts</div>
+  </div>
+
+  <!-- VEHICLES PANEL -->
+  <div class="sb-panel active" id="panel-vehicles">
+    <div id="vehicleCards">
+      <p style="font-size:12px;color:#888;">Select a region to see vehicle details.</p>
+    </div>
+  </div>
+
+  <!-- LEGEND PANEL -->
+  <div class="sb-panel" id="panel-legend">
+    <div class="legend">
+      <div class="leg-section">Channel Priority Tiers</div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#1a5c38;">Tier 1</div>
+        <div class="leg-txt"><strong>They come to you.</strong> Photographer/appraiser dispatched to your location at no charge. Highest leverage — start here.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#c96a00;">Tier 2</div>
+        <div class="leg-txt"><strong>Fee or transport required.</strong> They dispatch with a charge, or they'll appraise if you bring the vehicle to them. Work in parallel with Tier 1.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#8b1a1a;">Tier 3</div>
+        <div class="leg-txt"><strong>You do all the work.</strong> Self-submit, auction lotting, or direct sale where you coordinate photography, transport, and listing. Last resort or parallel fallback.</div>
+      </div>
+
+      <div class="leg-section">Channel Types</div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#1a5c38;">Consignment</div>
+        <div class="leg-txt">Dealer lists your vehicle on consignment. You retain ownership until sale. Best for maximizing net return.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#8b1a1a;">Auction</div>
+        <div class="leg-txt">Hard cash close at live or online auction. Fastest liquidity but lowest ceiling. BaT (Bring a Trailer) is a premium online auction with collector buyers.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#c96a00;">Direct Sale</div>
+        <div class="leg-txt">Dealer or private buyer purchases outright. Fastest transaction but typically a wholesale floor. Use as a floor number, not a target.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#1b2b4b;">BaT Proxy</div>
+        <div class="leg-txt">Dealer manages your Bring a Trailer listing, photography, write-up, and Q&A. You get BaT exposure without self-submitting. Usually bundled with consignment.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#555;">Self-Submit</div>
+        <div class="leg-txt">You build the listing yourself (BaT, RV Trader, etc.). Full control but 100% on you for photos, copy, Q&A, and logistics.</div>
+      </div>
+
+      <div class="leg-section">Regions</div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#2c5f8a;">ND Region</div>
+        <div class="leg-txt">North Dakota &amp; surrounding — Town Car (Hazen ND) and MKZ (Beulah ND, at Lucky's Towing). Auction houses: Resource Auction, Ulmer, Steffes, Neumiller.</div>
+      </div>
+      <div class="leg-item">
+        <div class="leg-badge" style="background:#2e7d32;">GA Region</div>
+        <div class="leg-txt">Georgia &amp; surrounding — F-350 King Ranch and Jayco Eagle HT both stored in Douglasville GA. On-site contacts: Sherrie &amp; Doug Appleby.</div>
+      </div>
+
+      <div class="leg-section">Pipeline Stages</div>
+      <div style="font-size:11.5px;line-height:2;color:#333;">
+        <span class="statuspill stat-notstarted">Not Started</span> →
+        <span class="statuspill stat-contacted">Contacted</span> →
+        <span class="statuspill stat-followup">Follow-up Sched.</span> →
+        <span class="statuspill stat-appraisal">Appraisal Done</span> →
+        <span class="statuspill stat-offer">Offer Received</span> →
+        <span class="statuspill stat-negotiating">Negotiating</span> →
+        <span class="statuspill stat-contract">Contract Sent</span> →
+        <span class="statuspill stat-contract">Contract Signed</span> →
+        <span class="statuspill stat-closing">Closing Sched.</span> →
+        <span class="statuspill stat-closed">Closed/Sold</span> →
+        <span class="statuspill stat-payment">Payment Recv'd</span>
+        <br><span class="statuspill stat-dead">Declined/Dead</span> — use if engagement is terminated
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACTS PANEL -->
+  <div class="sb-panel" id="panel-contacts">
+    <div style="font-size:12px;line-height:1.7;">
+      <strong>Kenyon Jones (Owner/Operator)</strong><br>
+      📞 (701) 870-5235 / 5325<br>
+      📧 kjonesmle@gmail.com<br><br>
+      <strong>Cynthia Ennis (Auth. Rep — ND)</strong><br>
+      📞 (701) 946-5731<br>
+      📧 thia@shy2shy.com<br><br>
+      <strong>Sherrie Appleby (On-Site — GA)</strong><br>
+      Available for photos, showings, pre-purchase inspection in Douglasville GA.<br><br>
+      <strong>Doug Appleby (On-Site — GA)</strong><br>
+      On-site GA contact, vehicles stored at his location.<br><br>
+      <hr style="border:none;border-top:1px solid #eee;margin:10px 0;">
+      <strong>Vehicle Locations</strong><br>
+      🛻 F-350 King Ranch: Lighthouse Storage, Douglasville GA<br>
+      🏕️ Jayco Eagle HT: Douglasville GA (same lot)<br>
+      🚗 1988 Town Car: Hazen/Beulah ND (Kenyon's location)<br>
+      🚙 2016 MKZ Hybrid: Lucky's Towing &amp; Repair, 812 2nd St NW, Beulah ND 58523<br><br>
+      <strong>ND Auction Contacts</strong><br>
+      Resource Auction — Matt: (701) 757-4015<br>
+      Ulmer Auction — Carson: (701) 621-0429<br>
+      Steffes Auction: (701) 237-9173<br>
+      Neumiller Auctions: (701) 252-9111
+    </div>
+  </div>
+
+</div><!-- /sidebar -->
+</div><!-- /outer -->
+
+<footer class="note">AutoBäad / Arc Badlands Compute LLC liquidation tracker · Kenyon Jones, Hazen ND · Data shared across all users viewing this page.</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// window.storage SHIM — this file is now hosted on GitHub Pages,
+// not run as a Claude Artifact, so the real window.storage API
+// doesn't exist. This redirects the same get/set calls used
+// throughout this file to a Firestore-backed endpoint instead.
+// EDIT THIS URL if the Cloud Run service address ever changes.
+// ═══════════════════════════════════════════════════════════
+const TRACKER_API_BASE = "https://commplex-api-xu5neiqofa-uc.a.run.app/tracker-storage";
+
+window.storage = {
+  async get(key, shared){
+    try{
+      const res = await fetch(`${TRACKER_API_BASE}/${encodeURIComponent(key)}`);
+      if(res.status === 404) return null;
+      if(!res.ok) throw new Error(`storage.get failed: ${res.status}`);
+      return await res.json();
+    }catch(e){ console.error("storage.get error", e); return null; }
+  },
+  async set(key, value, shared){
+    try{
+      const res = await fetch(`${TRACKER_API_BASE}/${encodeURIComponent(key)}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({value})
+      });
+      if(!res.ok) throw new Error(`storage.set failed: ${res.status}`);
+      return await res.json();
+    }catch(e){ console.error("storage.set error", e); return null; }
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════
+const PEOPLE = ["Unassigned","Kenyon","Sherrie","Doug","Charles","Cynthia"];
+const STAGES = [
+  "Not Started","Contacted","Follow-up Scheduled","Appraisal / Photography Done",
+  "Offer Received","Negotiating","Contract Sent","Contract Signed",
+  "Closing Scheduled","Closed / Sold","Payment Received","Declined / Dead"
+];
+const STAGE_CLASS = {
+  "Not Started":"stat-notstarted","Contacted":"stat-contacted","Follow-up Scheduled":"stat-followup",
+  "Appraisal / Photography Done":"stat-appraisal","Offer Received":"stat-offer","Negotiating":"stat-negotiating",
+  "Contract Sent":"stat-contract","Contract Signed":"stat-contract","Closing Scheduled":"stat-closing",
+  "Closed / Sold":"stat-closed","Payment Received":"stat-payment","Declined / Dead":"stat-dead"
+};
+const FOLLOWUP_TYPES = [
+  "— none yet —",
+  "Photography — they dispatch, no charge (Tier 1)",
+  "Photography — they dispatch, with fee (Tier 2)",
+  "Appraisal — we tow/drive to them",
+  "Appraisal — remote from photos/video",
+  "BaT listing write-up review",
+  "Negotiation call / counter-offer",
+  "Consignment agreement / paperwork",
+  "Auction submission / lotting",
+  "Pre-auction inspection appointment",
+  "Pre-contract title review",
+  "Direct sale meeting / walkthrough",
+  "Transport / logistics coordination",
+  "Title & payment coordination",
+  "Post-sale payment confirmation",
+  "Other / custom"
+];
+
+// ═══════════════════════════════════════════════════════════
+// ENGAGEMENT DATA
+// ═══════════════════════════════════════════════════════════
+function E(id, region, vehicle, tier, channelType, name, type, address, contact, talkingPoints, sms, attach, smsColor, preNotes){
+  return {id, region, vehicle, tier, channelType, name, type, address, contact, talkingPoints, sms, attach, smsColor, preNotes:preNotes||""};
+}
+
+// channelType: "consignment" | "auction" | "direct" | "both" | "self"
+const ENGAGEMENTS = [
+
+// ──────────────────────────────────────────────────────────
+//  ND REGION — TOWN CAR
+// ──────────────────────────────────────────────────────────
+E("tc-resourceauction","nd","towncar","Tier 1","auction","Resource Auction (Grand Forks ND)","Auction — Classic Car Block",
+  "3350 S Columbia Rd Ste A, Grand Forks, ND 58201",
+  "Matt · (701) 757-4015 · resourceauction.com",
+  [
+    "Photos taken — photography contract signed at ~1–2% of stated vehicle value",
+    "BaT comparable: 34k-mi 1988 Town Car sold $8,201 (Jul 2025), 30k-mi 1987 Signature sold $10,512 (Nov 2025)",
+    "Target: $9,500 reserve, realistic hammer $10,000–$14,000 with proper presentation",
+    "Lead with: 31,511 actual original miles — top 1% surviving Town Car by odometer",
+    "Windsor Velour interior is a collector premium — does not crack like leather",
+    "Clean ND title in hand, zero liens — immediate straightforward transfer",
+    "Cynthia Ennis (701) 946-5731 can be present for any intake or inspection"
+  ],
+  "Matt — Kenyon Jones. Following up on the 1988 Lincoln Town Car Signature, VIN 1LNBM82FXJY779113. 31,511 actual original miles. Oxford White, Windsor Velour interior, wire spoke wheels, landau roof. Clean ND title. Photos have been taken. Packet attached. Would love to confirm the auction date and lotting details. (701) 870-5235",
+  "TownCar_SalesPacket_v4.docx","#5a2d82",
+  "Photos done. Photographer contract signed (1–2% of stated value). Confirm auction date, reserve confirmation, and lot number."),
+
+E("tc-ulmer","nd","towncar","Tier 1","auction","Ulmer Auction (Ashley ND)","Auction",
+  "9610 51st Ave SE, Ashley, ND 58413",
+  "Carson · (701) 535-1611 / (701) 621-0429 · Carson@ulmerauction.com",
+  [
+    "Photos taken — photography contract signed at ~1–2% of stated vehicle value",
+    "Strong regional ND reach — agricultural/rural buyer base responds to classic domestic iron",
+    "Emphasize clean ND title, local provenance — Hazen ND history is a positive",
+    "Ask: classic car vs. general consignment block? Classic car block gets better collector bidders"
+  ],
+  "Carson — Kenyon Jones. Following up on the 1988 Lincoln Town Car Signature. 31,511 original miles, Oxford White, clean ND title, VIN 1LNBM82FXJY779113. Photos have been taken and we have a full sales packet with BaT comps. What upcoming auction block would this fit? (701) 870-5235",
+  "TownCar_SalesPacket_v4.docx","#5a2d82",
+  "Photos done. Photographer contract signed. Confirm block type (classic vs. general), reserve discussion, and lot scheduling."),
+
+E("tc-steffes","nd","towncar","Tier 2","auction","Steffes Auction (Fargo ND)","Auction",
+  "2000 Auction Frontage Rd, Fargo, ND 58103",
+  "Steffes Group · (701) 237-9173 · steffesgroup.com",
+  [
+    "Phone call initiated by Kenyon — not yet at photos/contract stage",
+    "Steffes has strong classic/collector vehicle consignment catalog",
+    "Next step: confirm interest, schedule photography, discuss reserve",
+    "BaT comp data available in sales packet to support any reserve discussion"
+  ],
+  "Hi — Kenyon Jones. We spoke recently about a 1988 Lincoln Town Car Signature I have in Hazen ND. 31,511 original miles, Oxford White, clean ND title. I have a full sales packet with BaT auction comps showing $10K–$14K is achievable with proper presentation. Would love to move forward — can we talk about getting photos scheduled and confirming the lot? (701) 870-5235",
+  "TownCar_SalesPacket_v4.docx","#8b1a1a",
+  "Phone call started by Kenyon. Not yet at photos stage. Next: confirm interest and move to photography scheduling."),
+
+E("tc-neumiller","nd","towncar","Tier 2","auction","Neumiller Auctions (Jamestown ND)","Auction",
+  "600 Business Loop, Jamestown, ND 58401",
+  "Neumiller · (701) 252-9111 · neumillerauctions.com",
+  [
+    "Phone call initiated by Kenyon — not yet at photos/contract stage",
+    "Next step: confirm auction calendar, interest in classic vehicle lots",
+    "Smaller regional operation — may be faster to schedule and lot"
+  ],
+  "Hi — Kenyon Jones. We spoke about a 1988 Lincoln Town Car Signature in Hazen ND — 31,511 original miles, Oxford White, clean ND title. I have a full packet with auction comps. Wanted to follow up and confirm next steps for getting it lotted. (701) 870-5235",
+  "TownCar_SalesPacket_v4.docx","#8b1a1a",
+  "Phone call started by Kenyon. Not yet at photos stage. Confirm auction calendar and interest."),
+
+E("tc-bat","nd","towncar","Self-Submit","self","Bring a Trailer — Direct Submission","BaT Auction (Self-Submit)",
+  "bringatrailer.com/submit",
+  "Online submission — no phone",
+  [
+    "Reserve $9,500 — realistic hammer $10,000–$14,000 with full presentation",
+    "BaT comps: 34k-mi 1988 sold $8,201 (Jul 2025); 30k-mi 1987 sold $10,512 (Nov 2025); 22k-mi 1989 sold $19,300 (Jul 2025)",
+    "Lead write-up: '31,511 original miles — Windsor Velour interior, Oxford White, wire spoke wheels, landau roof, clean ND title'",
+    "Disclose all 4 condition items upfront: door panel, window module, A/C recharge, trim — all factored into ask",
+    "Windsor Velour story: collector premium over leather versions — cloth does not crack, stays plush",
+    "Respond to Q&A within 2 hours during live 7-day auction — final-hour bidding driven by seller responsiveness",
+    "50–80 photos required — full gallery, all four sides, interior, dash, odometer, VIN plate, engine bay"
+  ],
+  "(No SMS — direct online submission at bringatrailer.com/submit. Use sales packet for write-up template.)",
+  "TownCar_SalesPacket_v4.docx","#1b2b4b",
+  "Self-submit. Requires professional photography first. Use BaT comp data in sales packet for write-up."),
+
+// ──────────────────────────────────────────────────────────
+//  ND REGION — MKZ HYBRID
+// ──────────────────────────────────────────────────────────
+E("mkz-resourceauction","nd","mkz","Tier 1","auction","Resource Auction (Grand Forks ND) — MKZ","Auction",
+  "3350 S Columbia Rd Ste A, Grand Forks, ND 58201",
+  "Matt · (701) 757-4015 · resourceauction.com",
+  [
+    "Lead with: bonded title in process (NDCC §39-05-20.3) — complete paper trail, not a 'missing title' situation",
+    "Rebuilt title — 20–40% discount to clean KBB. Clean KBB ceiling $9,735–$11,013, rebuilt retail range $5,500–$8,200",
+    "12V auxiliary battery recharge (~$100–$150) is the only immediate service item",
+    "Hybrid battery expected to continue 50k+ more miles (100k–150k typical life, we're at 100k)",
+    "Cynthia Ennis is authorized rep — can be present for intake/inspection at Lucky's Towing, Beulah",
+    "Vehicle is at Lucky's Towing & Repair, 812 2nd St NW, Beulah ND — direct lot pickup available",
+    "Ask if they handle rebuilt-title vehicles and how the bonded title process affects lotting timeline"
+  ],
+  "Matt — Kenyon Jones. I also have a 2016 Lincoln MKZ Hybrid at Lucky's Towing in Beulah ND (VIN 3LN6L2LUXGR630397). ~100k miles, 41 MPG city, beige/champagne. Rebuilt title — bonded title in process under NDCC §39-05-20.3 with a complete paper trail. Full packet attached. Would this fit your auction or do you do rebuilt-title lots? (701) 870-5235",
+  "MKZ_SalesPacket_v3.docx","#1a6b8a",
+  "Confirm rebuilt-title handling. Bonded title in process — timeline ~3–4 weeks for surety bond. Lot pickup available at Lucky's Towing, Beulah."),
+
+E("mkz-ulmer","nd","mkz","Tier 1","auction","Ulmer Auction (Ashley ND) — MKZ","Auction",
+  "9610 51st Ave SE, Ashley, ND 58413",
+  "Carson · (701) 535-1611 / (701) 621-0429 · Carson@ulmerauction.com",
+  [
+    "Rebuilt title — ask specifically if they accept rebuilt-title vehicles at auction",
+    "Cynthia Ennis authorized rep can coordinate pickup from Lucky's Towing Beulah",
+    "Pricing target: $2,500–$4,500 through dealer, $4,500–$6,500 private/rebuilt-lot channel",
+    "41 MPG city is a strong hook in ND — fuel savings story resonates with rural buyers"
+  ],
+  "Carson — Kenyon Jones. I have a 2016 Lincoln MKZ Hybrid (VIN 3LN6L2LUXGR630397) at Lucky's Towing in Beulah ND. ~100k miles, rebuilt title with bonded title in process. Full packet attached. Do you handle rebuilt-title vehicles at auction? (701) 870-5235",
+  "MKZ_SalesPacket_v3.docx","#1a6b8a",
+  "Confirm rebuilt-title acceptance. Vehicle at Lucky's Towing, Beulah ND — easy pickup."),
+
+E("mkz-ndprivate","nd","mkz","Tier 3","direct","Private Sale — BisManOnline / Facebook / Craigslist","Private Listing (Self-Post)",
+  "bismanonline.com / facebook.com / craigslist.org/bis",
+  "No single contact — self-posted listing",
+  [
+    "Best net return channel: $4,500–$6,500 once bonded title is in hand",
+    "Wait for bonded title before posting (3–4 weeks from application)",
+    "Listing title: '2016 Lincoln MKZ Hybrid — 41 MPG City — 100k Miles — Rebuilt Title — Beulah ND'",
+    "Lead with: 41 MPG city, heated seats, SYNC touchscreen, push-button start, dual-zone climate",
+    "Disclose rebuilt title clearly — buyers who specifically search rebuilt titles are your target",
+    "Vue Community Credit Union (ND) and Mountain America CU both finance rebuilt titles — mention in listing"
+  ],
+  "(Self-posted listing — no SMS. Use listing description from sales packet. Post after bonded title is in hand.)",
+  "MKZ_SalesPacket_v3.docx","#1a6b8a",
+  "Wait for bonded title (~3–4 weeks). Then post on BisManOnline, Facebook Bismarck groups, Craigslist Bismarck."),
+
+E("mkz-instant","nd","mkz","Tier 3","direct","Instant Cash Buyers — CarBrain / Wheelzy","Instant Cash Offer",
+  "carbrain.com / wheelzy.com",
+  "CarBrain: (877) 877-7911 · Wheelzy: (855) 995-4811",
+  [
+    "Fastest channel — this week if needed",
+    "Expected range: $1,000–$2,500 — use as a floor number only",
+    "Get offers from both to create competition",
+    "Do not accept unless all other channels have stalled — this is the nuclear option"
+  ],
+  "Hi — I have a 2016 Lincoln MKZ Hybrid (VIN 3LN6L2LUXGR630397), ~100k miles, rebuilt title, located in Beulah ND. What's your best offer? (701) 870-5235",
+  "MKZ_SalesPacket_v3.docx","#8b1a1a",
+  "Use as floor/fallback only. Get competing offers from both before accepting either."),
+
+// ──────────────────────────────────────────────────────────
+//  GA REGION — TRUCK ONLY
+// ──────────────────────────────────────────────────────────
+E("truck-finnicum","ga","truck","Tier 1","consignment","Finnicum Motor Company (Leesburg GA)","Consignment + BaT Proxy",
+  "1372 US-19, Leesburg, GA 31763",
+  "Tony Tucker · (229) 446-9960 · tony@finnicummotorcompany.com",
+  [
+    "Lead with: 47,000 miles — top 5% surviving Super Duty by odometer",
+    "V10 gas: no diesel headaches, no DEF, no injector risk — collector appeal",
+    "BaT comp: 26k-mi 2000 F-250 V10 sold $31,250 BaT Jan 2026 — confirms $28K–$36K target",
+    "Castaño leather: untreated saddle leather, bright + unstained — $5K–$8K premium over typical",
+    "GA location = rust-free: no Midwest salt exposure",
+    "On-site contacts (Sherrie + Doug Appleby) available for any photo/inspection visit",
+    "Ask: 'Do you have a photographer who covers the Douglasville GA area?'"
+  ],
+  "Hi Tony — Kenyon Jones. I have a 2006 F-350 King Ranch Crew Cab 4x4, VIN 1FTWW31Y86EA12357. 47k actual miles. 6.8L V10 gas. Castaño untreated leather. Factory 5th wheel kingpin hitch. Clean GA title. Stored Douglasville GA. On-site contacts available. Sending full packet — would love to discuss consignment or BaT proxy. (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#1a5c38",
+  "Priority #1 truck contact. Ask about remote dispatch for photography/appraisal."),
+
+E("truck-merlin","ga","truck","Tier 1","consignment","Merlin Auto Group (Atlanta GA)","Consignment + BaT Proxy",
+  "2882 Amwiler Rd, Atlanta, GA 30360",
+  "Dean Spedale · (770) 457-2699 / (770) 790-5415 · dean@merlinautogroup.com",
+  [
+    "25 mi from Douglasville — easiest logistics of any consignment partner",
+    "White-glove, high-end positioning — Merlin buyers are detail-oriented",
+    "Untreated Castaño leather is a known commodity to collectors — emphasize condition",
+    "Ask if they handle the full BaT write-up and Q&A management",
+    "Ask: 'Is it easier for you to send someone or should Sherrie bring it to your lot?'"
+  ],
+  "Hi Dean — Kenyon Jones. I have a 2006 F-350 King Ranch Crew Cab 4x4, VIN 1FTWW31Y86EA12357, 47k actual miles. 6.8L V10 gas. Castaño leather in excellent condition. Factory kingpin hitch. Clean GA title. Currently Douglasville GA — on-site contacts available. Sending full sales packet. Interested in consignment or BaT proxy? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#1a5c38",
+  "Ask whether they send someone out or need the truck brought to Atlanta. 25 min drive for Sherrie."),
+
+E("truck-rkmotors","ga","truck","Tier 1","consignment","RK Motors (Charlotte NC)","Consignment + Direct",
+  "5523 Lakeview Rd, Charlotte, NC 28269",
+  "Brian Kazura · (704) 596-5211 / (980) 500-8650 · brian.kazura@rkmotors.com",
+  [
+    "Elite national facility — top 20% collector trucks only, this qualifies",
+    "National buyer base in AZ/NV/TX pay rust-free/GA-stored premiums",
+    "Charlotte is ~4 hrs from Douglasville — feasible transport",
+    "Ask about their in-house photography/documentation team for consignment"
+  ],
+  "Brian — Kenyon Jones. I have a 2006 F-350 King Ranch Crew Cab, VIN 1FTWW31Y86EA12357, 47k miles, 6.8L V10 gas. Castaño leather, factory 5th wheel hitch, clean GA title, stored Douglasville GA. On-site inspection available. Full packet attached. Open to consignment discussion. (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#1a5c38",
+  "Ask about consignment rate, minimum reserve, and whether they dispatch or need the truck at their lot."),
+
+E("truck-survivor","ga","truck","Tier 2","consignment","Survivor Classic Car Services (Palmetto FL)","Consignment",
+  "2327 S Dock St, Palmetto, FL 34221",
+  "(941) 845-4461 / (813) 358-8830 · info@survivor-cars.com",
+  [
+    "Use their brand language: 'original survivor' — unmolested, unrestored, original miles",
+    "V10 gas King Ranch is increasingly rare vs. all-diesel post-2007 Super Dutys",
+    "Florida buyer pool feeds AZ/NV winter buyers seeking rust-free trucks",
+    "Ask: do they appraise remotely from photos/video first, or require the truck at their lot?"
+  ],
+  "Hi — Kenyon Jones. I have a 2006 F-350 King Ranch, VIN 1FTWW31Y86EA12357, 47k actual miles, V10 gas, Castaño leather. Unrestored original survivor — clean GA title. Douglasville GA. Sending full packet. Would love to discuss consignment. (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#c96a00",
+  "Frame as 'original survivor' — their niche. Ask about remote appraisal vs. lot requirement."),
+
+E("truck-vault","ga","truck","Tier 2","consignment","The Vault Auto Group (Kennesaw GA)","Consignment + BaT Proxy",
+  "1275 Shiloh Rd Ste 2411, Kennesaw, GA 30144 (~30 min from Douglasville)",
+  "JD Pass / Shana · (470) 922-5225 · thevaultms@gmail.com",
+  [
+    "~30 min from Douglasville — Sherrie can drive it there for live appraisal",
+    "Smaller operation = faster personal decisions",
+    "Low review count (9) — confirm active BaT history before committing"
+  ],
+  "JD — Kenyon Jones. I have a 2006 F-350 King Ranch Crew Cab 4x4, VIN 1FTWW31Y86EA12357, 47k miles, V10 gas, Castaño leather. Clean GA title, Douglasville GA. Full packet attached. Interested in consignment or BaT proxy? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#c96a00",
+  "30 min from Douglasville — easy for Sherrie to drive truck there."),
+
+E("truck-streetside","ga","truck","Tier 2","consignment","Streetside Classics (Nashville TN / Charlotte NC)","Consignment",
+  "Nashville: 6000 Reliance Dr, La Vergne TN · Charlotte: 800 Derita Rd Ste A, Concord NC",
+  "Nashville: (615) 930-0600 · Charlotte: (704) 598-2130",
+  [
+    "High volume, fast liquidity — good fallback if Tier 1 stalls",
+    "Nashville ag/country demographic — V10 tow rig resonates",
+    "Ask commission rate and average days to sale on Super Duty trucks"
+  ],
+  "Hi — Kenyon Jones. I have a 2006 F-350 King Ranch Crew Cab 4x4, 47k actual miles, V10 gas, Castaño leather, factory 5th wheel hitch, clean GA title. Douglasville GA. Full packet attached. Interested in consignment at Nashville or Charlotte? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#c96a00",
+  "Use as parallel fallback if Finnicum/Merlin/RK don't convert quickly."),
+
+E("truck-resourceauction-ga","ga","truck","Tier 3","auction","Resource Auction (Grand Forks ND) — Truck","Auction",
+  "3350 S Columbia Rd Ste A, Grand Forks, ND 58201",
+  "Matt · (701) 757-4015 · resourceauction.com",
+  [
+    "Hard cash close — fastest ND liquidity path, lower net than GA consignment",
+    "Truck is in GA — transport to ND required ($1,500–$3,600), factor into any offer",
+    "Lower net expected: $14K–$22K depending on block and attendance"
+  ],
+  "Matt — Kenyon Jones. I have a 2006 F-350 King Ranch Crew Cab 4x4, VIN 1FTWW31Y86EA12357, 47k miles, V10 gas, clean GA title. Currently in Douglasville GA. Have a full sales packet with comps. Would this fit your upcoming auction? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf","#8b1a1a",
+  "Use only if GA consignment channels stall. Transport cost must be factored into net."),
+
+E("truck-bat","ga","truck","Self-Submit","self","Bring a Trailer — Direct Submission","BaT Auction (Self-Submit)",
+  "bringatrailer.com/submit",
+  "Online submission — no phone",
+  [
+    "Reserve $22,000 — floor net ~$20,900 after 5% BaT fee, target $28K–$36K hammer",
+    "Key comp: 26k-mi 2000 F-250 V10 gas sold $31,250 BaT Jan 2026",
+    "Photography: Sherrie on-site, 50–80 photos required before submission",
+    "Lead write-up: '47,000 miles — V10 gas, Castaño leather, factory 5th wheel hitch'",
+    "Respond to Q&A within 2 hours during live 7-day auction"
+  ],
+  "(No SMS — direct submission at bringatrailer.com/submit. Use sales packet for write-up and photo order.)",
+  "F350_SalesPacket_v2.pdf","#1b2b4b",
+  "Requires professional photography first. Run in parallel with any Tier 1 consignment outreach."),
+
+// ──────────────────────────────────────────────────────────
+//  GA REGION — TRUCK + CAMPER PACKAGE
+// ──────────────────────────────────────────────────────────
+E("pkg-rvkountry","ga","both","Tier 1","consignment","RV Kountry (North Fort Myers FL)","Consignment",
+  "1660 N Tamiami Trail, North Fort Myers, FL 33903",
+  "(239) 656-6226 · sales@rvkountry.com",
+  [
+    "Lead with: one owner selling both — buyer can take the complete rig or either piece",
+    "Climate Shield (0°F rated, sleeps 10, ~2,400 mi) is rare in FL market",
+    "V10 truck is factory-matched: kingpin hitch, 18,000 lb GCWR, day-one tow-ready",
+    "Two-stop route: truck to Survivor Classic Cars Tampa/Palmetto, camper 40 min south to RV Kountry Fort Myers",
+    "Ask: can you dispatch someone to document both units?"
+  ],
+  "Hi — Kenyon Jones. I have a turnkey 5th wheel package: 2006 F-350 King Ranch Crew Cab 4x4, 47k miles, V10 gas + 2017 Jayco Eagle HT 26.5BHS bunkhouse, ~2,400 miles, Climate Shield, clean GA titles on both. Douglasville GA. On-site contacts available. Sending full packets — interested in consignment on one or both? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf + Jayco_Eagle_HT_Sales_Packet.docx","#1b2b4b",
+  "100% consignment shop — no new inventory conflict. Strong snowbird buyer pool."),
+
+E("pkg-rvsforless","ga","both","Tier 1","consignment","RVs For Less (Knoxville TN)","Consignment",
+  "8035 Rutledge Pike, Knoxville, TN 37924",
+  "(865) 521-9112 / (865) 933-8253 · rvsforless.net",
+  [
+    "Outdoor/camping demographic understands Climate Shield + Magnum Truss roof",
+    "~5 hrs from Douglasville, feasible one-trip delivery for both units",
+    "Ask about consignment rate and whether they handle multi-unit packages"
+  ],
+  "Hi — Kenyon Jones. I have a matched 5th wheel package: 2006 F-350 King Ranch 4x4, 47k miles, V10 gas, factory kingpin hitch + 2017 Jayco Eagle HT 26.5BHS bunkhouse, ~2,400 miles, Climate Shield 4-season. Both clean GA titles. Douglasville GA. Sending full packets. Open to consignment on both. (701) 870-5235",
+  "F350_SalesPacket_v2.pdf + Jayco_Eagle_HT_Sales_Packet.docx","#1b2b4b",
+  "Build-quality buyers. Mountain demographic. Ask about multi-unit consignment."),
+
+E("pkg-threeway","ga","both","Tier 1","consignment","Three Way Campers (Marietta GA)","Consignment + Direct Sale",
+  "1400 Cobb Pkwy N, Marietta, GA 30062 (~20 min from Douglasville)",
+  "(770) 422-9300 · threewaycampers.com",
+  [
+    "Lead with the Jayco — their primary inventory; truck is secondary",
+    "20 min from Douglasville — Sherrie can deliver the Jayco directly",
+    "Ask if they accept companion vehicle (truck) listings, even informally"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS fifth wheel, ~2,400 miles, Climate Shield 4-season, bunkhouse, clean GA title. Also the tow vehicle: 2006 F-350 King Ranch, 47k miles, V10 gas, factory 5th wheel hitch. Both stored Douglasville GA. Sending full packets. Interested in consignment? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf + Jayco_Eagle_HT_Sales_Packet.docx","#1b2b4b",
+  "Best GA RV consignment (4.7/5, 678 reviews). 20 min from Douglasville."),
+
+E("pkg-cookeville","ga","both","Tier 2","consignment","Cookeville RV (Cookeville TN)","Consignment + Direct Sale",
+  "631 Horace Lewis Rd, Cookeville, TN 38506",
+  "(931) 646-4678 · info@cookevillerv.com",
+  [
+    "Excellent reviews (4.8/5, 1,416 reviews) — highest volume in the list",
+    "TN outdoor/family market — bunkhouse 4-season is a direct match"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS bunkhouse fifth wheel, ~2,400 miles, Climate Shield 4-season, clean GA title. Also the tow vehicle if interested: 2006 F-350 King Ranch 4x4, 47k miles, V10 gas. Both in Douglasville GA. Sending full packet. Interested in consignment? (701) 870-5235",
+  "F350_SalesPacket_v2.pdf + Jayco_Eagle_HT_Sales_Packet.docx","#c96a00",
+  "Parallel call to RVs For Less. High volume = faster turnover."),
+
+E("pkg-conibear","ga","both","Tier 2","consignment","Conibear RV Center (Lakeland FL)","Consignment + Direct Sale",
+  "11636 US Hwy 98 N, Lakeland, FL 33809",
+  "J. Mills · (863) 858-4455 · jmills09@gmail.com",
+  [
+    "Lakeland FL snowbird hub — buyers want complete tow rigs to buy once and travel",
+    "Package deal framing is strong here"
+  ],
+  "Hi J. Mills — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS, ~2,400 miles, 4-season Climate Shield, bunkhouse, clean GA title. Optional: 2006 F-350 King Ranch tow vehicle, 47k miles, V10 gas, factory 5th wheel hitch. Douglasville GA. Interested in consignment? Sending full packets. (701) 870-5235",
+  "F350_SalesPacket_v2.pdf + Jayco_Eagle_HT_Sales_Packet.docx","#c96a00",
+  "Snowbird hub. Package deal framing works well."),
+
+E("pkg-corral","ga","both","Tier 3","auction","Corral Sales RV (Mandan ND) — Jayco Primary","Consignment + Direct Buy",
+  "Submit form first: corralsales.com/sell-your-rv",
+  "(701) 663-9538 · hello@corralsales.com",
+  [
+    "Submit the online form BEFORE calling — per the Jayco sales packet sequence",
+    "Net $24K–$28.5K outright / $24K–$27.5K consignment net",
+    "Lead with Jayco only — not a truck specialist",
+    "No competing 26.5BHS in ND or within 150 miles — zero local competition"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS fifth wheel, ~2,400 miles, Climate Shield 4-season, bunkhouse, all systems operational. Clean GA title, zero liens, VIN 1UJCJ0BPXH1P20237. Currently GA. Submitting your sell form now — just wanted to flag it's coming. Asking $30,000. (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#8b1a1a",
+  "Submit corralsales.com/sell-your-rv form FIRST. Then call same day."),
+
+// ──────────────────────────────────────────────────────────
+//  GA REGION — CAMPER ONLY
+// ──────────────────────────────────────────────────────────
+E("camper-threeway","ga","camper","Tier 1","consignment","Three Way Campers (Marietta GA)","Consignment + Direct Sale",
+  "1400 Cobb Pkwy N, Marietta, GA 30062 (~20 min from Douglasville)",
+  "(770) 422-9300 · threewaycampers.com",
+  [
+    "Lead with: 2,400 miles — barely used, extra clean, no damage/smoke/pets",
+    "Climate Shield (0°F rated) is a major differentiator",
+    "27 of 31 NRVIA points pass; 4 disclosed items already priced into $30,000 ask",
+    "20 min away — Sherrie can bring it directly, no transport cost"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS four-season bunkhouse fifth wheel, approx 2,400 miles, Climate Shield rated to 0°F, all systems operational, extra clean, zero liens, clean GA title. VIN 1UJCJ0BPXH1P20237. Douglasville GA — on-site contact available. Asking $30,000. Sending full packet. Would love to discuss consignment. (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#1a5c38",
+  "Closest GA consignment option. Sherrie can drive it directly (20 min)."),
+
+E("camper-rvkountry","ga","camper","Tier 1","consignment","RV Kountry (North Fort Myers FL)","Consignment",
+  "1660 N Tamiami Trail, North Fort Myers, FL 33903",
+  "(239) 656-6226 · sales@rvkountry.com",
+  [
+    "FL retirees/snowbirds who need a 4-season unit for northern travel — rare in their market",
+    "2,400 miles is effectively brand new for a 2017",
+    "If asked about tow vehicle, mention F-350 V10 is also for sale as a package"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS, ~2,400 miles, 4-season Climate Shield rated 0°F, bunkhouse, all systems run, clean GA title, zero liens. VIN 1UJCJ0BPXH1P20237. Extra clean. Douglasville GA, on-site contacts available. Asking $30,000. Sending full packet. Interested in consignment? (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#1a5c38",
+  "Snowbird buyer pool. Bunkhouse + 4-season combo is rare in FL market."),
+
+E("camper-rvsforless","ga","camper","Tier 1","consignment","RVs For Less (Knoxville TN)","Consignment",
+  "8035 Rutledge Pike, Knoxville, TN 37924",
+  "(865) 521-9112 · rvsforless.net",
+  [
+    "Build-quality buyers understand Magnum Truss roof and MORryde CRE-3000 suspension",
+    "Mountain/camping demographic fits the bunkhouse Jayco well"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS bunkhouse fifth wheel, ~2,400 miles, Climate Shield 4-season, Magnum Truss roof, MORryde CRE-3000. Extra clean, clean GA title, zero liens. VIN 1UJCJ0BPXH1P20237. Douglasville GA. Asking $30,000. Sending full packet. Interested in consignment? (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#1a5c38",
+  "Build-quality buyers. ~5 hrs from Douglasville."),
+
+E("camper-cookeville","ga","camper","Tier 2","consignment","Cookeville RV (Cookeville TN)","Consignment + Direct Sale",
+  "631 Horace Lewis Rd, Cookeville, TN 38506",
+  "(931) 646-4678 · info@cookevillerv.com",
+  [
+    "1,416 reviews — highest volume in the RV list; ask average days to sale",
+    "Nearest competing bunkhouse unit is 282 miles away at $29,995 — send comp page"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS bunkhouse fifth wheel, ~2,400 miles, 4-season Climate Shield, all systems operational, extra clean. Clean GA title, zero liens, VIN 1UJCJ0BPXH1P20237. Asking $30,000. Douglasville GA. Sending full packet. Interested in consignment? (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#c96a00",
+  "Highest review volume. Fast turnover."),
+
+E("camper-conibear","ga","camper","Tier 2","consignment","Conibear RV Center (Lakeland FL)","Consignment + Direct Sale",
+  "11636 US Hwy 98 N, Lakeland, FL 33809",
+  "J. Mills · (863) 858-4455 · jmills09@gmail.com",
+  [
+    "Lakeland FL snowbird hub — full-timers want 4-season capability",
+    "Direct contact (J. Mills) established"
+  ],
+  "J. Mills — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS, ~2,400 miles, 4-season Climate Shield, bunkhouse, extra clean, clean GA title. VIN 1UJCJ0BPXH1P20237. Asking $30,000. Douglasville GA. Sending full packet — interested in consignment? (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#c96a00",
+  "Established contact. Snowbird hub."),
+
+E("camper-corral","ga","camper","Tier 3","auction","Corral Sales RV (Mandan ND) — Jayco Phase 1","Consignment + Direct Buy",
+  "Submit form first: corralsales.com/sell-your-rv",
+  "(701) 663-9538 · hello@corralsales.com",
+  [
+    "Climate Shield: ND requirement, not a nice-to-have — Corral knows this",
+    "No competing 26.5BHS in ND or within 150 miles — zero local competition",
+    "Net ask: outright buy or consignment? Transport/delivery arrangement?",
+    "Submit form BEFORE calling, per the Jayco sales packet sequence"
+  ],
+  "Hi — Kenyon Jones. I have a 2017 Jayco Eagle HT 26.5BHS, ~2,400 miles, 4-season Climate Shield, bunkhouse, all systems operational. Clean GA title, zero liens. VIN 1UJCJ0BPXH1P20237. Submitting your sell form now. Asking $30,000. (701) 870-5325",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#8b1a1a",
+  "Submit corralsales.com/sell-your-rv form FIRST. Then call same day. Priority per sales packet."),
+
+E("camper-rvtrader","ga","camper","Self-Submit","self","RV Trader + National Vehicle — Private Listing","Private Listing (Self-Submit)",
+  "rvtrader.com / nationalvehicle.com",
+  "Online submission — no phone",
+  [
+    "Post National Vehicle first ($99–$149) for the permanent URL — include in every dealer email/SMS",
+    "RV Trader simultaneously (free basic / ~$49 featured)",
+    "Do NOT post Facebook/local ND groups until unit is physically in ND"
+  ],
+  "(No SMS — online listing. Use master listing description and 9-photo set from sales packet.)",
+  "Jayco_Eagle_HT_Sales_Packet.docx","#1b2b4b",
+  "Get National Vehicle permanent URL first — that link goes in every outreach email and SMS."),
+];
+
+// ═══════════════════════════════════════════════════════════
+// VEHICLE SIDEBAR DATA
+// ═══════════════════════════════════════════════════════════
+const VEHICLE_CARDS = {
+  towncar: {
+    label: "1988 Lincoln Town Car Signature",
+    color: "#5a2d82",
+    fields: [
+      ["VIN","1LNBM82FXJY779113"],
+      ["Mileage","31,511 actual original miles"],
+      ["Engine","5.0L HO V8 (Ford 302) · AOD 4-Speed Auto"],
+      ["Exterior","Oxford White · Black Landau Vinyl Roof"],
+      ["Interior","Windsor Velour Split-Bench (Navy Blue)"],
+      ["Wheels","Styled Wire Spoke · Whitewall Tires"],
+      ["Title","Clean North Dakota · Zero Liens"],
+      ["Location","Hazen / Beulah ND — by appointment"],
+      ["Asking","$10,000–$14,000 BaT target · Reserve $9,500"],
+    ],
+    tip: "Windsor Velour stays plush — does not crack like leather. Collector premium over leather versions. BaT comp: 34k-mi 1988 sold $8,201 (Jul 2025). With proper presentation $10K–$14K is realistic.",
+    condition: "Disclosed: driver door panel dry rot (~$200–300), window module repair (~$80–150), A/C needs R134a recharge (~$120–180), minor trim peeling. Total ~$500–700 factored into ask."
+  },
+  mkz: {
+    label: "2016 Lincoln MKZ Hybrid",
+    color: "#1a6b8a",
+    fields: [
+      ["VIN","3LN6L2LUXGR630397"],
+      ["Mileage","~100,000"],
+      ["Engine","2.0L Hybrid CVT · 41 MPG city / 39 MPG hwy"],
+      ["Exterior","Beige / Champagne"],
+      ["Interior","Premium Fabric / Miko Suede · Heated Front Seats"],
+      ["Tech","8\" SYNC Touchscreen · Backup Camera · Push-Button Start"],
+      ["Title","Rebuilt (Bonded Title in Process — NDCC §39-05-20.3)"],
+      ["Location","Lucky's Towing & Repair, 812 2nd St NW, Beulah ND"],
+      ["Pricing","$2,500–$6,500 depending on channel"],
+    ],
+    tip: "Bonded title converts to clean title after 3 years. Complete paper trail: bill of sale, Zelle payment records, seller letters, transport confirmation, active GEICO ND policy. NOT a 'missing title' — title was stolen by transporter.",
+    condition: "12V auxiliary battery needs deep-cycle recharge (~$100–$150). Hybrid drivetrain fully unaffected. Battery expected to continue 50k+ more miles. All other systems functional."
+  },
+  truck: {
+    label: "2006 Ford F-350 King Ranch Crew Cab 4x4",
+    color: "#1b2b4b",
+    fields: [
+      ["VIN","1FTWW31Y86EA12357"],
+      ["Mileage","47,000 actual"],
+      ["Engine","6.8L V10 Gas (no diesel, no DEF)"],
+      ["Exterior","Clean, GA-stored, no rust"],
+      ["Interior","Castaño Leather (untreated saddle) · pristine"],
+      ["Hitch","Factory 5th wheel kingpin hitch installed"],
+      ["Title","Clean GA Title · Zero Liens"],
+      ["Location","Douglasville GA · On-site: Sherrie & Doug Appleby"],
+      ["Target","$28,000–$36,000 BaT range · Reserve $22,000"],
+    ],
+    tip: "BaT comp: 26k-mi 2000 F-250 V10 gas sold $31,250 Jan 2026. GA storage = rust-free premium. Castaño leather is untreated saddle leather — collector-preferred, does not dry-crack.",
+    condition: "No known mechanical issues. V10 gas means no diesel headaches (no DEF, no EGR, no injector risk). Inspection available on-site in Douglasville GA by Sherrie/Doug Appleby."
+  },
+  camper: {
+    label: "2017 Jayco Eagle HT 26.5BHS",
+    color: "#c96a00",
+    fields: [
+      ["VIN","1UJCJ0BPXH1P20237"],
+      ["Mileage","~2,400 actual"],
+      ["Type","Fifth Wheel · Bunkhouse · Double-over-double bunks"],
+      ["GVWR","9,950 lbs · Half-ton towable"],
+      ["4-Season","Climate Shield rated to 0°F · Enclosed heated underbelly"],
+      ["Systems","All operational: furnace, A/C, water heater, stove, fridge, awning"],
+      ["Title","Clean GA Title · Zero Liens"],
+      ["Location","Douglasville GA · On-site: Sherrie & Doug Appleby"],
+      ["Asking","$30,000 · Floor $22,000+"],
+    ],
+    tip: "No competing 26.5BHS in ND or within 150 miles. Nearest comp (rear living, no bunks) is $29,995 in Detroit Lakes MN (282 mi away). Climate Shield is a requirement in ND, not a nice-to-have.",
+    condition: "4 disclosed items: tires (2017 DOT, full tread — age replacement advised ~$600), underbelly localized insulation damage (~$293 materials), Lippert rear auto-level jacks disengaged (manual override works), one cabinet hinge (~$50). Total ~$1,150–$1,600 — factored into ask."
+  },
+  both: {
+    label: "F-350 King Ranch + Jayco Eagle HT Package",
+    color: "#2e7d32",
+    fields: [
+      ["Package","Turnkey 5th wheel tow rig — truck + camper"],
+      ["Truck","2006 F-350 King Ranch · 47k mi · V10 gas · factory kingpin hitch"],
+      ["Camper","2017 Jayco Eagle HT 26.5BHS · ~2,400 mi · Climate Shield"],
+      ["Titles","Both clean GA · Zero Liens"],
+      ["Location","Both in Douglasville GA · Sherrie & Doug on-site"],
+      ["Package Target","$55,000–$65,000 combined (sold separately preferred)"],
+    ],
+    tip: "The V10 truck is factory-matched for the Jayco — kingpin hitch, 18,000 lb GCWR, day-one tow-ready. One owner, two assets, one transaction. Buyer can take the complete rig or either piece separately.",
+    condition: "See individual vehicle cards for condition details on each unit."
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+const STORAGE_KEY = "engagement-status-v2";
+let STATE = {};
+let openCard = null;
+let currentRegion = null;
+let currentCat = null;
+
+function defaultStatus(){
+  return {assigned:"Unassigned", stage:"Not Started", followupType:"— none yet —",
+    contactPhone:"Unassigned", contactSms:"Unassigned", contactEmail:"Unassigned",
+    contactVoicemail:"Unassigned", notes:""};
+}
+
+async function loadState(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if(res && res.value){ STATE = JSON.parse(res.value); }
+  }catch(e){ STATE = {}; }
+  ENGAGEMENTS.forEach(en=>{ if(!STATE[en.id]) STATE[en.id] = defaultStatus(); });
+}
+
+let saveTimer = null;
+function saveState(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async ()=>{
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(STATE), true);
+      flashSaved();
+    }catch(e){ console.error("save failed", e); }
+  }, 250);
+}
+
+function flashSaved(){
+  const b = document.getElementById("saveBadge");
+  b.classList.add("show");
+  setTimeout(()=>b.classList.remove("show"), 1400);
+}
+
+// ═══════════════════════════════════════════════════════════
+// REGION / CAT GATES
+// ═══════════════════════════════════════════════════════════
+const REGION_INTRO = {
+  nd: `North Dakota &amp; surrounding region. <strong>Town Car</strong> is in Hazen/Beulah ND — Cynthia Ennis is the authorized on-site rep. 
+       <strong>MKZ</strong> is at Lucky's Towing &amp; Repair, Beulah ND — bonded title in process. ND auction houses engaged: Resource Auction, Ulmer (both: photos taken, photographer contract signed). 
+       Steffes and Neumiller: phone calls initiated by Kenyon, not yet at photos stage. 
+       No wholesale — floor is $1,000 for the MKZ through instant cash channels only, target is rebuilt-lot or private sale at $4,500+.`,
+  ga: `Georgia &amp; surrounding region. Both the <strong>F-350 King Ranch</strong> and <strong>Jayco Eagle HT</strong> are stored in Douglasville GA. 
+       On-site contacts: <strong>Sherrie &amp; Doug Appleby</strong> — available for photos, showings, and pre-purchase inspection. 
+       Priority: Tier 1 consignment (they dispatch) before Tier 2 (appraisal if you bring it). 
+       <strong>Never accept Camping World / Blue Compass</strong> for the Jayco — their wholesale floor ($10K–$13K) is off the table entirely.`
+};
+
+const ND_CATS = [
+  {key:"all",label:"All ND"},
+  {key:"towncar",label:"🚗 Town Car"},
+  {key:"mkz",label:"🚙 MKZ Hybrid"},
+  {key:"consignment",label:"Consignment","type":true},
+  {key:"auction",label:"Auction","type":true},
+];
+
+const GA_CATS = [
+  {key:"all",label:"All GA"},
+  {key:"truck",label:"🛻 F-350 Truck"},
+  {key:"camper",label:"🏕️ Jayco Camper"},
+  {key:"both",label:"🛻🏕️ Package"},
+  {key:"consignment",label:"Consignment","type":true},
+  {key:"auction",label:"Auction","type":true},
+];
+
+function selectRegion(r){
+  currentRegion = r;
+  currentCat = null;
+  document.getElementById("contentArea").classList.remove("visible");
+
+  // Reset region buttons
+  document.querySelectorAll(".region-btn").forEach(b=>b.classList.remove("active"));
+
+  if(!r){
+    document.getElementById("regionGate").style.display = "";
+    document.getElementById("catGate").classList.remove("visible");
+    updateSidebar([]);
+    return;
+  }
+
+  document.getElementById("regionGate").style.display = "none";
+  document.querySelector(`.region-btn.${r}`).classList.add("active");
+
+  // Build cat gate
+  const cats = r === "nd" ? ND_CATS : GA_CATS;
+  document.getElementById("catGateTitle").textContent = r === "nd" ? "ND Region — Select Vehicle or Category" : "GA Region — Select Vehicle or Category";
+  const btns = document.getElementById("catBtns");
+  btns.innerHTML = cats.map(c=>`<button class="cat-btn" onclick="selectCat('${c.key}')">${c.label}</button>`).join("");
+  document.getElementById("catGate").classList.add("visible");
+}
+
+function selectCat(cat){
+  currentCat = cat;
+  document.querySelectorAll(".cat-btn").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+  document.getElementById("introText").innerHTML = REGION_INTRO[currentRegion];
+  document.getElementById("contentArea").classList.add("visible");
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function vehicleLabel(v){
+  const m = {truck:"Truck",camper:"Camper",both:"Truck+Camper",towncar:"Town Car",mkz:"MKZ Hybrid"};
+  return m[v] || v;
+}
+function vehicleTagClass(v){
+  const m = {truck:"tag-truck",camper:"tag-camper",both:"tag-both",towncar:"tag-towncar",mkz:"tag-mkz"};
+  return m[v] || "tag-both";
+}
+function tierTagClass(t){
+  if(t==="Tier 1") return "tag-tier1"; if(t==="Tier 2") return "tag-tier2";
+  if(t==="Tier 3") return "tag-tier3"; return "tag-both";
+}
+function channelTagClass(c){
+  const m = {consignment:"tag-consignment",auction:"tag-auction",direct:"tag-direct",both:"tag-both"};
+  return m[c] || "tag-both";
+}
+function cardHighlightClass(c){
+  const m = {consignment:"highlight-consignment",auction:"highlight-auction",direct:"highlight-direct",both:"highlight-both",self:""};
+  return m[c] || "";
+}
+
+function selectHTML(id, options, current, onchangeAttr){
+  return `<select id="${id}" ${onchangeAttr}>` +
+    options.map(o=>`<option value="${o}" ${o===current?"selected":""}>${o}</option>`).join("") +
+    `</select>`;
+}
+
+function buildCard(en){
+  const st = STATE[en.id];
+  const tpHtml = en.talkingPoints.map(t=>`<li>${t}</li>`).join("");
+  const hasPreNotes = en.preNotes ? `<div class="con-pre">📌 <strong>Pre-filled context:</strong> ${en.preNotes}</div>` : "";
+
+  return `
+  <div class="card ${cardHighlightClass(en.channelType)}" id="card-${en.id}" data-vehicle="${en.vehicle}" data-assigned="${st.assigned}">
+    <div class="card-head" onclick="toggleCard('${en.id}')">
+      <div>
+        <div class="card-title">${en.name}</div>
+        <div class="card-meta">${en.type} · ${en.address}</div>
+      </div>
+      <div class="card-right">
+        <span class="pill ${vehicleTagClass(en.vehicle)}">${vehicleLabel(en.vehicle)}</span>
+        <span class="pill ${tierTagClass(en.tier)}">${en.tier}</span>
+        <span class="pill ${channelTagClass(en.channelType)}">${en.channelType}</span>
+        <span class="statuspill ${STAGE_CLASS[st.stage]}" id="pill-${en.id}">${st.stage}</span>
+        <span class="chev">&#9656;</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="kv">
+        <div class="k">Contact</div><div class="v">${en.contact}</div>
+        <div class="k">Address</div><div class="v">${en.address}</div>
+        <div class="k">Type</div><div class="v">${en.type}</div>
+      </div>
+
+      ${hasPreNotes}
+
+      <h3 class="sec">Talking Points</h3>
+      <ul class="tp">${tpHtml}</ul>
+
+      <h3 class="sec">SMS — Copy &amp; Paste</h3>
+      <div class="smsbox">
+        <div class="lbl" style="background:${en.smsColor}">Text to ${en.name}</div>
+        <div class="msg" id="smsmsg-${en.id}">${en.sms}</div>
+        <div class="att">
+          <span>📎 ${en.attach}</span>
+          <button class="copybtn" onclick="copySms('${en.id}')">Copy Message</button>
+        </div>
+      </div>
+
+      <h3 class="sec">Status &amp; Engagement Tracking</h3>
+      <div class="statusgrid">
+        <div class="field">
+          <label>Assigned To</label>
+          ${selectHTML(`assigned-${en.id}`, PEOPLE, st.assigned, `onchange="updateField('${en.id}','assigned',this.value)"`)}
+        </div>
+        <div class="field">
+          <label>Pipeline Stage</label>
+          ${selectHTML(`stage-${en.id}`, STAGES, st.stage, `onchange="updateField('${en.id}','stage',this.value)"`)}
+        </div>
+        <div class="field">
+          <label>Contacted — Phone (who)</label>
+          ${selectHTML(`contactPhone-${en.id}`, PEOPLE, st.contactPhone, `onchange="updateField('${en.id}','contactPhone',this.value)"`)}
+        </div>
+        <div class="field">
+          <label>Contacted — SMS (who)</label>
+          ${selectHTML(`contactSms-${en.id}`, PEOPLE, st.contactSms, `onchange="updateField('${en.id}','contactSms',this.value)"`)}
+        </div>
+        <div class="field">
+          <label>Contacted — Email (who)</label>
+          ${selectHTML(`contactEmail-${en.id}`, PEOPLE, st.contactEmail, `onchange="updateField('${en.id}','contactEmail',this.value)"`)}
+        </div>
+        <div class="field">
+          <label>Contacted — Voicemail (who)</label>
+          ${selectHTML(`contactVoicemail-${en.id}`, PEOPLE, st.contactVoicemail, `onchange="updateField('${en.id}','contactVoicemail',this.value)"`)}
+        </div>
+        <div class="field" style="grid-column:1/-1;">
+          <label>Follow-up / Appointment Type</label>
+          ${selectHTML(`followupType-${en.id}`, FOLLOWUP_TYPES, st.followupType, `onchange="updateField('${en.id}','followupType',this.value)"`)}
+        </div>
+        <div class="field" style="grid-column:1/-1;">
+          <label>Notes</label>
+          <textarea class="noteph" placeholder="Log dates, names spoken with, numbers discussed, and next action here..."
+            onchange="updateField('${en.id}','notes',this.value)">${st.notes || ""}</textarea>
+          <div class="hint">Hint: date each entry, note who you spoke with, any offer number or reserve discussed, and what the next step is.</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function groupHeading(label, cls){
+  return `<div class="grouphead ${cls||""}">${label}</div>`;
+}
+
+function getVisibleEngagements(){
+  if(!currentRegion || !currentCat) return [];
+  return ENGAGEMENTS.filter(en => {
+    if(en.region !== currentRegion) return false;
+    if(currentCat === "all") return true;
+    // vehicle filter
+    if(["truck","camper","both","towncar","mkz"].includes(currentCat)) return en.vehicle === currentCat;
+    // channel type filter
+    if(["consignment","auction","direct"].includes(currentCat)) return en.channelType === currentCat;
+    return true;
+  });
+}
+
+function renderAll(){
+  if(!currentRegion || !currentCat){
+    document.getElementById("cardsContainer").innerHTML = "";
+    document.getElementById("summaryBody").innerHTML = "";
+    return;
+  }
+
+  const aFilter = document.getElementById("filterAssigned").value;
+  const visible = getVisibleEngagements();
+  const filteredByPerson = visible.filter(en => aFilter === "all" || STATE[en.id].assigned === aFilter);
+
+  // Group by vehicle
+  const groups = currentRegion === "nd"
+    ? [{key:"towncar",label:"🚗 1988 Town Car Signature — ND Region",cls:"nd"},{key:"mkz",label:"🚙 2016 MKZ Hybrid — ND Region",cls:"nd"}]
+    : [{key:"truck",label:"🛻 F-350 King Ranch — GA Region",cls:"ga"},{key:"both",label:"🛻🏕️ Truck + Camper Package — GA Region",cls:"ga"},{key:"camper",label:"🏕️ Jayco Eagle HT — GA Region",cls:"ga"}];
+
+  let html = "";
+  groups.forEach(g=>{
+    const items = filteredByPerson.filter(en => en.vehicle === g.key);
+    if(items.length === 0) return;
+    html += groupHeading(g.label, g.cls);
+    // Sort: Tier 1, Tier 2, Tier 3, Self-Submit
+    const tierOrder = {"Tier 1":0,"Tier 2":1,"Tier 3":2,"Self-Submit":3};
+    items.sort((a,b) => (tierOrder[a.tier]||9) - (tierOrder[b.tier]||9));
+    items.forEach(en => html += buildCard(en));
+  });
+
+  document.getElementById("cardsContainer").innerHTML = html || "<p style='color:#888;font-size:13px;'>No engagements match current filters.</p>";
+  if(openCard){
+    const el = document.getElementById("card-"+openCard);
+    if(el) el.classList.add("open");
+  }
+
+  // Update sidebar vehicles for current context
+  const vehiclesShown = [...new Set(filteredByPerson.map(e=>e.vehicle))];
+  updateSidebar(vehiclesShown);
+  renderSummary(filteredByPerson);
+}
+
+function renderSummary(items){
+  if(!items) items = getVisibleEngagements();
+  const rows = items.map(en=>{
+    const st = STATE[en.id];
+    const phone = en.contact.match(/\(?\d{3}\)?[\s\-\.]?\d{3}[\s\-\.]?\d{4}/);
+    return `<tr onclick="jumpTo('${en.id}')">
+      <td>${en.name}</td>
+      <td><span class="pill ${vehicleTagClass(en.vehicle)}">${vehicleLabel(en.vehicle)}</span></td>
+      <td><span class="pill ${channelTagClass(en.channelType)}">${en.channelType}</span></td>
+      <td><span class="pill ${tierTagClass(en.tier)}">${en.tier}</span></td>
+      <td>${phone ? phone[0] : "—"}</td>
+      <td>${st.assigned}</td>
+      <td><span class="statuspill ${STAGE_CLASS[st.stage]}">${st.stage}</span></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("summaryBody").innerHTML = rows;
+}
+
+function updateSidebar(vehicleKeys){
+  if(!vehicleKeys || vehicleKeys.length === 0){
+    document.getElementById("vehicleCards").innerHTML = "<p style='font-size:12px;color:#888;'>Select a region to see vehicle details.</p>";
+    document.getElementById("sidebarContext").textContent = "Select a region and engagement to see details.";
+    return;
+  }
+
+  const region = currentRegion === "nd" ? "ND Region" : "GA Region";
+  document.getElementById("sidebarContext").textContent = `Showing: ${region}`;
+
+  // Show all relevant vehicle cards
+  const allVehicles = currentCat === "all"
+    ? (currentRegion === "nd" ? ["towncar","mkz"] : ["truck","both","camper"])
+    : vehicleKeys.length > 0 ? vehicleKeys : (currentRegion === "nd" ? ["towncar","mkz"] : ["truck","camper"]);
+
+  const uniqueVehicles = [...new Set(allVehicles)];
+
+  let html = "";
+  uniqueVehicles.forEach(v => {
+    const vc = VEHICLE_CARDS[v];
+    if(!vc) return;
+    html += `
+      <div class="vh-card">
+        <div class="vh-head" style="background:${vc.color};">${vc.label}</div>
+        <div class="vh-body">
+          ${vc.fields.map(f=>`<div class="row"><span class="lbl">${f[0]}</span><span class="val">${f[1]}</span></div>`).join("")}
+          <div class="vh-tip">💡 ${vc.tip}</div>
+          ${vc.condition ? `<div style="font-size:11px;color:#666;margin-top:6px;border-top:1px solid #eee;padding-top:6px;">⚠️ Condition: ${vc.condition}</div>` : ""}
+        </div>
+      </div>`;
+  });
+
+  document.getElementById("vehicleCards").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SIDEBAR TABS
+// ═══════════════════════════════════════════════════════════
+window.sbTab = function(name){
+  document.querySelectorAll(".sb-tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".sb-panel").forEach(p=>p.classList.remove("active"));
+  event.target.classList.add("active");
+  document.getElementById("panel-"+name).classList.add("active");
+};
+
+// ═══════════════════════════════════════════════════════════
+// CARD INTERACTIONS
+// ═══════════════════════════════════════════════════════════
+function jumpTo(id){
+  openCard = id;
+  renderAll();
+  setTimeout(()=>{
+    const el = document.getElementById("card-"+id);
+    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+  }, 60);
+}
+
+window.toggleCard = function(id){
+  const el = document.getElementById("card-"+id);
+  const isOpen = el.classList.contains("open");
+  document.querySelectorAll(".card.open").forEach(c=>c.classList.remove("open"));
+  if(!isOpen){
+    el.classList.add("open");
+    openCard = id;
+    // Update sidebar to highlight relevant vehicles for this card
+    const en = ENGAGEMENTS.find(e=>e.id===id);
+    if(en) updateSidebar([en.vehicle]);
+  } else {
+    openCard = null;
+  }
+};
+
+window.updateField = function(id, field, value){
+  STATE[id][field] = value;
+  saveState();
+  if(field === "stage"){
+    const pill = document.getElementById("pill-"+id);
+    if(pill){ pill.className = "statuspill " + STAGE_CLASS[value]; pill.textContent = value; }
+  }
+  renderSummary(getVisibleEngagements());
+};
+
+window.copySms = function(id){
+  const text = document.getElementById("smsmsg-"+id).textContent;
+  navigator.clipboard?.writeText(text).then(()=>flashSaved()).catch(()=>{});
+};
+
+document.getElementById("expandAllBtn").onclick = ()=>{
+  openCard = "__ALL__";
+  document.querySelectorAll(".card").forEach(c=>c.classList.add("open"));
+};
+document.getElementById("collapseAllBtn").onclick = ()=>{
+  openCard = null;
+  document.querySelectorAll(".card").forEach(c=>c.classList.remove("open"));
+};
+document.getElementById("filterAssigned").onchange = renderAll;
+
+// ═══════════════════════════════════════════════════════════
+// AUTH GATE
+// ═══════════════════════════════════════════════════════════
+const AUTH_STORAGE_KEY = "auth-credentials-v1";
+const ALLOWED_NAMES = ["Doug Appleby","Sherrie Appleby","Kenyon Jones","Charles Perrine","Cynthia Ennis"];
+let authSelectedName = null;
+let authCreds = {};
+
+async function sha256(text){
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+async function loadAuthCreds(){
+  try{
+    const res = await window.storage.get(AUTH_STORAGE_KEY, true);
+    if(res && res.value) authCreds = JSON.parse(res.value);
+  }catch(e){ authCreds = {}; }
+}
+
+async function saveAuthCreds(){
+  await window.storage.set(AUTH_STORAGE_KEY, JSON.stringify(authCreds), true);
+}
+
+function showAuthStep(id){
+  document.querySelectorAll(".auth-step").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+document.getElementById("authNameNext").onclick = async ()=>{
+  const name = document.getElementById("authNameSelect").value;
+  const err = document.getElementById("authNameErr");
+  if(!ALLOWED_NAMES.includes(name)){
+    err.textContent = "Please select your name from the list.";
+    return;
+  }
+  err.textContent = "";
+  authSelectedName = name;
+  if(authCreds[name]){
+    document.getElementById("authLoginLabel").textContent = `Welcome back, ${name}. Enter your password.`;
+    document.getElementById("authLoginErr").textContent = "";
+    document.getElementById("authLoginPassword").value = "";
+    showAuthStep("authStepLogin");
+  } else {
+    document.getElementById("authSetupLabel").textContent = `First time, ${name}? Set a password you'll use going forward.`;
+    document.getElementById("authSetupErr").textContent = "";
+    document.getElementById("authSetupPassword").value = "";
+    document.getElementById("authSetupPassword2").value = "";
+    showAuthStep("authStepSetup");
+  }
+};
+
+document.getElementById("authLoginBtn").onclick = async ()=>{
+  const pw = document.getElementById("authLoginPassword").value;
+  const err = document.getElementById("authLoginErr");
+  if(!pw){ err.textContent = "Enter your password."; return; }
+  const hash = await sha256(authSelectedName + ":" + pw);
+  if(hash === authCreds[authSelectedName]){
+    document.getElementById("authGate").classList.add("hidden");
+    boot();
+  } else {
+    err.textContent = "Incorrect password.";
+  }
+};
+
+document.getElementById("authSetupBtn").onclick = async ()=>{
+  const pw = document.getElementById("authSetupPassword").value;
+  const pw2 = document.getElementById("authSetupPassword2").value;
+  const err = document.getElementById("authSetupErr");
+  if(!pw || pw.length < 4){ err.textContent = "Password must be at least 4 characters."; return; }
+  if(pw !== pw2){ err.textContent = "Passwords don't match."; return; }
+  const hash = await sha256(authSelectedName + ":" + pw);
+  authCreds[authSelectedName] = hash;
+  await saveAuthCreds();
+  document.getElementById("authGate").classList.add("hidden");
+  boot();
+};
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+async function boot(){
+  await loadState();
+  renderAll();
+}
+(async function initAuth(){
+  await loadAuthCreds();
+})();
+</script>
+</body>
+</html>
